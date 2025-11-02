@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tab Bar Navigation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css'>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <nav id="navbar">
+        <div class="logo"><i class="fa-solid fa-plane-departure"></i> Travel-Smart</div>
+
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Destinations</a></li>
+            <li><a href="#">Packages</a></li>
+            <li><a href="#">Gallery</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+
+        <div class="nav-right">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <i class="fa-regular fa-user"></i>
+            <div class="hamburger" id="hamburger">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+        </div>
+    </nav>
+
+
+    <section class="reveal">
+        <div class="overlay-container">
+            <div class="container">
+                <div class="slide">
+                    <div class="item"
+                        style="background: url('images/Switzerland.png'); background-size: cover; background-repeat: no-repeat; background-position: center center">
+                        <div class="content">
+                            <div class="name">Switzerland</div>
+                            <div class="description">Renowned for its breathtaking Alpine scenery and precision in
+                                craftsmanship
+                            </div>
+                            <button>See More</button>
+                        </div>
+                    </div>
+
+                    <div class="item"
+                        style="background: url('images/Finland.png'); background-size: cover; background-repeat: no-repeat; background-position: center center">
+                        <div class="content">
+                            <div class="name">Finland</div>
+                            <div class="description">Known for its saunas, lakes, and a deep connection to nature</div>
+                            <button>See More</button>
+                        </div>
+                    </div>
+
+                    <div class="item"
+                        style="background: url('images/India.png'); background-size: cover; background-repeat: no-repeat; background-position: center center">
+                        <div class="content">
+                            <div class="name">India</div>
+                            <div class="description">Famous for its rich culture, historical landmarks, natural beauty,
+                                and
+                                diverse cuisine</div>
+                            <button>See More</button>
+                        </div>
+                    </div>
+
+                    <div class="item"
+                        style="background: url('images/Australia.png'); background-size: cover; background-repeat: no-repeat; background-position: center center">
+                        <div class="content">
+                            <div class="name">Australia</div>
+                            <div class="description">Distinguished by its diverse ecosystems, ranging from beaches to
+                                bushland
+                            </div>
+                            <button>See More</button>
+                        </div>
+                    </div>
+
+                    <div class="item"
+                        style="background: url('images/Netherland.png'); background-size: cover; background-repeat: no-repeat; background-position: center center">
+                        <div class="content">
+                            <div class="name">Netherland</div>
+                            <div class="description">Characterized by its iconic canals, tulip fields, and windmills
+                            </div>
+                            <button>See More</button>
+                        </div>
+                    </div>
+
+                    <div class="item"
+                        style="background: url('images/Ireland.png'); background-size: cover; background-repeat: no-repeat; background-position: center center">
+                        <div class="content">
+                            <div class="name">Ireland</div>
+                            <div class="description">Known for its lush green landscapes and rich cultural heritage
+                            </div>
+                            <button>See More</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="button">
+                    <button class="prev"><i class="fa-solid fa-arrow-left"></i></button>
+                    <button class="next"><i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== Testimonials Section ===== -->
+    <section class="testimonials reveal">
+        <h2 class="section-title">What Our Travelers Say</h2>
+
+        <div class="testimonial-wrapper">
+            <div class="testimonial-track">
+                <!-- Testimonial Card 1 -->
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p>"Travel-Smart made my Bali trip unforgettable! Everything was seamless, from booking to local
+                        guidance. Truly a lifesaver for solo travelers."</p>
+                    <h4>— Sara Khan</h4>
+                </div>
+
+                <!-- Testimonial Card 2 -->
+                <div class="testimonial-card">
+                    <div class="stars">★★★★☆</div>
+                    <p>"Amazing experience! The packages are well-planned and hassle-free. My family loved the itinerary
+                        and support provided."</p>
+                    <h4>— Ahmed Raza</h4>
+                </div>
+
+                <!-- Testimonial Card 3 -->
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p>"Highly recommend Travel-Smart for solo adventurers. I felt secure, guided, and inspired
+                        throughout my journey."</p>
+                    <h4>— Maria Lopez</h4>
+                </div>
+
+                <!-- Testimonial Card 4 -->
+                <div class="testimonial-card">
+                    <div class="stars">★★★★☆</div>
+                    <p>"Their adventure packages are top-notch! Loved the trekking experience and local interactions.
+                        Excellent service all around."</p>
+                    <h4>— Faisal Khan</h4>
+                </div>
+
+                <!-- Testimonial Card 5 -->
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p>"Professional and easy-to-use platform. Planning my European trip was stress-free, and the local
+                        tips were invaluable."</p>
+                    <h4>— Anjali Sharma</h4>
+                </div>
+
+                <!-- Testimonial Card 6 -->
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p>"From start to finish, Travel-Smart exceeded my expectations. Personalized recommendations made
+                        my vacation unforgettable."</p>
+                    <h4>— John Doe</h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== Promotional Offers Section ===== -->
+    <section class="promotions reveal">
+        <h2 class="section-title">Promotional Offers</h2>
+        <p class="promo-text">🔥 Limited Time Deals! Book Now & Save Big! 🔥</p>
+        <div class="promo-cards">
+            <!-- Promo Card 1 -->
+            <div class="promo-card">
+                <div class="promo-badge">HOT</div>
+                <div class="promo-content">
+                    <h3>Paris Getaway</h3>
+                    <p>Experience the romantic city of lights. Iconic landmarks, gourmet cuisine, and a breathtaking
+                        Seine cruise await you.</p>
+                    <button>Book Now</button>
+                </div>
+            </div>
+
+            <!-- Promo Card 2 -->
+            <div class="promo-card">
+                <div class="promo-badge">NEW</div>
+                <div class="promo-content">
+                    <h3>Bali Adventure</h3>
+                    <p>Discover Bali’s lush forests and serene beaches. Perfect for adventure lovers and relaxation
+                        seekers alike.</p>
+                    <button>Book Now</button>
+                </div>
+            </div>
+
+            <!-- Promo Card 3 -->
+            <div class="promo-card">
+                <div class="promo-badge">LIMITED</div>
+                <div class="promo-content">
+                    <h3>Tokyo Explorer</h3>
+                    <p>Immerse yourself in Tokyo’s vibrant culture. Temples, tech, and cuisine all in one exciting
+                        adventure.</p>
+                    <button>Book Now</button>
+                </div>
+            </div>
+
+            <!-- Promo Card 4 -->
+            <div class="promo-card">
+                <div class="promo-badge">HOT</div>
+                <div class="promo-content">
+                    <h3>New York Rush</h3>
+                    <p>From Times Square to Central Park, experience the city that never sleeps with exclusive discounts
+                        for a limited time.</p>
+                    <button>Book Now</button>
+                </div>
+            </div>
+
+            <!-- Promo Card 5 -->
+            <div class="promo-card">
+                <div class="promo-badge">SALE</div>
+                <div class="promo-content">
+                    <h3>Dubai Luxury</h3>
+                    <p>Luxury stays, desert safaris, and breathtaking skyscrapers.Hurry up quicky Grab this special
+                        offer before it ends!</p>
+                    <button>Book Now</button>
+                </div>
+            </div>
+
+            <!-- Promo Card 6 -->
+            <div class="promo-card">
+                <div class="promo-badge">EXCLUSIVE</div>
+                <div class="promo-content">
+                    <h3>Rome Classic</h3>
+                    <p>Step into history with Rome’s ancient architecture, world-class cuisine, and unforgettable
+                        experiences at discounted rates.</p>
+                    <button>Book Now</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- destination section -->
+
+    <section class="destinations cinematic reveal" id="destinations">
+        <div class="dest-bg"></div>
+
+        <div class="wrap">
+            <h2 class="section-title">Popular Destinations</h2>
+
+            <div class="destination-grid">
+                <!-- 1 -->
+                <article class="destination-card" aria-labelledby="d-paris">
+                    <figure class="card-image" role="img" aria-label="Paris image">
+                        <img src="images/paris.webp" alt="Paris skyline and Eiffel Tower">
+                        <div class="image-overlay"><span class="country">Paris, France</span></div>
+                        <div class="shine"></div>
+                    </figure>
+                    <div class="card-body">
+                        <h3 id="d-paris">Paris — City of Light & Craft</h3>
+                        <p>
+                            Paris whispers beauty in every cobblestone, every pastry, every whispered “bonjour.” Its
+                            art, cuisine, and charm create a rhythm of life that never feels rushed.
+                            Whether you stand before the Eiffel Tower or sip coffee by the Seine, you feel an unspoken
+                            connection with elegance itself.
+                        </p>
+                        <div class="card-actions">
+                            <button class="btn-primary">Discover Now</button>
+                            <a class="link-ghost" href="#">View experiences →</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 2 -->
+                <article class="destination-card" aria-labelledby="d-bali">
+                    <figure class="card-image" role="img" aria-label="Bali image">
+                        <img src="images/bali.jpg" alt="Bali rice terraces and sea">
+                        <div class="image-overlay"><span class="country">Bali, Indonesia</span></div>
+                        <div class="shine"></div>
+                    </figure>
+                    <div class="card-body">
+                        <h3 id="d-bali">Bali — Island of Quiet Luxuries</h3>
+                        <p>
+                            In Bali, time moves like waves gently, purposefully, and always toward calm.
+                            Between emerald rice terraces and golden beaches, you’ll find temples that hum with peace
+                            and sunsets that paint the horizon.
+                            Every moment feels sacred, every breeze a quiet invitation to simply be.
+                        </p>
+                        <div class="card-actions">
+                            <button class="btn-primary">Discover Now</button>
+                            <a class="link-ghost" href="#">View experiences →</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 3 -->
+                <article class="destination-card" aria-labelledby="d-dubai">
+                    <figure class="card-image" role="img" aria-label="Dubai image">
+                        <img src="images/dubai.jpg" alt="Dubai skyline">
+                        <div class="image-overlay"><span class="country">Dubai, UAE</span></div>
+                        <div class="shine"></div>
+                    </figure>
+                    <div class="card-body">
+                        <h3 id="d-dubai">Dubai — The Modern Mirage</h3>
+                        <p>
+                            Dubai rises from desert sands as a masterpiece of ambition and wonder.
+                            Its skyline sparkles with innovation, while hidden souks preserve stories of timeless trade.
+                            Between gold sunsets and glass towers, Dubai blends old-world hospitality with the thrilling
+                            pulse of tomorrow.
+                        </p>
+                        <div class="card-actions">
+                            <button class="btn-primary">Discover Now</button>
+                            <a class="link-ghost" href="#">View experiences →</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 4 -->
+                <article class="destination-card" aria-labelledby="d-rome">
+                    <figure class="card-image" role="img" aria-label="Rome image">
+                        <img src="images/rome.jfif" alt="Rome Colosseum">
+                        <div class="image-overlay"><span class="country">Rome, Italy</span></div>
+                        <div class="shine"></div>
+                    </figure>
+                    <div class="card-body">
+                        <h3 id="d-rome">Rome — Timeless & Tactile</h3>
+                        <p>
+                            Rome is a living museum, where history breathes between espresso sips and evening strolls.
+                            Ancient arches meet bustling piazzas, echoing laughter and centuries of stories.
+                            Every corner offers art, aroma, and affection proof that the eternal city still beats with
+                            passion and poetry.
+                        </p>
+                        <div class="card-actions">
+                            <button class="btn-primary">Discover Now</button>
+                            <a class="link-ghost" href="#">View experiences →</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 5 -->
+                <article class="destination-card" aria-labelledby="d-tokyo">
+                    <figure class="card-image" role="img" aria-label="Tokyo image">
+                        <img src="images/tokyo.jpg" alt="Tokyo city lights">
+                        <div class="image-overlay"><span class="country">Tokyo, Japan</span></div>
+                        <div class="shine"></div>
+                    </figure>
+                    <div class="card-body">
+                        <h3 id="d-tokyo">Tokyo — Future Meets Ritual</h3>
+                        <p>
+                            Tokyo hums like a heartbeat precise, vibrant, alive.
+                            Neon towers rise beside silent temples, where past and future exchange quiet glances
+                            peacefully.
+                            Here, technology serves beauty, and every alley reveals a taste, a texture, or a tradition
+                            waiting to be rediscovered.
+                        </p>
+                        <div class="card-actions">
+                            <button class="btn-primary">Discover Now</button>
+                            <a class="link-ghost" href="#">View experiences →</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 6 -->
+                <article class="destination-card" aria-labelledby="d-ny">
+                    <figure class="card-image" role="img" aria-label="New York image">
+                        <img src="images/newyork.avif" alt="New York skyline">
+                        <div class="image-overlay"><span class="country">New York, USA</span></div>
+                        <div class="shine"></div>
+                    </figure>
+                    <div class="card-body">
+                        <h3 id="d-ny">New York — Urban Energy</h3>
+                        <p>
+                            New York never pauses; it dances, dazzles, and defines possibility.
+                            From sunrise jogs in Central Park to jazz echoing through downtown streets, every hour
+                            carries its own rhythm.
+                            The city’s pulse is electric a living invitation to chase dreams that don’t wait.
+                        </p>
+                        <div class="card-actions">
+                            <button class="btn-primary">Discover Now</button>
+                            <a class="link-ghost" href="#">View experiences →</a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <div class="more-btn">
+                <button class="btn-ghost-large">Explore All Destinations</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= SERVICES / FEATURES SECTION ================= -->
+    <section class="services reveal">
+        <!-- Section Heading -->
+        <h2 class="section-title">Our Services</h2>
+
+        <div class="service-cards">
+            <!-- Card 1 -->
+            <div class="card">
+                <div class="icon"><i class="fas fa-plane"></i></div>
+                <h3>Flight Booking</h3>
+                <p>Book your flights easily with flexible dates and enjoy seamless planning for every journey you take
+                    with Travel-Smart.</p>
+                <button>Book Now</button>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="card">
+                <div class="icon"><i class="fas fa-hotel"></i></div>
+                <h3>Hotel Reservation</h3>
+                <p>Find and reserve hotels worldwide with best deals. Read reviews and get personalized recommendations
+                    for every stay you need.</p>
+                <button>Book Now</button>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="card">
+                <div class="icon"><i class="fas fa-map-marked-alt"></i></div>
+                <h3>Custom Itineraries</h3>
+                <p>Create travel plans tailored to your interests. Sightseeing, adventures, and relaxing activities
+                    designed just for your trips.</p>
+                <button>Plan Now</button>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="card">
+                <div class="icon"><i class="fas fa-car"></i></div>
+                <h3>Car Rentals</h3>
+                <p>Book reliable vehicles for your trip with ease. Flexible pickup and drop-off options make travel
+                    convenient anywhere you go.</p>
+                <button>Rent Now</button>
+            </div>
+
+            <!-- Card 5 -->
+            <div class="card">
+                <div class="icon"><i class="fas fa-umbrella-beach"></i></div>
+                <h3>Excursions & Tours</h3>
+                <p>Explore guided tours and activities at destinations. Choose cultural, adventure, or relaxing
+                    experiences for your travel plans.</p>
+                <button>Explore Now</button>
+            </div>
+
+            <!-- Card 6 -->
+            <div class="card">
+                <div class="icon"><i class="fas fa-headset"></i></div>
+                <h3>24/7 Support</h3>
+                <p>Get help whenever you need it. Travel experts assist you anytime to ensure your trip is smooth, safe,
+                    and worry-free always.</p>
+                <button>Contact Now</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="reveal">
+        <div class="footer-container">
+            <!-- Logo & Description -->
+            <div class="footer-about">
+                <div class="logo">
+                    <i class="fas fa-plane-departure"></i>
+                    <span>Travel-Smart</span>
+                </div>
+                <p>Explore the world effortlessly with Travel-Smart. Your journey, our expertise.</p>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="footer-links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Destinations</a></li>
+                    <li><a href="#">Services</a></li>
+                    <li><a href="#">Offers</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="footer-contact">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-map-marker-alt"></i> 123 Travel Street, City</p>
+                <p><i class="fas fa-phone-alt"></i> +123 456 7890</p>
+                <p><i class="fas fa-envelope"></i> info@travelsmart.com</p>
+            </div>
+
+            <!-- Newsletter -->
+            <div class="footer-newsletter">
+                <h3>Newsletter</h3>
+                <p>Subscribe to get latest updates & offers</p>
+                <form>
+                    <input type="email" placeholder="Enter your email" />
+                    <button type="submit">Subscribe</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 Travel-Smart. All rights reserved.</p>
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+            </div>
+        </div>
+    </footer>
+
+
+
+
+
+
+
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
