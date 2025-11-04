@@ -1,741 +1,341 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Travel Smart — Destinations (Dynamic)</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
 
-    <!-- fonts & icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet">
-
+    <title>Destination Explorer</title>
     <style>
-        /* ----------------------------
-       THEME VARIABLES (your values)
-       ---------------------------- */
-        :root {
-            --background: #252432;
-            --accent1: #fb8b24;
-            --accent2: #d90368;
-            --accent3: #820263;
-            --text-light: #ffffff;
-            --text-dark: #0a0a0a;
-            --overlay-darkness: rgba(0, 0, 0, 0.45);
-            --card-radius: 18px;
-            --icon-size: 24px;
-            --scale: 1;
-            --max-w: 1100px;
-        }
+        @import url('https://fonts.googleapis.com/css?family=Poppins:400,600');
 
-        /* reset & base */
         * {
-            box-sizing: border-box
-        }
-
-        html,
-        body {
-            height: 100%
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
-            margin: 0;
-            font-family: Poppins, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
-            background: linear-gradient(180deg, var(--background) 0%, #1f1d2a 100%);
-            color: var(--text-light);
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-
-        /* NAVBAR */
-        .navbar {
-            width: 100%;
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 60;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 14px 28px;
-            background: rgba(7, 8, 10, 0.18);
-            backdrop-filter: blur(8px) saturate(120%);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-        }
-
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-weight: 700;
-            font-size: 1.05rem
-        }
-
-        .brand .logo {
-            width: 44px;
-            height: 44px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, rgba(37, 99, 235, 0.08), rgba(16, 185, 129, 0.08));
-            color: var(--accent3);
-            font-size: 18px;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 20px;
-            align-items: center;
-            list-style: none;
-            margin: 0;
-            padding: 0
-        }
-
-        .nav-links a {
-            color: rgba(255, 255, 255, 0.88);
-            text-decoration: none;
-            font-weight: 600;
-            padding: 8px 10px;
-            border-radius: 8px;
-            transition: all .22s ease;
-        }
-
-        .nav-links a:hover {
-            color: var(--accent1);
-            transform: translateY(-3px);
-            text-shadow: 0 0 6px rgba(251, 139, 36, 0.4)
-        }
-
-        /* page shell */
-        .shell {
-            padding-top: 78px;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-        }
-
-        .container {
-            width: 100%;
-            max-width: var(--max-w);
-            margin: 0 auto;
-            padding: 28px;
-        }
-
-        /* header / hero */
-        .hero {
-            border-radius: 14px;
-            padding: 40px;
-            display: flex;
-            gap: 24px;
-            align-items: center;
-            justify-content: space-between;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
-            box-shadow: 0 10px 30px rgba(2, 6, 23, 0.35);
-            margin-bottom: 28px;
-        }
-
-        .hero-left h1 {
-            font-size: 2.1rem;
-            margin: 0 0 8px 0;
-            color: var(--accent1);
-        }
-
-        .hero-left p {
-            margin: 0;
-            color: rgba(255, 255, 255, 0.9)
-        }
-
-        .hero-cta {
-            padding: 10px 16px;
-            border-radius: 12px;
-            background: linear-gradient(90deg, var(--accent1), var(--accent2));
+            font-family: 'Poppins', sans-serif;
+            background: #1d1b27;
             color: #fff;
-            font-weight: 700;
-            border: 0;
-            cursor: pointer;
-            box-shadow: 0 12px 30px rgba(251, 139, 36, 0.12);
-        }
-
-        /* grid for cards */
-        #destGrid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 26px;
-            align-items: stretch;
-        }
-
-        /* card */
-        .place-card {
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
-            border-radius: var(--card-radius);
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(2, 6, 23, 0.28);
-            transition: transform .36s ease, box-shadow .36s ease;
-            display: flex;
-            flex-direction: column;
-            min-height: 380px;
+        }
+
+        .slider-container {
             position: relative;
-        }
-
-        .place-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 22px 50px rgba(2, 6, 23, 0.36);
-        }
-
-        .place-image {
-            height: 220px;
-            width: 100%;
             overflow: hidden;
-            position: relative;
-            flex-shrink: 0;
+            width: 100vw;
+            height: 100vh;
         }
 
-        .place-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform .6s ease, filter .28s ease;
-            display: block;
-        }
-
-        .place-card:hover .place-image img {
-            transform: scale(1.06);
-            filter: brightness(.92);
-        }
-
-        .badge {
+        .left-slide {
             position: absolute;
-            left: 14px;
-            bottom: 14px;
-            background: linear-gradient(90deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.28));
-            color: #fff;
-            padding: 8px 12px;
-            border-radius: 10px;
-            font-weight: 700;
-            font-size: .85rem;
-            text-transform: uppercase;
-            backdrop-filter: blur(4px);
+            left: 0;
+            top: 0;
+            width: 35%;
+            height: 100%;
+            transition: transform 0.6s ease-in-out;
         }
 
-        .place-body {
-            padding: 18px 16px 22px;
+        .left-slide>div {
+            height: 100%;
+            width: 100%;
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            flex: 1;
-        }
-
-        .place-body h3 {
-            margin: 0;
-            color: var(--accent3);
-            font-size: 1.15rem;
-        }
-
-        .place-body p {
-            margin: 0;
-            color: rgba(255, 255, 255, 0.9);
-            font-size: .95rem;
-            line-height: 1.5;
-            flex: 1;
-        }
-
-        .place-meta {
-            display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
-            gap: 12px;
-            margin-top: 6px;
+            text-align: center;
+            padding: 20px;
         }
 
-        .btn-outline {
-            padding: 8px 14px;
-            border-radius: 999px;
-            border: 2px solid rgba(255, 255, 255, 0.06);
-            color: var(--accent1);
-            background: transparent;
+        .left-slide h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .left-slide p {
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+
+        .explore-btn {
+            background: #fb8b24;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 600;
             cursor: pointer;
-            font-weight: 700;
-            transition: all .28s ease;
+            transition: all 0.3s;
         }
 
-        .btn-outline:hover {
-            background: linear-gradient(90deg, var(--accent1), var(--accent2));
-            color: #fff;
-            box-shadow: 0 10px 30px rgba(217, 3, 104, 0.12);
-            transform: translateY(-3px)
+        .explore-btn:hover {
+            background: #d90368;
         }
 
-        /* detail view */
-        #detailView {
+        .right-slide {
+            position: absolute;
+            left: 35%;
+            top: 0;
+            width: 65%;
+            height: 100%;
+            transition: transform 0.6s ease-in-out;
+        }
+
+        .right-slide>div {
+            background-size: cover;
+            background-position: center;
+            height: 100%;
+            width: 100%;
+        }
+
+        .action-buttons button {
+            position: absolute;
+            left: 35%;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: #fff;
+            border: none;
+            color: #aaa;
+            cursor: pointer;
+            font-size: 18px;
+            padding: 15px;
+            z-index: 10;
+        }
+
+        .action-buttons .down-button {
+            transform: translate(-100%, -50%);
+            border-top-left-radius: 5px;
+            border-bottom-left-radius: 5px;
+        }
+
+        .action-buttons .up-button {
+            border-top-right-radius: 5px;
+            border-bottom-right-radius: 5px;
+        }
+
+        .action-buttons button:hover {
+            color: #222;
+        }
+
+        /* Detail Page Styling */
+        .detail-page {
             display: none;
-            padding: 18px 0;
-            animation: fadeIn .36s ease both;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(8px)
-            }
-
-            to {
-                opacity: 1;
-                transform: none
-            }
+            background: #1d1b27;
+            height: 100vh;
+            overflow-y: auto;
+            padding: 50px;
         }
 
         .detail-hero {
             position: relative;
-            border-radius: 14px;
+            height: 400px;
+            border-radius: 20px;
             overflow: hidden;
-            min-height: 340px;
-            margin-bottom: 18px;
-            box-shadow: 0 12px 36px rgba(2, 6, 23, 0.35);
+            margin-bottom: 50px;
         }
 
         .detail-hero img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            display: block;
-            filter: brightness(.7);
-            transition: transform .6s ease;
+            filter: brightness(70%);
         }
 
-        .hero-overlay {
+        .detail-hero h1 {
             position: absolute;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            padding: 28px;
+            bottom: 30px;
+            left: 40px;
+            font-size: 3rem;
+            font-weight: 700;
             color: #fff;
-            background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.6) 60%);
         }
 
-        .hero-overlay h2 {
-            margin: 0 0 6px 0;
-            color: var(--accent1);
-            font-size: 2rem;
+        .section {
+            margin-bottom: 50px;
         }
 
-        .hero-overlay p {
-            margin: 0;
-            color: rgba(255, 255, 255, 0.95)
+        .section h3 {
+            color: #fb8b24;
+            margin-bottom: 20px;
         }
 
-        /* gallery */
-        .gallery {
-            display: flex;
-            gap: 12px;
-            overflow-x: auto;
-            padding: 12px 0 18px;
-            margin-bottom: 18px;
+        .section p {
+            line-height: 1.6;
+            color: #ccc;
         }
 
-        .gallery img {
-            width: 320px;
-            height: 180px;
-            object-fit: cover;
-            border-radius: 10px;
-            flex-shrink: 0;
-            box-shadow: 0 8px 20px rgba(2, 6, 23, 0.12);
-            transition: transform .28s ease
-        }
-
-        .gallery img:hover {
-            transform: scale(1.03)
-        }
-
-        /* detail cards */
-        .grid-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 16px;
-            margin-bottom: 18px;
-        }
-
-        .info-card {
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
-            border-radius: 12px;
-            padding: 16px;
-            color: var(--text-light);
-            box-shadow: 0 10px 30px rgba(2, 6, 23, 0.18);
-        }
-
-        .info-card h4 {
-            margin: 0 0 8px 0;
-            color: var(--accent2);
-            font-weight: 800;
-        }
-
-        /* whats special ribbon */
-        .special-card {
-            background: linear-gradient(90deg, rgba(16, 185, 129, 0.06), rgba(37, 99, 235, 0.04));
-            border-radius: 12px;
-            padding: 18px;
-            position: relative;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            margin-bottom: 18px;
-            box-shadow: 0 10px 30px rgba(2, 6, 23, 0.12);
-        }
-
-        .special-ribbon {
-            position: absolute;
-            left: 0;
-            top: 22px;
-            transform: translateX(-22%);
-            background: var(--accent2);
-            color: #fff;
-            padding: 8px 36px;
-            border-radius: 6px;
-            font-weight: 800;
-            box-shadow: 0 8px 20px rgba(217, 3, 104, 0.12)
-        }
-
-        /* history / avoid */
-        .info-block {
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
-            padding: 16px;
-            border-radius: 12px;
-            box-shadow: 0 8px 24px rgba(2, 6, 23, 0.12);
-            margin-bottom: 12px;
-        }
-
-        .info-block h3 {
-            margin: 0 0 8px 0;
-            color: var(--accent3);
-        }
-
-        /* footer */
-        footer {
-            margin-top: 22px;
-            padding: 28px;
-            text-align: center;
-            color: rgba(255, 255, 255, 0.7)
-        }
-
-        /* responsive tweaks */
-        @media (max-width:900px) {
-            .hero {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 14px
-            }
-
-            .gallery img {
-                width: 240px;
-                height: 140px
-            }
-
-            .detail-hero {
-                min-height: 220px
-            }
-
-            .hero-overlay h2 {
-                font-size: 1.5rem
-            }
+        .back-btn {
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            z-index: 100;
         }
     </style>
 </head>
 
 <body>
+    <!-- Dynamic Slider -->
+    <div class="slider-container" id="sliderContainer">
+        <div class="left-slide" id="leftSlide"></div>
+        <div class="right-slide" id="rightSlide"></div>
 
-    <!-- NAV -->
-    <header class="navbar">
-        <div class="brand">
-            <div class="logo"><i class="fa-solid fa-location-dot"></i></div>
-            <div>Travel-Smart</div>
+        <div class="action-buttons">
+            <button class="down-button"><i class="fas fa-arrow-down"></i></button>
+            <button class="up-button"><i class="fas fa-arrow-up"></i></button>
         </div>
-        <nav>
-            <ul class="nav-links">
-                <li><a href="#" data-nav="home">Home</a></li>
-                <li><a href="#" data-nav="destinations" class="active">Destinations</a></li>
-                <li><a href="#" data-nav="offers">Offers</a></li>
-                <li><a href="#" data-nav="contact">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
+    </div>
 
-    <!-- MAIN -->
-    <main class="shell" role="main">
-        <div class="container">
+    <!-- Dynamic Detail Page -->
+    <div id="detailPage" class="detail-page"></div>
 
-            <!-- HERO (top) -->
-            <section class="hero" aria-label="intro">
-                <div class="hero-left">
-                    <h1>Explore destinations — Travel-Smart</h1>
-                    <p>Curated destinations, dynamic details and local tips — all powered from JSON. Click any card to
-                        open details without reloading.</p>
-                </div>
-                <div class="hero-right">
-                    <button class="hero-cta" id="viewAllBtn">View All Destinations</button>
-                </div>
-            </section>
-
-            <!-- GRID -->
-            <section id="gridView">
-                <div id="destGrid" aria-live="polite"></div>
-            </section>
-
-            <!-- DETAIL (dynamic) -->
-            <section id="detailView" aria-live="polite"></section>
-
-            <div style="height:40px"></div><!-- breathing room -->
-
-        </div>
-    </main>
-
-    <footer>
-        <div>© 2025 Travel-Smart — Built with care</div>
-    </footer>
-
-    <!-- jQuery (we use it) -->
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-
-    <!-- DYNAMIC JSON + JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        /* ===========================
-           DESTINATIONS DATA (JSON)
-           Add / edit entries here
-           =========================== */
-        const DESTINATIONS = [
-            {
-                id: "paris",
-                title: "Paris, France",
-                subtitle: "City of lights, art & cuisine.",
-                cardImage: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=1400&auto=format&fit=crop",
-                heroImage: "https://images.unsplash.com/photo-1488747279002-c8523379faaa?q=80&w=1800&auto=format&fit=crop",
-                gallery: [
-                    "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=1200&auto=format&fit=crop",
-                    "https://images.unsplash.com/photo-1543340713-1f9c17d86d9f?q=80&w=1200&auto=format&fit=crop",
-                    "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?q=80&w=1200&auto=format&fit=crop"
-                ],
-                places: [
-                    { name: "Eiffel Tower", img: "https://images.unsplash.com/photo-1529429614939-4ee3aa2d7c87?q=80&w=1200&auto=format&fit=crop", desc: "Iconic tower with panoramic city views." },
-                    { name: "Louvre Museum", img: "https://images.unsplash.com/photo-1549893070-1f0e7f8a2f0b?q=80&w=1200&auto=format&fit=crop", desc: "World’s largest art museum." },
-                    { name: "Notre Dame", img: "https://images.unsplash.com/photo-1508057198894-247b23fe5ade?q=80&w=1200&auto=format&fit=crop", desc: "Gothic cathedral in the city's heart." }
-                ],
-                special: { text: "Famous for its cuisine, fashion, and timeless romantic ambiance." },
-                famous: [
-                    { name: "Montmartre", img: "https://images.unsplash.com/photo-1508057198894-247b23fe5ade?q=80&w=1200&auto=format&fit=crop", desc: "Bohemian quarter with art and Sacré-Cœur." },
-                    { name: "Seine River", img: "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?q=80&w=1200&auto=format&fit=crop", desc: "Scenic cruises and riverside strolls." }
-                ],
-                history: "Founded in the 3rd century BC and a center of culture, art and commerce across centuries.",
-                avoid: "Avoid tourist traps and be mindful of pickpockets in crowded areas."
-            },
-            {
-                id: "bali",
-                title: "Bali, Indonesia",
-                subtitle: "Temples, rice terraces & surf.",
-                cardImage: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1400&auto=format&fit=crop",
-                heroImage: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1800&auto=format&fit=crop",
-                gallery: [
-                    "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1200&auto=format&fit=crop",
-                    "https://images.unsplash.com/photo-1482192596544-9eb78a3a3d88?q=80&w=1200&auto=format&fit=crop"
-                ],
-                places: [
-                    { name: "Ubud Rice Terraces", img: "https://images.unsplash.com/photo-1482192596544-9eb78a3a3d88?q=80&w=1200&auto=format&fit=crop", desc: "Terraced rice paddies and cultural heart." },
-                    { name: "Uluwatu Temple", img: "https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=1200&auto=format&fit=crop", desc: "Clifftop temple with sunset views." }
-                ],
-                special: { text: "Amazing surf, cultural rituals and warm hospitality." },
-                famous: [
-                    { name: "Kuta Beach", img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1200&auto=format&fit=crop", desc: "Popular surf and sunset spot." }
-                ],
-                history: "Bali has an ancient Hindu culture expressed through temples, ceremonies and arts.",
-                avoid: "Respect temple dress codes and be cautious at surf beaches with strong currents."
-            },
-            {
-                id: "tokyo",
-                title: "Tokyo, Japan",
-                subtitle: "Neon metropolis & serene temples.",
-                cardImage: "https://images.unsplash.com/photo-1549692520-acc6669e2f0c?q=80&w=1400&auto=format&fit=crop",
-                heroImage: "https://images.unsplash.com/photo-1549692520-acc6669e2f0c?q=80&w=1800&auto=format&fit=crop",
-                gallery: [
-                    "https://images.unsplash.com/photo-1549692520-acc6669e2f0c?q=80&w=1200&auto=format&fit=crop",
-                    "https://images.unsplash.com/photo-1504788363416-9f0e2db2b5a3?q=80&w=1200&auto=format&fit=crop"
-                ],
-                places: [
-                    { name: "Shibuya Crossing", img: "https://images.unsplash.com/photo-1549692520-acc6669e2f0c?q=80&w=1200&auto=format&fit=crop", desc: "Famous neon intersection and nightlife." },
-                    { name: "Senso-ji", img: "https://images.unsplash.com/photo-1504788363416-9f0e2db2b5a3?q=80&w=1200&auto=format&fit=crop", desc: "Ancient temple in Asakusa." }
-                ],
-                special: { text: "Unmatched food culture, precision and polite hospitality." },
-                famous: [{ name: "Akihabara", img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1200&auto=format&fit=crop", desc: "Electronics and anime district." }],
-                history: "Tokyo evolved from Edo and modernized swiftly after Meiji era.",
-                avoid: "Rush hour trains are extremely busy — avoid peak times and queue politely."
+        $(document).ready(function () {
+            // JSON DATA
+            const countries = [
+                {
+                    name: "France",
+                    text: "The land of art, romance, and fine wine.",
+                    color: "#252E33",
+                    image: "images/paris.webp",
+                    details: {
+                        places: ["Eiffel Tower", "Louvre Museum"],
+                        cuisine: ["Croissants", "Baguette"],
+                        spots: ["Seine River", "Montmartre"],
+                        todo: ["Visit museums", "Enjoy cafes"],
+                        history: "France has influenced art, philosophy, and politics for centuries.",
+                        avoid: "Avoid peak tourist hours around main landmarks."
+                    }
+                },
+                {
+                    name: "Japan",
+                    text: "A fusion of tradition and futuristic innovation.",
+                    color: "#2A86BA",
+                    image: "images/tokyo.jpg",
+                    details: {
+                        places: ["Tokyo Tower", "Mount Fuji"],
+                        cuisine: ["Sushi", "Ramen"],
+                        spots: ["Shibuya Crossing", "Akihabara"],
+                        todo: ["Temple visits", "Night markets"],
+                        history: "Japan's history is rich with samurai, art, and technology.",
+                        avoid: "Avoid rush hours in subways."
+                    }
+                },
+                {
+                    name: "Italy",
+                    text: "Where every corner whispers history and style.",
+                    color: "#FD3555",
+                    image: "images/rome.jfif",
+                    details: {
+                        places: ["Colosseum", "Venice Canals"],
+                        cuisine: ["Pizza", "Pasta"],
+                        spots: ["Amalfi Coast", "Florence"],
+                        todo: ["Sightseeing", "Cultural tours"],
+                        history: "Italy birthed Renaissance art and architecture.",
+                        avoid: "Avoid tourist scams near famous landmarks."
+                    }
+                }
+            ];
+
+            // Populate Slider
+            const leftSlide = $("#leftSlide");
+            const rightSlide = $("#rightSlide");
+            const totalSlides = countries.length;
+
+            countries.forEach((country, index) => {
+                leftSlide.append(`
+      <div style="background-color:${country.color}">
+        <h1>${country.name}</h1>
+        <p>${country.text}</p>
+        <button class="explore-btn" data-index="${index}">Explore More</button>
+      </div>
+    `);
+                rightSlide.append(`
+      <div style="background-image:url('${country.image}')"></div>
+    `);
+            });
+
+            leftSlide.css("top", `-${(totalSlides - 1) * 100}vh`);
+
+            let activeSlideIndex = 0;
+            const sliderHeight = $(".slider-container").height();
+
+            function changeSlide(direction) {
+                if (direction === "up") {
+                    activeSlideIndex = (activeSlideIndex + 1) % totalSlides;
+                } else if (direction === "down") {
+                    activeSlideIndex = (activeSlideIndex - 1 + totalSlides) % totalSlides;
+                }
+
+                rightSlide.css("transform", `translateY(-${activeSlideIndex * sliderHeight}px)`);
+                leftSlide.css("transform", `translateY(${activeSlideIndex * sliderHeight}px)`);
             }
-        ];
 
-        /* ===========================
-           Utility & Render Helpers
-           =========================== */
-        function esc(s) { return String(s || '').replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;'); }
+            $(".up-button").on("click", () => changeSlide("up"));
+            $(".down-button").on("click", () => changeSlide("down"));
 
-        // Render grid
-        function renderGrid() {
-            const $grid = $("#destGrid");
-            $grid.empty();
-            DESTINATIONS.forEach((d, i) => {
-                const html = `
-          <article class="place-card fade-up" data-id="${esc(d.id)}" aria-label="${esc(d.title)}" style="animation-delay:${i * 80}ms">
-            <div class="place-image" role="img" aria-hidden="true">
-              <img src="${esc(d.cardImage)}" alt="${esc(d.title)}">
-              <div class="badge">${esc(d.title)}</div>
-            </div>
-            <div class="place-body">
-              <h3>${esc(d.title)}</h3>
-              <p>${esc(d.subtitle)}</p>
-              <div class="place-meta">
-                <button class="btn-outline view-details" data-id="${esc(d.id)}">View Details</button>
-                <div style="opacity:.9; font-size:.92rem">${(d.places || []).length} places</div>
-              </div>
-            </div>
-          </article>
-        `;
-                $grid.append(html);
+            // Explore More button -> Dynamic Detail Page
+            $(document).on("click", ".explore-btn", function () {
+                const index = $(this).data("index");
+                const country = countries[index];
+                renderDetailPage(country);
             });
 
-            // fade-up entrance
-            $(".fade-up").css({ opacity: 0, transform: "translateY(18px)" }).each(function (i) {
-                $(this).delay(i * 90).animate({ opacity: 1 }, { duration: 420, complete: function () { $(this).css("transform", "none"); } });
-                setTimeout(() => $(this).css("transform", "none"), 400 + i * 90);
+            // Render Detail Page
+            function renderDetailPage(country) {
+                $(".slider-container").fadeOut(400, function () {
+                    $("#detailPage")
+                        .html(`
+          <button class="back-btn"><i class="fas fa-arrow-left"></i> Back</button>
+          <div class="detail-hero">
+            <img src="${country.image}" alt="${country.name}">
+            <h1>${country.name}</h1>
+          </div>
+          ${renderSection("Places to Visit", country.details.places)}
+          ${renderSection("Famous Cuisine", country.details.cuisine)}
+          ${renderSection("Famous Spots", country.details.spots)}
+          ${renderSection("Things To Do", country.details.todo)}
+          ${renderParagraph("History", country.details.history)}
+          ${renderParagraph("Things To Avoid", country.details.avoid)}
+        `)
+                        .fadeIn(500);
+                });
+            }
+
+            function renderSection(title, items) {
+                return `
+      <div class="section">
+        <h3>${title}</h3>
+        <p>${items.join(", ")}</p>
+      </div>
+    `;
+            }
+
+            function renderParagraph(title, text) {
+                return `
+      <div class="section">
+        <h3>${title}</h3>
+        <p>${text}</p>
+      </div>
+    `;
+            }
+
+            $(document).on("click", ".back-btn", function () {
+                $("#detailPage").fadeOut(400, function () {
+                    $(".slider-container").fadeIn(500);
+                });
             });
-        }
-
-        // open detail view
-        function openDetail(id) {
-            const dest = DESTINATIONS.find(x => x.id === id);
-            if (!dest) return;
-            const $detail = $("#detailView");
-
-            // hero
-            const hero = `
-        <div class="detail-hero">
-          <img src="${esc(dest.heroImage)}" alt="${esc(dest.title)}">
-          <div class="hero-overlay">
-            <h2>${esc(dest.title)}</h2>
-            <p>${esc(dest.subtitle)}</p>
-            <div style="margin-top:10px;">
-              <button class="btn-outline" id="planBtn">Plan Trip</button>
-            </div>
-          </div>
-        </div>
-      `;
-
-            // gallery
-            const galleryHtml = `<div class="gallery">${(dest.gallery || []).map(g => `<img src="${esc(g)}" alt="${esc(dest.title)}">`).join('')}</div>`;
-
-            // places grid
-            const placesHtml = `
-        <div>
-          <h3 style="margin-bottom:12px; color:var(--accent2);">Places to Visit</h3>
-          <div class="grid-cards">
-            ${(dest.places || []).map(p => `
-              <article class="info-card detail-card">
-                <img src="${esc(p.img)}" alt="${esc(p.name)}" style="width:100%; height:140px; object-fit:cover; border-radius:8px; margin-bottom:10px;">
-                <h4 style="margin:0 0 6px 0; color:var(--accent3)">${esc(p.name)}</h4>
-                <p style="margin:0;color:rgba(255,255,255,0.9)">${esc(p.desc)}</p>
-              </article>
-            `).join('')}
-          </div>
-        </div>
-      `;
-
-            // special
-            const specialHtml = `
-        <div class="special-card">
-          <div class="special-ribbon">Highlight</div>
-          <div style="padding-left:80px;">
-            <h4 style="margin:0 0 6px 0; color:var(--accent1)">What's Special</h4>
-            <p style="margin:0;color:rgba(255,255,255,0.95)">${esc(dest.special?.text || "")}</p>
-          </div>
-        </div>
-      `;
-
-            // famous
-            const famousHtml = `
-        <div>
-          <h3 style="margin-bottom:12px; color:var(--accent2);">Famous Spots</h3>
-          <div class="grid-cards">
-            ${(dest.famous || []).map(f => `
-              <article class="info-card detail-card">
-                <img src="${esc(f.img)}" alt="${esc(f.name)}" style="width:100%; height:140px; object-fit:cover; border-radius:8px; margin-bottom:10px;">
-                <h4 style="margin:0 0 6px 0; color:var(--accent3)">${esc(f.name)}</h4>
-                <p style="margin:0;color:rgba(255,255,255,0.9)">${esc(f.desc)}</p>
-              </article>
-            `).join('')}
-          </div>
-        </div>
-      `;
-
-            // history & avoid
-            const historyHtml = `
-        <div class="info-block">
-          <h3>History</h3>
-          <p style="margin:0;color:rgba(255,255,255,0.95)">${esc(dest.history || "")}</p>
-        </div>
-      `;
-            const avoidHtml = `
-        <div class="info-block">
-          <h3>What to Avoid</h3>
-          <p style="margin:0;color:rgba(255,255,255,0.95)">${esc(dest.avoid || "")}</p>
-        </div>
-      `;
-
-            // compose
-            const composed = `
-        <div style="display:flex; justify-content:space-between; gap:20px; align-items:flex-start; margin-bottom:12px;">
-          <button class="btn-outline" id="backBtn">← Back to destinations</button>
-        </div>
-        ${hero}
-        ${galleryHtml}
-        ${placesHtml}
-        ${specialHtml}
-        ${famousHtml}
-        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px; margin-top:12px;">
-          ${historyHtml}
-          ${avoidHtml}
-        </div>
-        <div style="height:20px;"></div>
-      `;
-
-            $detail.html(composed);
-
-            // switch views
-            $("#gridView").hide();
-            $detail.show();
-            window.scrollTo({ top: 0, behavior: "smooth" });
-        }
-
-        // back to grid
-        function backToGrid() { $("#detailView").hide(); $("#gridView").show(); window.scrollTo({ top: 0, behavior: "smooth" }); }
-
-        // init
-        $(function () {
-            renderGrid();
-
-            // delegate clicks
-            $(document).on("click", ".view-details", function (e) {
-                const id = $(this).attr("data-id");
-                openDetail(id);
-            });
-            $(document).on("click", ".place-card", function (e) {
-                // if clicked anywhere on card, open detail
-                // but ignore clicks that are on buttons inside card
-                if ($(e.target).closest('.btn-outline').length) return;
-                const id = $(this).attr("data-id");
-                openDetail(id);
-            });
-
-            // back btn
-            $(document).on("click", "#backBtn", backToGrid);
-            $(document).on("click", "#viewAllBtn", function () { backToGrid(); });
-
-            // esc closes detail
-            $(document).on("keydown", function (e) { if (e.key === "Escape" && $("#detailView").is(":visible")) backToGrid(); });
         });
+
     </script>
 </body>
 

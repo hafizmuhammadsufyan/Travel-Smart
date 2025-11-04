@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TravelSmart — Full Screen Cinematic Slider</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --background: #252432;
+            --accent1: #fb8b24;
+            --accent2: #d90368;
+            --accent3: #820263;
+            --text-light: #ffffff;
+            --text-dark: #0a0a0a;
+            --overlay-darkness: rgba(0, 0, 0, 0.45);
+            --primary1: #fb8b24;
+            --primary2: #d90368;
+            --primary3: #820263;
+            --text-dark: #111827;
+            --muted: #6b7280;
+            --card-radius: 18px;
+            /* darker overlay for text visibility */
+            --icon-size: 24px;
+            --scale: 1;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body,
+        html {
+            width: 100%;
+            height: 100%;
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .slider-wrapper {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            transition: background 1s ease-in-out;
+        }
+
+        .slider-bg {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            filter: blur(14px) brightness(0.6);
+            transition: all 1s ease-in-out;
+            z-index: 1;
+        }
+
+        .slider-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.35);
+            z-index: 2;
+        }
+
+        /* IMAGE CENTER */
+        .slider-image {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 80%;
+            height: 80%;
+            transform: translate(-50%, -50%) scale(1.1);
+            overflow: hidden;
+            z-index: 3;
+            opacity: 0;
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        .slider-image.show {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .slider-image img {
+            width: 100%;
+            height: 100%;
+            border-radius: 25px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.6s ease;
+        }
+
+        /* CARD CENTER */
+        .slider-card {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, 200px);
+            width: 70%;
+            max-width: 900px;
+            padding: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(8px);
+            border-radius: 25px;
+            box-shadow: 7px 5px 15px 3px rgb(65, 64, 64);
+            color: #fff;
+            text-align: center;
+            z-index: 4;
+            opacity: 0;
+            transition: transform 0.8s cubic-bezier(.22, .9, .36, 1), opacity 0.8s ease;
+        }
+
+        .slider-card.show {
+            opacity: 1;
+            transform: translate(-50%, -50%);
+        }
+
+        .slide-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: #fb8b24;
+            margin-bottom: 20px;
+        }
+
+        .slide-sub {
+            font-size: 1.3rem;
+            line-height: 1.5;
+            margin-bottom: 30px;
+        }
+
+        .btn-explore {
+            padding: 15px 25px;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(90deg, var(--accent2), var(--accent3));
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .btn-explore::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(120deg, var(--accent1), var(--accent2), var(--accent3));
+            opacity: 0.3;
+            transition: all 0.4s ease;
+            transform: rotate(45deg) scale(0);
+            z-index: -1;
+        }
+
+        .btn-explore:hover::before {
+            transform: rotate(45deg) scale(1);
+            opacity: 0.8;
+        }
+
+
+        .btn-explore:hover {
+            transform: scale(1.05) translateY(-4px);
+            background: linear-gradient(90deg, var(--accent1), var(--accent2), var(--accent3));
+
+            box-shadow: 0 25px 60px rgba(251, 139, 36, 0.5);
+        }
+
+        /* CONTROLS CENTER */
+        .slider-controls {
+            position: absolute;
+            bottom: -2%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            gap: 8px;
+            z-index: 5;
+        }
+
+        .slider-controls button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 14px;
+            background: linear-gradient(120deg, var(--accent1), var(--accent2), var(--accent3));
+            color: #fff;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .slider-controls button:hover {
+            background: linear-gradient(90deg, var(--accent1), var(--accent2), var(--accent3));
+
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="slider-wrapper" id="sliderWrapper">
+        <div class="slider-bg" id="sliderBg"></div>
+        <div class="slider-overlay"></div>
+
+        <div class="slider-image" id="slideImage"><img src="" alt=""></div>
+
+        <div class="slider-card" id="slideCard">
+            <div class="slide-title" id="slideTitle"></div>
+            <div class="slide-sub" id="slideSub"></div>
+            <button class="btn-explore">Explore More</button>
+        </div>
+
+        <div class="slider-controls">
+            <button id="prevBtn"><i class="fa-solid fa-arrow-up"></i></button>
+            <button id="nextBtn"><i class="fa-solid fa-arrow-down"></i></button>
+        </div>
+    </div>
+
+    <script>
+        const slides = [
+            { name: "Paris", sub: "The land of art, romance, and fine wine.", img: "images/paris.webp", color: "#252E33" },
+            { name: "Japan", sub: "A fusion of ancient traditions and futuristic innovation.", img: "images/tokyo.jpg", color: "#2A86BA" },
+            { name: "Italy", sub: "Where every corner whispers history, art and flavor.", img: "images/rome.jfif", color: "#FD3555" }
+        ];
+
+        let current = 0;
+        const wrapper = document.getElementById('sliderWrapper'),
+            bg = document.getElementById('sliderBg'),
+            card = document.getElementById('slideCard'),
+            image = document.getElementById('slideImage'),
+            title = document.getElementById('slideTitle'),
+            sub = document.getElementById('slideSub'),
+            imgTag = image.querySelector('img');
+
+        function showSlide(idx) {
+            const s = slides[idx];
+            wrapper.style.background = s.color;
+            bg.style.backgroundImage = `url('${s.img}')`;
+
+            // fade out current
+            image.classList.remove('show');
+            card.classList.remove('show');
+            card.style.transform = 'translate(-50%,200px)';
+
+            setTimeout(() => {
+                title.textContent = s.name;
+                sub.textContent = s.sub;
+                imgTag.src = s.img;
+
+                // fade in with animation
+                requestAnimationFrame(() => {
+                    image.classList.add('show');
+                    card.classList.add('show');
+                    card.style.transform = 'translate(-50%,-50%)';
+                });
+            }, 200);
+        }
+
+        document.getElementById('nextBtn').addEventListener('click', () => {
+            current = (current + 1) % slides.length;
+            showSlide(current);
+        });
+        document.getElementById('prevBtn').addEventListener('click', () => {
+            current = (current - 1 + slides.length) % slides.length;
+            showSlide(current);
+        });
+
+        // initial
+        showSlide(current);
+    </script>
+
+</body>
+
+</html>

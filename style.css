@@ -349,8 +349,7 @@ nav.scrolled .nav-right i:hover {
     border-radius: 10px;
     font-weight: bold;
     box-shadow: 5px 3px 7px 2px #505050;
-    ;
-    background-color: #ff3996;
+    background: linear-gradient(120deg, var(--accent1), var(--accent2), var(--accent3));
     color: white;
     cursor: pointer;
     opacity: 0;
@@ -1255,7 +1254,7 @@ footer {
 
 .footer-newsletter button {
     padding: 10px 20px;
-    background: var(--accent2);
+    background: linear-gradient(120deg, var(--accent1), var(--accent2), var(--accent3));
     color: var(--text-light);
     border: none;
     border-radius: 8px;
@@ -1264,11 +1263,18 @@ footer {
     transition: all 0.3s ease;
 }
 
-.footer-newsletter button:hover {
-    background: var(--accent1);
-    color: #fff;
-    box-shadow: 0 0 10px var(--accent1), 0 0 20px var(--accent2);
+.footer-newsletter button:hover::before {
+    transform: rotate(45deg) scale(1);
+    opacity: 0.8;
 }
+
+.footer-newsletter button:hover {
+    background: linear-gradient(90deg, var(--accent1), var(--accent2), var(--accent3));
+    color: #fff;
+    transform: scale(1.1);
+}
+
+
 
 /* Footer Bottom */
 .footer-bottom {

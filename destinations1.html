@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TravelSmart — Destinations</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --accent1: #fb8b24;
+            --accent2: #d90368;
+            --accent3: #820263;
+            --text-light: #fff;
+            --text-dark: #111827;
+            --muted: #6b7280;
+            --ribbon-color: #fb8b24;
+            --card-radius: 18px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body,
+        html {
+            width: 100%;
+            height: 100%;
+            font-family: 'Poppins', sans-serif;
+            background: #252432;
+            color: var(--text-light);
+            overflow-x: hidden;
+        }
+
+        /* ------------------ SLIDER ------------------ */
+        .slider-wrapper {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            transition: background 1s ease-in-out;
+        }
+
+        .slider-bg {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            filter: blur(14px) brightness(0.6);
+            transition: all 1s ease-in-out;
+            z-index: 1;
+        }
+
+        .slider-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.35);
+            z-index: 2;
+        }
+
+        .slider-image {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 80%;
+            height: 80%;
+            transform: translate(-50%, -50%) scale(1.1);
+            overflow: hidden;
+            z-index: 3;
+            opacity: 0;
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        .slider-image.show {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .slider-image img {
+            width: 100%;
+            height: 100%;
+            border-radius: 25px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.6s ease;
+        }
+
+        .slider-card {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, 200px);
+            width: 70%;
+            max-width: 900px;
+            padding: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(8px);
+            border-radius: 25px;
+            box-shadow: 7px 5px 15px 3px rgb(65, 64, 64);
+            color: #fff;
+            text-align: center;
+            z-index: 4;
+            opacity: 0;
+            transition: transform 0.8s cubic-bezier(.22, .9, .36, 1), opacity 0.8s ease;
+        }
+
+        .slider-card.show {
+            opacity: 1;
+            transform: translate(-50%, -50%);
+        }
+
+        .slide-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--accent1);
+            margin-bottom: 20px;
+        }
+
+        .slide-sub {
+            font-size: 1.3rem;
+            line-height: 1.5;
+            margin-bottom: 30px;
+        }
+
+        .btn-explore {
+            padding: 15px 25px;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(90deg, var(--accent2), var(--accent3));
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .btn-explore:hover {
+            transform: scale(1.05) translateY(-4px);
+            box-shadow: 0 25px 60px rgba(251, 139, 36, 0.5);
+        }
+
+        .slider-controls {
+            position: absolute;
+            bottom: -2%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            gap: 8px;
+            z-index: 5;
+        }
+
+        .slider-controls button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 14px;
+            background: linear-gradient(120deg, var(--accent1), var(--accent2), var(--accent3));
+            color: #fff;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .slider-controls button:hover {
+            transform: scale(1.05);
+        }
+
+        /* ------------------ DETAIL PAGE ------------------ */
+        .detail-wrap {
+            position: fixed;
+            inset: 0;
+            background: #f3f4f6;
+            overflow-y: auto;
+            transform: translateY(120%);
+            transition: transform 0.8s cubic-bezier(.22, .9, .36, 1);
+            z-index: 200;
+        }
+
+        .detail-wrap.open {
+            transform: translateY(0);
+        }
+
+        .detail-inner {
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 30px;
+        }
+
+        .detail-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .detail-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--accent3);
+        }
+
+        .detail-back {
+            padding: 12px 18px;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            font-weight: 700;
+            background: var(--accent1);
+            color: #fff;
+            transition: all 0.3s ease;
+        }
+
+        .detail-back:hover {
+            background: var(--accent2);
+        }
+
+        .section-head {
+            font-size: 1.8rem;
+            color: var(--accent2);
+            margin-bottom: 16px;
+            font-weight: 800;
+            border-bottom: 2px solid var(--accent1);
+            padding-bottom: 6px;
+            margin-top: 40px;
+        }
+
+        /* Type 1 cards: 3 per row */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: #fff;
+            color: var(--text-dark);
+            border-radius: var(--card-radius);
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(16, 24, 40, 0.06);
+            transform: translateY(30px);
+            opacity: 0;
+            transition: transform 0.5s ease, opacity 0.5s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .card-body {
+            padding: 16px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-title {
+            font-weight: 700;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .card-text {
+            font-size: 0.95rem;
+            color: var(--muted);
+            margin-bottom: auto;
+        }
+
+        .card-button {
+            margin-top: 12px;
+            padding: 10px 16px;
+            border: none;
+            border-radius: 8px;
+            background: var(--accent3);
+            color: #fff;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .card-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Type 2 cards: full-width with ribbon */
+        .full-card {
+            background: #fff;
+            color: var(--text-dark);
+            border-radius: var(--card-radius);
+            padding: 24px 28px;
+            margin: 20px auto;
+            width: 80%;
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            gap: 20px;
+            transform: translateX(-50px);
+            opacity: 0;
+            transition: transform 0.6s ease, opacity 0.6s ease;
+            position: relative;
+        }
+
+        .full-card.show {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .full-card::before {
+            content: '';
+            width: 8px;
+            background: var(--ribbon-color);
+            height: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+            border-radius: 8px 0 0 8px;
+        }
+
+        .full-card-content {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .full-card-title {
+            font-weight: 700;
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--accent3);
+        }
+
+        .full-card-text {
+            font-size: 1rem;
+            color: var(--muted);
+            line-height: 1.5;
+        }
+
+        .full-card:hover {
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+            transform: translateX(0) scale(1.02);
+            transition: 0.3s ease;
+        }
+
+        /* Responsive */
+        @media(max-width:900px) {
+            .slider-card {
+                width: 90%;
+                padding: 30px;
+            }
+
+            .slider-image {
+                width: 90%;
+                height: 70%;
+            }
+
+            .full-card {
+                width: 95%;
+                flex-direction: column;
+            }
+
+            .full-card::before {
+                width: 100%;
+                height: 6px;
+                border-radius: 6px 6px 0 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ------------------ SLIDER ------------------ -->
+    <div class="slider-wrapper" id="sliderWrapper">
+        <div class="slider-bg" id="sliderBg"></div>
+        <div class="slider-overlay"></div>
+        <div class="slider-image" id="slideImage"><img src="" alt=""></div>
+        <div class="slider-card" id="slideCard">
+            <div class="slide-title" id="slideTitle"></div>
+            <div class="slide-sub" id="slideSub"></div>
+            <button class="btn-explore" id="exploreBtn">Explore More</button>
+        </div>
+        <div class="slider-controls">
+            <button id="prevBtn"><i class="fa-solid fa-arrow-up"></i></button>
+            <button id="nextBtn"><i class="fa-solid fa-arrow-down"></i></button>
+        </div>
+    </div>
+
+    <!-- ------------------ DETAIL PAGE ------------------ -->
+    <div class="detail-wrap" id="detailPage">
+        <div class="detail-inner" id="detailInner">
+            <div class="detail-header">
+                <h2 class="detail-title" id="detailTitle"></h2>
+                <button class="detail-back" id="backBtn">Back</button>
+            </div>
+            <div id="detailContent"></div>
+        </div>
+    </div>
+
+    <script>
+        // ------------------ SLIDER ------------------
+        const slides = [
+            { name: "Paris", sub: "The land of art, romance, and fine wine.", img: "images/paris.webp", color: "#252E33" },
+            { name: "Japan", sub: "A fusion of ancient traditions and futuristic innovation.", img: "images/tokyo.jpg", color: "#2A86BA" },
+            { name: "Italy", sub: "Where every corner whispers history, art and flavor.", img: "images/rome.jfif", color: "#FD3555" },
+            { name: "New York", sub: "The city that never sleeps, bustling with energy.", img: "images/newyork.jpg", color: "#1C1C1C" },
+            { name: "London", sub: "Historic landmarks meet modern vibes along the Thames.", img: "images/london.jpg", color: "#2E2B3C" },
+            { name: "Dubai", sub: "Futuristic skyline and luxury like nowhere else.", img: "images/dubai.jpg", color: "#D4AF37" },
+            { name: "Sydney", sub: "Harbour city with iconic Opera House and beaches.", img: "images/sydney.jpg", color: "#0077B6" },
+            { name: "Rio de Janeiro", sub: "Vibrant culture, carnival, and breathtaking landscapes.", img: "images/rio.jpg", color: "#FF6F61" },
+            { name: "Istanbul", sub: "A magical blend of Asia and Europe with rich history.", img: "images/istanbul.jpg", color: "#8B4513" },
+            { name: "Cairo", sub: "Ancient wonders, pyramids, and the life-giving Nile.", img: "images/cairo.jpg", color: "#A0522D" },
+            { name: "Barcelona", sub: "Architectural masterpieces meet sunny Mediterranean vibes.", img: "images/barcelona.jpg", color: "#FF4500" },
+            { name: "Bangkok", sub: "Bustling markets, temples, and delicious street food.", img: "images/bangkok.jpg", color: "#006400" },
+            { name: "Moscow", sub: "Grand architecture, Red Square, and rich Russian history.", img: "images/moscow.jpg", color: "#800000" },
+            { name: "Cape Town", sub: "Natural beauty with mountains, beaches, and vineyards.", img: "images/capetown.jpg", color: "#2E8B57" },
+            { name: "Santorini", sub: "Picturesque white buildings and stunning sunsets.", img: "images/santorini.jpg", color: "#4682B4" }
+        ];
+
+        let current = 0;
+        const wrapper = document.getElementById('sliderWrapper'),
+            bg = document.getElementById('sliderBg'),
+            card = document.getElementById('slideCard'),
+            image = document.getElementById('slideImage'),
+            title = document.getElementById('slideTitle'),
+            sub = document.getElementById('slideSub'),
+            imgTag = image.querySelector('img'),
+            exploreBtn = document.getElementById('exploreBtn');
+        function showSlide(idx) {
+            const s = slides[idx];
+            wrapper.style.background = s.color;
+            bg.style.backgroundImage = `url('${s.img}')`;
+            image.classList.remove('show');
+            card.classList.remove('show');
+            card.style.transform = 'translate(-50%,200px)';
+            setTimeout(() => {
+                title.textContent = s.name;
+                sub.textContent = s.sub;
+                imgTag.src = s.img;
+                requestAnimationFrame(() => {
+                    image.classList.add('show');
+                    card.classList.add('show');
+                    card.style.transform = 'translate(-50%,-50%)';
+                });
+            }, 200);
+        }
+        document.getElementById('nextBtn').addEventListener('click', () => { current = (current + 1) % slides.length; showSlide(current); });
+        document.getElementById('prevBtn').addEventListener('click', () => { current = (current - 1 + slides.length) % slides.length; showSlide(current); });
+        showSlide(current);
+
+        // ------------------ DETAIL PAGE ------------------
+        const detailPage = document.getElementById('detailPage');
+        const detailInner = document.getElementById('detailInner');
+        const detailTitle = document.getElementById('detailTitle');
+        const detailContent = document.getElementById('detailContent');
+        const backBtn = document.getElementById('backBtn');
+
+        // JSON data
+        const detailData = {
+            "Paris": {
+                "places": [
+                    { img: "images/eiffel.jpg", title: "Eiffel Tower", desc: "Iconic tower in the heart of Paris." },
+                    { img: "images/louvre.jpg", title: "Louvre Museum", desc: "World's largest art museum." },
+                    { img: "images/notredame.jpg", title: "Notre-Dame Cathedral", desc: "Famous Gothic cathedral." }
+                ],
+                "cuisine": [
+                    { img: "images/croissant.jpg", title: "Croissant", desc: "Buttery, flaky, viennoiserie pastry." },
+                    { img: "images/escargot.jpg", title: "Escargot", desc: "Traditional French snail dish." },
+                    { img: "images/ratatouille.jpg", title: "Ratatouille", desc: "Classic vegetable stew." }
+                ],
+                "spots": [
+                    { img: "images/montmartre.jpg", title: "Montmartre", desc: "Historic hilltop district." },
+                    { img: "images/seine.jpg", title: "Seine River", desc: "Romantic river cruises." },
+                    { img: "images/champs.jpg", title: "Champs-Élysées", desc: "Famous avenue of Paris." }
+                ],
+                "todo": [
+                    "Walk around charming streets, visit museums, enjoy café culture.",
+                    "Take a Seine river evening cruise for a romantic view."
+                ],
+                "history": [
+                    "Paris has been a center of art, fashion, and culture for centuries.",
+                    "It grew from a small Roman city to one of the world's leading capitals."
+                ],
+                "avoid": [
+                    "Avoid tourist traps and overly crowded areas during peak season.",
+                    "Avoid visiting during public strikes for a smoother experience."
+                ]
+            },
+            "Japan": {
+                "places": [
+                    { img: "images/mtfuji.jpg", title: "Mount Fuji", desc: "Japan's tallest mountain and iconic landmark." },
+                    { img: "images/kinkakuji.jpg", title: "Kinkaku-ji", desc: "The famous Golden Pavilion in Kyoto." },
+                    { img: "images/shibuya.jpg", title: "Shibuya Crossing", desc: "World-famous bustling intersection." }
+                ],
+                "cuisine": [
+                    { img: "images/sushi.jpg", title: "Sushi", desc: "Fresh seafood delicacies with rice." },
+                    { img: "images/ramen.jpg", title: "Ramen", desc: "Hearty noodle soup with rich flavors." },
+                    { img: "images/tempura.jpg", title: "Tempura", desc: "Crispy fried seafood and vegetables." }
+                ],
+                "spots": [
+                    { img: "images/kyoto.jpg", title: "Kyoto Temples", desc: "Ancient temples and shrines." },
+                    { img: "images/tokyo.jpg", title: "Tokyo Tower", desc: "Iconic city observation tower." },
+                    { img: "images/osaka.jpg", title: "Osaka Castle", desc: "Historic castle with beautiful grounds." }
+                ],
+                "todo": [
+                    "Experience traditional tea ceremonies and hot springs.",
+                    "Visit bustling markets and modern shopping districts."
+                ],
+                "history": [
+                    "Japan has a rich history of samurais, shoguns, and emperors.",
+                    "It transitioned from isolation to a modern global powerhouse in the 19th century."
+                ],
+                "avoid": [
+                    "Avoid crowded tourist spots during holidays.",
+                    "Respect local customs and temple etiquette."
+                ]
+            },
+            "Italy": {
+                "places": [
+                    { img: "images/colosseum.jpg", title: "Colosseum", desc: "Ancient Roman amphitheater in Rome." },
+                    { img: "images/venice.jpg", title: "Venice Canals", desc: "Romantic gondola rides in historic Venice." },
+                    { img: "images/florence.jpg", title: "Florence Duomo", desc: "Iconic cathedral with stunning architecture." }
+                ],
+                "cuisine": [
+                    { img: "images/pizza.jpg", title: "Pizza", desc: "Classic Italian thin-crust pizza." },
+                    { img: "images/pasta.jpg", title: "Pasta", desc: "Variety of traditional pasta dishes." },
+                    { img: "images/tiramisu.jpg", title: "Tiramisu", desc: "Famous coffee-flavored dessert." }
+                ],
+                "spots": [
+                    { img: "images/leaningtower.jpg", title: "Leaning Tower of Pisa", desc: "Famous leaning bell tower." },
+                    { img: "images/trevi.jpg", title: "Trevi Fountain", desc: "Iconic Baroque fountain in Rome." },
+                    { img: "images/pompeii.jpg", title: "Pompeii Ruins", desc: "Ancient city preserved by volcanic ash." }
+                ],
+                "todo": [
+                    "Explore historic cities, museums, and art galleries.",
+                    "Enjoy wine tasting and local culinary tours."
+                ],
+                "history": [
+                    "Italy was the center of the Roman Empire.",
+                    "It has influenced art, architecture, and culture for centuries."
+                ],
+                "avoid": [
+                    "Avoid tourist traps near major landmarks.",
+                    "Be cautious of pickpockets in crowded areas."
+                ]
+            },
+            "New York": {
+                "places": [
+                    { img: "images/statue.jpg", title: "Statue of Liberty", desc: "Symbol of freedom and democracy." },
+                    { img: "images/centralpark.jpg", title: "Central Park", desc: "Urban park in the heart of the city." },
+                    { img: "images/timesquare.jpg", title: "Times Square", desc: "Bright lights and bustling nightlife." }
+                ],
+                "cuisine": [
+                    { img: "images/bagel.jpg", title: "Bagel", desc: "Classic New York breakfast treat." },
+                    { img: "images/cheesecake.jpg", title: "Cheesecake", desc: "Rich and creamy dessert." },
+                    { img: "images/pizza_ny.jpg", title: "New York Pizza", desc: "Thin-crust pizza slice." }
+                ],
+                "spots": [
+                    { img: "images/brooklyn.jpg", title: "Brooklyn Bridge", desc: "Historic bridge connecting boroughs." },
+                    { img: "images/moma.jpg", title: "MoMA", desc: "Museum of Modern Art." },
+                    { img: "images/empire.jpg", title: "Empire State Building", desc: "Iconic skyscraper with views." }
+                ],
+                "todo": [
+                    "Take a ferry to Statue of Liberty.",
+                    "Walk through Central Park and visit museums."
+                ],
+                "history": [
+                    "New York City has been a hub for immigration and commerce.",
+                    "It grew from a Dutch settlement to a global metropolis."
+                ],
+                "avoid": [
+                    "Avoid crowded tourist areas during peak hours.",
+                    "Be cautious in subway stations late at night."
+                ]
+            },
+            "London": {
+                "places": [
+                    { img: "images/buckingham.jpg", title: "Buckingham Palace", desc: "Royal residence of the British monarch." },
+                    { img: "images/bigtower.jpg", title: "Big Ben", desc: "Famous clock tower in Westminster." },
+                    { img: "images/londoneye.jpg", title: "London Eye", desc: "Giant observation wheel on the Thames." }
+                ],
+                "cuisine": [
+                    { img: "images/fishchips.jpg", title: "Fish & Chips", desc: "Classic British fried dish." },
+                    { img: "images/afternoontea.jpg", title: "Afternoon Tea", desc: "Traditional tea with pastries." },
+                    { img: "images/roast.jpg", title: "Sunday Roast", desc: "Hearty meal with meat and vegetables." }
+                ],
+                "spots": [
+                    { img: "images/towerbridge.jpg", title: "Tower Bridge", desc: "Iconic drawbridge over Thames." },
+                    { img: "images/stonehenge.jpg", title: "Stonehenge", desc: "Prehistoric monument nearby." },
+                    { img: "images/britishmuseum.jpg", title: "British Museum", desc: "World-famous museum with artifacts." }
+                ],
+                "todo": [
+                    "Ride the London Eye and explore the city by Thames.",
+                    "Visit historic landmarks and museums."
+                ],
+                "history": [
+                    "London has been an important city since Roman times.",
+                    "It became a center of trade, culture, and politics."
+                ],
+                "avoid": [
+                    "Avoid peak-hour traffic zones.",
+                    "Be mindful of pickpockets in tourist areas."
+                ]
+            },
+            "Sydney": {
+                "places": [
+                    { img: "images/operahouse.jpg", title: "Sydney Opera House", desc: "Famous performing arts venue." },
+                    { img: "images/harbourbridge.jpg", title: "Harbour Bridge", desc: "Iconic bridge in Sydney." },
+                    { img: "images/bondi.jpg", title: "Bondi Beach", desc: "Popular beach for surfing and sunbathing." }
+                ],
+                "cuisine": [
+                    { img: "images/meatpie.jpg", title: "Meat Pie", desc: "Savory Australian pastry." },
+                    { img: "images/barbecue.jpg", title: "Barbecue", desc: "Outdoor grilled specialties." },
+                    { img: "images/lamington.jpg", title: "Lamington", desc: "Coconut-coated sponge cake." }
+                ],
+                "spots": [
+                    { img: "images/darling.jpg", title: "Darling Harbour", desc: "Waterfront shopping and dining area." },
+                    { img: "images/royalbotanic.jpg", title: "Royal Botanic Garden", desc: "Beautiful gardens near Opera House." },
+                    { img: "images/taronga.jpg", title: "Taronga Zoo", desc: "Famous zoo with native wildlife." }
+                ],
+                "todo": [
+                    "Take a ferry across Sydney Harbour.",
+                    "Enjoy coastal walks and beaches."
+                ],
+                "history": [
+                    "Sydney is the oldest city in Australia.",
+                    "It grew from a penal colony to a vibrant metropolis."
+                ],
+                "avoid": [
+                    "Avoid crowded beaches on holidays.",
+                    "Sun protection is essential."
+                ]
+            },
+            "Dubai": {
+                "places": [
+                    { img: "images/burjkhalifa.jpg", title: "Burj Khalifa", desc: "Tallest building in the world." },
+                    { img: "images/palm.jpg", title: "Palm Jumeirah", desc: "Famous artificial archipelago." },
+                    { img: "images/burjalarab.jpg", title: "Burj Al Arab", desc: "Luxury sail-shaped hotel." }
+                ],
+                "cuisine": [
+                    { img: "images/lamb.jpg", title: "Lamb Kebab", desc: "Grilled spiced lamb." },
+                    { img: "images/shawarma.jpg", title: "Shawarma", desc: "Middle Eastern wrap." },
+                    { img: "images/dates.jpg", title: "Dates", desc: "Traditional sweet fruit." }
+                ],
+                "spots": [
+                    { img: "images/dubaimall.jpg", title: "Dubai Mall", desc: "World's largest shopping mall." },
+                    { img: "images/fountaindubai.jpg", title: "Dubai Fountain", desc: "Choreographed water show." },
+                    { img: "images/desert.jpg", title: "Desert Safari", desc: "Adventure in Arabian desert." }
+                ],
+                "todo": [
+                    "Experience desert safaris and dune bashing.",
+                    "Shop at luxury malls and souks."
+                ],
+                "history": [
+                    "Dubai transformed from fishing village to global city in decades.",
+                    "It has rich maritime and trade history."
+                ],
+                "avoid": [
+                    "Avoid peak summer months due to extreme heat.",
+                    "Follow local customs and dress modestly."
+                ]
+            },
+            "Germany": {
+                "places": [
+                    { img: "images/brandenburg.jpg", title: "Brandenburg Gate", desc: "Historic monument in Berlin." },
+                    { img: "images/neuschwanstein.jpg", title: "Neuschwanstein Castle", desc: "Fairytale castle in Bavaria." },
+                    { img: "images/berlinwall.jpg", title: "Berlin Wall", desc: "Historic Cold War landmark." }
+                ],
+                "cuisine": [
+                    { img: "images/bratwurst.jpg", title: "Bratwurst", desc: "Grilled German sausage." },
+                    { img: "images/sauerkraut.jpg", title: "Sauerkraut", desc: "Fermented cabbage dish." },
+                    { img: "images/pretzel.jpg", title: "Pretzel", desc: "Traditional baked snack." }
+                ],
+                "spots": [
+                    { img: "images/marienplatz.jpg", title: "Marienplatz", desc: "Central square in Munich." },
+                    { img: "images/blackforest.jpg", title: "Black Forest", desc: "Scenic forest region." },
+                    { img: "images/heidelberg.jpg", title: "Heidelberg Castle", desc: "Romantic historic castle." }
+                ],
+                "todo": [
+                    "Attend Oktoberfest and explore local breweries.",
+                    "Walk scenic trails and visit historic towns."
+                ],
+                "history": [
+                    "Germany has a rich medieval and modern history.",
+                    "It played a central role in European politics and culture."
+                ],
+                "avoid": [
+                    "Avoid busy tourist zones during festivals.",
+                    "Respect local rules and traffic."
+                ]
+            },
+            "Spain": {
+                "places": [
+                    { img: "images/sagrada.jpg", title: "Sagrada Familia", desc: "Antoni Gaudí's famous basilica." },
+                    { img: "images/parcguell.jpg", title: "Parc Güell", desc: "Colorful park in Barcelona." },
+                    { img: "images/alhambra.jpg", title: "Alhambra", desc: "Historic palace and fortress in Granada." }
+                ],
+                "cuisine": [
+                    { img: "images/paella.jpg", title: "Paella", desc: "Traditional rice dish with seafood." },
+                    { img: "images/tapas.jpg", title: "Tapas", desc: "Variety of small Spanish dishes." },
+                    { img: "images/churros.jpg", title: "Churros", desc: "Fried-dough pastry with chocolate." }
+                ],
+                "spots": [
+                    { img: "images/plaza.jpg", title: "Plaza Mayor", desc: "Historic square in Madrid." },
+                    { img: "images/bullring.jpg", title: "Bullring", desc: "Famous bullfighting arena." },
+                    { img: "images/camino.jpg", title: "Camino de Santiago", desc: "Pilgrimage route." }
+                ],
+                "todo": [
+                    "Experience flamenco performances and local festivals.",
+                    "Relax at beaches and explore historic towns."
+                ],
+                "history": [
+                    "Spain has a rich history of empires and exploration.",
+                    "It was a key player in European and global trade."
+                ],
+                "avoid": [
+                    "Avoid crowded tourist spots during summer.",
+                    "Be cautious during major festivals."
+                ]
+            },
+            "Thailand": {
+                "places": [
+                    { img: "images/bangkok.jpg", title: "Grand Palace", desc: "Historic palace in Bangkok." },
+                    { img: "images/phi.jpg", title: "Phi Phi Islands", desc: "Scenic tropical islands." },
+                    { img: "images/chiangmai.jpg", title: "Chiang Mai Temples", desc: "Ancient temples in northern Thailand." }
+                ],
+                "cuisine": [
+                    { img: "images/padthai.jpg", title: "Pad Thai", desc: "Stir-fried noodle dish." },
+                    { img: "images/tomyam.jpg", title: "Tom Yum Soup", desc: "Spicy and sour soup." },
+                    { img: "images/mango.jpg", title: "Mango Sticky Rice", desc: "Sweet dessert with coconut." }
+                ],
+                "spots": [
+                    { img: "images/floating.jpg", title: "Floating Markets", desc: "Traditional riverside markets." },
+                    { img: "images/ayutthaya.jpg", title: "Ayutthaya Ruins", desc: "Historic city ruins." },
+                    { img: "images/phi.jpg", title: "Phi Phi Viewpoints", desc: "Breathtaking island views." }
+                ],
+                "todo": [
+                    "Visit temples and floating markets.",
+                    "Enjoy beaches and island hopping tours."
+                ],
+                "history": [
+                    "Thailand has been a kingdom for centuries with rich traditions.",
+                    "It was never colonized, preserving unique culture."
+                ],
+                "avoid": [
+                    "Avoid scams targeting tourists.",
+                    "Respect temple dress codes."
+                ]
+            },
+            "Brazil": {
+                "places": [
+                    { img: "images/christ.jpg", title: "Christ the Redeemer", desc: "Famous statue overlooking Rio." },
+                    { img: "images/copacabana.jpg", title: "Copacabana Beach", desc: "Iconic beach in Rio de Janeiro." },
+                    { img: "images/iguazu.jpg", title: "Iguazu Falls", desc: "Spectacular waterfalls on the border." }
+                ],
+                "cuisine": [
+                    { img: "images/feijoada.jpg", title: "Feijoada", desc: "Traditional black bean stew." },
+                    { img: "images/pao.jpg", title: "Pão de Queijo", desc: "Cheese bread snack." },
+                    { img: "images/brigadeiro.jpg", title: "Brigadeiro", desc: "Chocolate truffle dessert." }
+                ],
+                "spots": [
+                    { img: "images/sugarloaf.jpg", title: "Sugarloaf Mountain", desc: "Famous granite peak." },
+                    { img: "images/maracana.jpg", title: "Maracanã Stadium", desc: "Historic football stadium." },
+                    { img: "images/lapa.jpg", title: "Lapa Arches", desc: "Famous Rio landmark." }
+                ],
+                "todo": [
+                    "Attend Carnival and local festivals.",
+                    "Explore beaches, mountains, and rainforests."
+                ],
+                "history": [
+                    "Brazil was colonized by Portugal and has a diverse culture.",
+                    "It has a rich history of indigenous and immigrant influences."
+                ],
+                "avoid": [
+                    "Avoid unsafe neighborhoods at night.",
+                    "Be cautious with belongings in crowded areas."
+                ]
+            },
+            "India": {
+                "places": [
+                    { img: "images/tajmahal.jpg", title: "Taj Mahal", desc: "Iconic white marble mausoleum in Agra." },
+                    { img: "images/jaipur.jpg", title: "Hawa Mahal", desc: "Palace of Winds in Jaipur." },
+                    { img: "images/kerala.jpg", title: "Backwaters of Kerala", desc: "Scenic canal network and houseboats." }
+                ],
+                "cuisine": [
+                    { img: "images/biryani.jpg", title: "Biryani", desc: "Spiced rice and meat dish." },
+                    { img: "images/samosa.jpg", title: "Samosa", desc: "Fried pastry with savory filling." },
+                    { img: "images/mango.jpg", title: "Mango Lassi", desc: "Refreshing yogurt-based drink." }
+                ],
+                "spots": [
+                    { img: "images/varanasi.jpg", title: "Varanasi Ghats", desc: "Historic riverfront steps along the Ganges." },
+                    { img: "images/goa.jpg", title: "Goa Beaches", desc: "Sunny beaches with vibrant nightlife." },
+                    { img: "images/leh.jpg", title: "Leh-Ladakh", desc: "Scenic mountainous region." }
+                ],
+                "todo": [
+                    "Explore historical forts and temples.",
+                    "Enjoy street food and local markets."
+                ],
+                "history": [
+                    "India has a rich and diverse cultural history spanning millennia.",
+                    "It was home to ancient civilizations and empires."
+                ],
+                "avoid": [
+                    "Avoid unsafe areas and follow local customs.",
+                    "Be cautious with food hygiene."
+                ]
+            },
+            "China": {
+                "places": [
+                    { img: "images/greatwall.jpg", title: "Great Wall", desc: "Ancient wall stretching across northern China." },
+                    { img: "images/forbidden.jpg", title: "Forbidden City", desc: "Imperial palace in Beijing." },
+                    { img: "images/terracotta.jpg", title: "Terracotta Army", desc: "Ancient clay warriors in Xi'an." }
+                ],
+                "cuisine": [
+                    { img: "images/dumplings.jpg", title: "Dumplings", desc: "Steamed or fried filled pockets." },
+                    { img: "images/pekingduck.jpg", title: "Peking Duck", desc: "Famous roasted duck dish." },
+                    { img: "images/noodles.jpg", title: "Noodles", desc: "Staple dish with regional variations." }
+                ],
+                "spots": [
+                    { img: "images/xi'an.jpg", title: "Xi'an City Wall", desc: "Ancient defensive wall." },
+                    { img: "images/shanghai.jpg", title: "The Bund", desc: "Waterfront area with skyline views." },
+                    { img: "images/zhangjiajie.jpg", title: "Zhangjiajie", desc: "Scenic sandstone pillars and mountains." }
+                ],
+                "todo": [
+                    "Visit ancient sites and modern skyscrapers.",
+                    "Experience local markets and street food."
+                ],
+                "history": [
+                    "China has one of the oldest continuous civilizations.",
+                    "It contributed greatly to science, art, and philosophy."
+                ],
+                "avoid": [
+                    "Avoid crowded tourist areas during holidays.",
+                    "Be mindful of local regulations."
+                ]
+            },
+            "Canada": {
+                "places": [
+                    { img: "images/niagara.jpg", title: "Niagara Falls", desc: "Famous waterfalls on the US-Canada border." },
+                    { img: "images/banff.jpg", title: "Banff National Park", desc: "Scenic mountainous park in Alberta." },
+                    { img: "images/cn.jpg", title: "CN Tower", desc: "Iconic observation tower in Toronto." }
+                ],
+                "cuisine": [
+                    { img: "images/poutine.jpg", title: "Poutine", desc: "Fries with cheese curds and gravy." },
+                    { img: "images/maplesyrup.jpg", title: "Maple Syrup", desc: "Sweet syrup from maple trees." },
+                    { img: "images/salmon.jpg", title: "Grilled Salmon", desc: "Fresh Atlantic salmon dish." }
+                ],
+                "spots": [
+                    { img: "images/ottawa.jpg", title: "Parliament Hill", desc: "Political center in Ottawa." },
+                    { img: "images/quebec.jpg", title: "Old Quebec", desc: "Historic district with French influence." },
+                    { img: "images/rockies.jpg", title: "Rocky Mountains", desc: "Majestic mountain range." }
+                ],
+                "todo": [
+                    "Explore national parks and urban landmarks.",
+                    "Enjoy winter sports in snowy regions."
+                ],
+                "history": [
+                    "Canada has a history of French and British colonization.",
+                    "It became a peaceful, diverse, and prosperous nation."
+                ],
+                "avoid": [
+                    "Avoid harsh weather conditions without preparation.",
+                    "Be cautious in remote areas."
+                ]
+            },
+            "Egypt": {
+                "places": [
+                    { img: "images/pyramids.jpg", title: "Pyramids of Giza", desc: "Ancient Egyptian pyramids." },
+                    { img: "images/luxor.jpg", title: "Luxor Temple", desc: "Ancient temple complex." },
+                    { img: "images/nile.jpg", title: "Nile River", desc: "Longest river in Africa." }
+                ],
+                "cuisine": [
+                    { img: "images/koshari.jpg", title: "Koshari", desc: "Traditional rice and lentil dish." },
+                    { img: "images/falafel.jpg", title: "Falafel", desc: "Fried chickpea balls." },
+                    { img: "images/taameya.jpg", title: "Taameya", desc: "Egyptian falafel version." }
+                ],
+                "spots": [
+                    { img: "images/temple.jpg", title: "Temple of Karnak", desc: "Ancient temple complex in Luxor." },
+                    { img: "images/abu.jpg", title: "Abu Simbel", desc: "Rock temples in Nubia." },
+                    { img: "images/cairo.jpg", title: "Cairo Citadel", desc: "Historic fortress with panoramic views." }
+                ],
+                "todo": [
+                    "Explore pyramids and temples.",
+                    "Cruise along the Nile."
+                ],
+                "history": [
+                    "Egypt is one of the oldest civilizations in the world.",
+                    "It was home to pharaohs, hieroglyphics, and monumental architecture."
+                ],
+                "avoid": [
+                    "Avoid unlicensed guides near tourist sites.",
+                    "Be careful in crowded areas."
+                ]
+            },
+            "Greece": {
+                "places": [
+                    { img: "images/acropolis.jpg", title: "Acropolis", desc: "Ancient citadel in Athens." },
+                    { img: "images/santorini.jpg", title: "Santorini", desc: "Iconic island with white buildings." },
+                    { img: "images/delphi.jpg", title: "Delphi", desc: "Ancient archaeological site." }
+                ],
+                "cuisine": [
+                    { img: "images/moussaka.jpg", title: "Moussaka", desc: "Layered eggplant and meat dish." },
+                    { img: "images/souvlaki.jpg", title: "Souvlaki", desc: "Grilled meat skewers." },
+                    { img: "images/greeksalad.jpg", title: "Greek Salad", desc: "Fresh vegetables with feta cheese." }
+                ],
+                "spots": [
+                    { img: "images/mykonos.jpg", title: "Mykonos", desc: "Vibrant island with nightlife." },
+                    { img: "images/crete.jpg", title: "Crete", desc: "Largest Greek island with history." },
+                    { img: "images/olympia.jpg", title: "Olympia", desc: "Birthplace of the Olympic Games." }
+                ],
+                "todo": [
+                    "Explore historic ruins and islands.",
+                    "Enjoy Mediterranean cuisine and beaches."
+                ],
+                "history": [
+                    "Greece is the cradle of Western civilization.",
+                    "It has contributed greatly to philosophy, democracy, and art."
+                ],
+                "avoid": [
+                    "Avoid crowded tourist spots in peak season.",
+                    "Respect local customs and sacred sites."
+                ]
+            },
+            "Russia": {
+                "places": [
+                    { img: "images/redsquare.jpg", title: "Red Square", desc: "Historic square in Moscow." },
+                    { img: "images/kremlin.jpg", title: "Kremlin", desc: "Political and historic complex." },
+                    { img: "images/stbasils.jpg", title: "St. Basil's Cathedral", desc: "Colorful iconic cathedral." }
+                ],
+                "cuisine": [
+                    { img: "images/borscht.jpg", title: "Borscht", desc: "Beetroot soup with vegetables." },
+                    { img: "images/pelmeni.jpg", title: "Pelmeni", desc: "Dumplings with meat filling." },
+                    { img: "images/blini.jpg", title: "Blini", desc: "Thin pancakes often with toppings." }
+                ],
+                "spots": [
+                    { img: "images/hermitage.jpg", title: "Hermitage Museum", desc: "Art and cultural museum in St. Petersburg." },
+                    { img: "images/transsib.jpg", title: "Trans-Siberian Railway", desc: "Famous long-distance railway journey." },
+                    { img: "images/sochi.jpg", title: "Sochi", desc: "Coastal resort city on the Black Sea." }
+                ],
+                "todo": [
+                    "Visit historic landmarks and museums.",
+                    "Experience winter activities in snowy regions."
+                ],
+                "history": [
+                    "Russia has a complex history with tsars, revolutions, and empires.",
+                    "It spans across Europe and Asia with diverse cultures."
+                ],
+                "avoid": [
+                    "Avoid political protests and unsafe areas.",
+                    "Be cautious in crowded tourist sites."
+                ]
+            }
+        };
+
+
+
+        exploreBtn.addEventListener('click', () => {
+            const s = slides[current];
+            const data = detailData[s.name];
+            if (!data) return;
+            detailTitle.textContent = s.name;
+            detailContent.innerHTML = "";
+
+            // Type 1: 3 cards per row
+            const sections1 = [{ title: "Places to Visit", items: data.places }, { title: "Famous Cuisine", items: data.cuisine }, { title: "Famous Spots", items: data.spots }];
+            sections1.forEach(section => {
+                const sec = document.createElement('div');
+                sec.innerHTML = `<h3 class="section-head">${section.title}</h3>`;
+                const grid = document.createElement('div');
+                grid.className = 'cards-grid';
+                section.items.forEach(item => {
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    card.innerHTML = `<img src="${item.img}" alt=""><div class="card-body"><h4 class="card-title">${item.title}</h4><p class="card-text">${item.desc}</p><button class="card-button">Explore</button></div>`;
+                    grid.appendChild(card);
+                    setTimeout(() => card.classList.add('show'), 100);
+                });
+                sec.appendChild(grid);
+                detailContent.appendChild(sec);
+            });
+
+            // Type 2: full-width horizontal cards with ribbon (at least 2 per section)
+            const sections2 = [{ title: "Things to Do", items: data.todo }, { title: "History", items: data.history }, { title: "Things to Avoid", items: data.avoid }];
+            sections2.forEach(section => {
+                const secHead = document.createElement('h3'); secHead.className = 'section-head'; secHead.textContent = section.title; detailContent.appendChild(secHead);
+                section.items.forEach(text => {
+                    const card = document.createElement('div'); card.className = 'full-card';
+                    card.innerHTML = `<div class="full-card-content"><p class="full-card-text">${text}</p></div>`;
+                    detailContent.appendChild(card);
+                    setTimeout(() => card.classList.add('show'), 100);
+                });
+            });
+
+            detailPage.classList.add('open');
+        });
+
+        backBtn.addEventListener('click', () => { detailPage.classList.remove('open'); });
+    </script>
+</body>
+
+</html>
