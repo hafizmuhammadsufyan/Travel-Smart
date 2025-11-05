@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TravelSmart — Full Screen Cinematic Slider</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <title>Travel Smart</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
         :root {
             --background: #252432;
@@ -16,270 +16,435 @@
             --text-light: #ffffff;
             --text-dark: #0a0a0a;
             --overlay-darkness: rgba(0, 0, 0, 0.45);
-            --primary1: #fb8b24;
-            --primary2: #d90368;
-            --primary3: #820263;
-            --text-dark: #111827;
             --muted: #6b7280;
             --card-radius: 18px;
-            /* darker overlay for text visibility */
             --icon-size: 24px;
-            --scale: 1;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-        }
-
-        body,
-        html {
-            width: 100%;
-            height: 100%;
             font-family: 'Poppins', sans-serif;
-            overflow: hidden;
-            background: #000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
         }
 
+        body {
+            overflow: hidden;
+        }
+
+        /* Navbar */
+        nav {
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: rgba(37, 36, 50, 0.9);
+            backdrop-filter: blur(10px);
+            color: var(--text-light);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 40px;
+            z-index: 100;
+        }
+
+        nav h1 {
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            color: var(--accent1);
+        }
+
+        nav ul {
+            display: flex;
+            gap: 25px;
+        }
+
+        nav ul li {
+            list-style: none;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--text-light);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: var(--accent2);
+        }
+
+        /* Slider Layout */
         .slider-wrapper {
             position: relative;
             width: 100vw;
             height: 100vh;
+            display: flex;
             overflow: hidden;
             transition: background 1s ease-in-out;
+            background: var(--background);
         }
 
-        .slider-bg {
-            position: absolute;
-            inset: 0;
+        .left-slide,
+        .right-slide {
+            height: 100%;
+            transition: transform 0.8s ease-in-out;
+        }
+
+        .left-slide {
+            width: 35%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            z-index: 5;
+            text-align: center;
+        }
+
+        .left-slide h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--accent1);
+        }
+
+        .left-slide p {
+            color: var(--text-light);
+            margin-bottom: 20px;
+            max-width: 80%;
+        }
+
+        .explore-btn {
+            background: var(--accent1);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .explore-btn:hover {
+            background: var(--accent2);
+            transform: scale(1.05);
+        }
+
+        .right-slide {
+            width: 65%;
+            position: relative;
+        }
+
+        .right-slide>div {
+            height: 100%;
+            width: 100%;
             background-size: cover;
             background-position: center;
-            filter: blur(14px) brightness(0.6);
-            transition: all 1s ease-in-out;
-            z-index: 1;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
         }
 
-        .slider-overlay {
-            position: absolute;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.35);
+        .right-slide>div.active {
+            opacity: 1;
             z-index: 2;
         }
 
-        /* IMAGE CENTER */
-        .slider-image {
+        .right-slide>div::after {
+            content: "";
             position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 80%;
-            height: 80%;
-            transform: translate(-50%, -50%) scale(1.1);
-            overflow: hidden;
-            z-index: 3;
-            opacity: 0;
-            transition: opacity 1s ease, transform 1s ease;
-        }
-
-        .slider-image.show {
-            opacity: 1;
-            transform: translate(-50%, -50%) scale(1);
-        }
-
-        .slider-image img {
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            border-radius: 25px;
-            object-fit: cover;
-            display: block;
-            transition: transform 0.6s ease;
+            background: var(--overlay-darkness);
+            transition: all 0.3s ease;
         }
 
-        /* CARD CENTER */
-        .slider-card {
+        .right-slide>div:hover::after {
+            backdrop-filter: blur(4px);
+            background: rgba(0, 0, 0, 0.25);
+        }
+
+        /* Hover text overlay on image */
+        .image-text {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, 200px);
-            width: 70%;
-            max-width: 900px;
-            padding: 50px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(8px);
-            border-radius: 25px;
-            box-shadow: 7px 5px 15px 3px rgb(65, 64, 64);
-            color: #fff;
-            text-align: center;
-            z-index: 4;
+            bottom: 40px;
+            left: 40px;
+            font-size: 1.5rem;
+            color: white;
             opacity: 0;
-            transition: transform 0.8s cubic-bezier(.22, .9, .36, 1), opacity 0.8s ease;
+            transform: translateY(20px);
+            transition: all 0.4s ease;
         }
 
-        .slider-card.show {
+        .right-slide>div:hover .image-text {
             opacity: 1;
-            transform: translate(-50%, -50%);
+            transform: translateY(0);
         }
 
-        .slide-title {
-            font-size: 3.5rem;
-            font-weight: 800;
-            color: #fb8b24;
+        /* Buttons */
+        .action-buttons {
+            position: absolute;
+            right: 50%;
+            top: 50%;
+            transform: translate(50%, -50%);
+            z-index: 10;
+        }
+
+        .action-buttons button {
+            background: rgba(255, 255, 255, 0.8);
+            border: none;
+            color: var(--text-dark);
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin: 5px;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            transition: all 0.3s;
+        }
+
+        .action-buttons button:hover {
+            background: var(--accent1);
+            color: #fff;
+            transform: scale(1.1);
+        }
+
+        /* Detail Page */
+        .detail-page {
+            display: none;
+            background: #f8f8f8;
+            color: var(--text-dark);
+            padding: 60px;
+            min-height: 100vh;
+            overflow-y: auto;
+        }
+
+        .detail-hero {
+            height: 400px;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .detail-hero img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(70%);
+        }
+
+        .detail-hero h1 {
+            position: absolute;
+            bottom: 30px;
+            left: 40px;
+            color: white;
+            font-size: 3rem;
+            font-weight: 700;
+        }
+
+        .section {
+            margin-bottom: 50px;
+        }
+
+        .section h3 {
+            color: var(--accent1);
             margin-bottom: 20px;
         }
 
-        .slide-sub {
-            font-size: 1.3rem;
-            line-height: 1.5;
-            margin-bottom: 30px;
+        .card-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
         }
 
-        .btn-explore {
-            padding: 15px 25px;
+        .info-card {
+            background: #fff;
+            border-radius: var(--card-radius);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 80px;
+            left: 40px;
+            background: var(--accent1);
+            color: white;
             border: none;
-            border-radius: 8px;
-            background: linear-gradient(90deg, var(--accent2), var(--accent3));
-            color: #fff;
-            font-weight: bold;
+            border-radius: 25px;
+            padding: 10px 20px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            z-index: 0;
+            z-index: 99;
         }
 
-        .btn-explore::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(120deg, var(--accent1), var(--accent2), var(--accent3));
-            opacity: 0.3;
-            transition: all 0.4s ease;
-            transform: rotate(45deg) scale(0);
-            z-index: -1;
-        }
-
-        .btn-explore:hover::before {
-            transform: rotate(45deg) scale(1);
-            opacity: 0.8;
-        }
-
-
-        .btn-explore:hover {
-            transform: scale(1.05) translateY(-4px);
-            background: linear-gradient(90deg, var(--accent1), var(--accent2), var(--accent3));
-
-            box-shadow: 0 25px 60px rgba(251, 139, 36, 0.5);
-        }
-
-        /* CONTROLS CENTER */
-        .slider-controls {
-            position: absolute;
-            bottom: -2%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            display: flex;
-            gap: 8px;
-            z-index: 5;
-        }
-
-        .slider-controls button {
-            padding: 10px 15px;
-            border: none;
-            border-radius: 14px;
-            background: linear-gradient(120deg, var(--accent1), var(--accent2), var(--accent3));
-            color: #fff;
-            font-size: 1.3rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .slider-controls button:hover {
-            background: linear-gradient(90deg, var(--accent1), var(--accent2), var(--accent3));
-
-            transform: scale(1.05);
+        .back-btn:hover {
+            background: var(--accent2);
         }
     </style>
 </head>
 
 <body>
+    <nav>
+        <h1>Travel Smart</h1>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Explore</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </nav>
 
     <div class="slider-wrapper" id="sliderWrapper">
-        <div class="slider-bg" id="sliderBg"></div>
-        <div class="slider-overlay"></div>
-
-        <div class="slider-image" id="slideImage"><img src="" alt=""></div>
-
-        <div class="slider-card" id="slideCard">
-            <div class="slide-title" id="slideTitle"></div>
-            <div class="slide-sub" id="slideSub"></div>
-            <button class="btn-explore">Explore More</button>
-        </div>
-
-        <div class="slider-controls">
-            <button id="prevBtn"><i class="fa-solid fa-arrow-up"></i></button>
-            <button id="nextBtn"><i class="fa-solid fa-arrow-down"></i></button>
+        <div class="left-slide" id="leftSlide"></div>
+        <div class="right-slide" id="rightSlide"></div>
+        <div class="action-buttons">
+            <button class="up-button"><i class="fas fa-arrow-up"></i></button>
+            <button class="down-button"><i class="fas fa-arrow-down"></i></button>
         </div>
     </div>
 
+    <div id="detailPage" class="detail-page"></div>
+
     <script>
-        const slides = [
-            { name: "Paris", sub: "The land of art, romance, and fine wine.", img: "images/paris.webp", color: "#252E33" },
-            { name: "Japan", sub: "A fusion of ancient traditions and futuristic innovation.", img: "images/tokyo.jpg", color: "#2A86BA" },
-            { name: "Italy", sub: "Where every corner whispers history, art and flavor.", img: "images/rome.jfif", color: "#FD3555" }
-        ];
+        $(document).ready(function () {
+            const countries = [
+                {
+                    name: "France",
+                    text: "The land of art, romance, and fine wine.",
+                    color: "#fb8b24",
+                    image: "images/paris.webp",
+                    details: {
+                        places: ["Eiffel Tower", "Louvre Museum", "Notre Dame"],
+                        cuisine: ["Croissants", "Baguette", "Macarons"],
+                        spots: ["Seine River", "Montmartre", "Nice Beach"],
+                        todo: ["Visit museums", "Enjoy cafes", "Stroll along Champs-Élysées"],
+                        history: "France has influenced art, philosophy, and politics for centuries.",
+                        avoid: "Avoid peak tourist hours around main landmarks."
+                    }
+                },
+                {
+                    name: "Japan",
+                    text: "A fusion of tradition and futuristic innovation.",
+                    color: "#d90368",
+                    image: "images/tokyo.jpg",
+                    details: {
+                        places: ["Tokyo Tower", "Mount Fuji", "Kyoto Temples"],
+                        cuisine: ["Sushi", "Ramen", "Takoyaki"],
+                        spots: ["Shibuya Crossing", "Akihabara", "Nara Park"],
+                        todo: ["Temple visits", "Night markets", "Cherry blossom viewing"],
+                        history: "Japan's history is rich with samurai, art, and technology.",
+                        avoid: "Avoid rush hours in subways."
+                    }
+                },
+                {
+                    name: "Italy",
+                    text: "Where every corner whispers history and style.",
+                    color: "#820263",
+                    image: "images/rome.jfif",
+                    details: {
+                        places: ["Colosseum", "Venice Canals", "Leaning Tower of Pisa"],
+                        cuisine: ["Pizza", "Pasta", "Gelato"],
+                        spots: ["Amalfi Coast", "Florence", "Milan Duomo"],
+                        todo: ["Sightseeing", "Cultural tours", "Shopping"],
+                        history: "Italy birthed Renaissance art and architecture.",
+                        avoid: "Avoid tourist scams near famous landmarks."
+                    }
+                }
+            ];
 
-        let current = 0;
-        const wrapper = document.getElementById('sliderWrapper'),
-            bg = document.getElementById('sliderBg'),
-            card = document.getElementById('slideCard'),
-            image = document.getElementById('slideImage'),
-            title = document.getElementById('slideTitle'),
-            sub = document.getElementById('slideSub'),
-            imgTag = image.querySelector('img');
+            let activeSlide = 0;
+            const leftSlide = $("#leftSlide");
+            const rightSlide = $("#rightSlide");
+            const sliderWrapper = $("#sliderWrapper");
 
-        function showSlide(idx) {
-            const s = slides[idx];
-            wrapper.style.background = s.color;
-            bg.style.backgroundImage = `url('${s.img}')`;
+            // Populate slides
+            countries.forEach((country, i) => {
+                leftSlide.append(`
+          <div class="slide" style="display:${i === 0 ? 'flex' : 'none'}; flex-direction:column; align-items:center;">
+            <h1>${country.name}</h1>
+            <p>${country.text}</p>
+            <button class="explore-btn" data-index="${i}">Explore More</button>
+          </div>
+        `);
 
-            // fade out current
-            image.classList.remove('show');
-            card.classList.remove('show');
-            card.style.transform = 'translate(-50%,200px)';
+                rightSlide.append(`
+          <div class="${i === 0 ? 'active' : ''}" style="background-image:url('${country.image}')">
+            <div class="image-text">${country.name}</div>
+          </div>
+        `);
+            });
 
-            setTimeout(() => {
-                title.textContent = s.name;
-                sub.textContent = s.sub;
-                imgTag.src = s.img;
+            function updateSlide(index) {
+                $(".slide").hide().eq(index).fadeIn(600);
+                $(".right-slide>div").removeClass("active").eq(index).addClass("active");
+                sliderWrapper.css("background", countries[index].color);
+            }
 
-                // fade in with animation
-                requestAnimationFrame(() => {
-                    image.classList.add('show');
-                    card.classList.add('show');
-                    card.style.transform = 'translate(-50%,-50%)';
+            $(".up-button").on("click", function () {
+                activeSlide = (activeSlide + 1) % countries.length;
+                updateSlide(activeSlide);
+            });
+
+            $(".down-button").on("click", function () {
+                activeSlide = (activeSlide - 1 + countries.length) % countries.length;
+                updateSlide(activeSlide);
+            });
+
+            // Explore detail
+            $(document).on("click", ".explore-btn", function () {
+                const index = $(this).data("index");
+                const c = countries[index];
+                $(".slider-wrapper").fadeOut(400, function () {
+                    $("#detailPage").html(`
+            <button class="back-btn"><i class="fas fa-arrow-left"></i> Back</button>
+            <div class="detail-hero">
+              <img src="${c.image}">
+              <h1>${c.name}</h1>
+            </div>
+            ${renderCards("Places to Visit", c.details.places)}
+            ${renderCards("Famous Cuisine", c.details.cuisine)}
+            ${renderCards("Famous Spots", c.details.spots)}
+            ${renderCards("Things To Do", c.details.todo)}
+            ${renderText("History", c.details.history)}
+            ${renderText("Things To Avoid", c.details.avoid)}
+          `).fadeIn(600);
                 });
-            }, 200);
-        }
+            });
 
-        document.getElementById('nextBtn').addEventListener('click', () => {
-            current = (current + 1) % slides.length;
-            showSlide(current);
-        });
-        document.getElementById('prevBtn').addEventListener('click', () => {
-            current = (current - 1 + slides.length) % slides.length;
-            showSlide(current);
-        });
+            function renderCards(title, arr) {
+                return `
+          <div class="section">
+            <h3>${title}</h3>
+            <div class="card-list">
+              ${arr.map(i => `<div class="info-card">${i}</div>`).join("")}
+            </div>
+          </div>`;
+            }
 
-        // initial
-        showSlide(current);
+            function renderText(title, text) {
+                return `
+          <div class="section">
+            <h3>${title}</h3>
+            <p>${text}</p>
+          </div>`;
+            }
+
+            $(document).on("click", ".back-btn", function () {
+                $("#detailPage").fadeOut(400, function () {
+                    $(".slider-wrapper").fadeIn(600);
+                });
+            });
+        });
     </script>
-
 </body>
 
 </html>

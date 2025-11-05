@@ -1,0 +1,1234 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>TravelSmart — Packages (Enhanced)</title>
+
+    <!-- Fonts & icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap"
+        rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        :root {
+            /* Theme (you specified these) */
+            --background: linear-gradient(180deg, #f8f9fb, #fff4ed);
+            /* LIGHT background */
+            --text-light: #111827;
+            --text-dark: #0a0a0a;
+            --overlay-darkness: rgba(0, 0, 0, 0.18);
+            --primary1: #fb8b24;
+            --primary2: #d90368;
+            --primary3: #820263;
+            --muted: #6b7280;
+            --card-radius: 18px;
+            --icon-size: 20px;
+            --glass: rgba(255, 255, 255, 0.65);
+            --glass-2: rgba(255, 255, 255, 0.9);
+            --shadow-strong: 0 18px 60px rgba(16, 24, 40, 0.06);
+        }
+
+        /* Reset */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+
+        html,
+        body {
+            height: 100%;
+            font-family: 'Poppins', system-ui, -apple-system, Segoe UI, Roboto, Arial;
+            color: var(--text-light);
+            background: var(--background);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden
+        }
+
+        a {
+            color: inherit
+        }
+
+        /* Header */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 140;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 16px 40px;
+            background: transparent;
+            backdrop-filter: blur(6px);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px
+        }
+
+        .logo {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: grid;
+            place-items: center;
+            color: var(--primary3);
+            font-weight: 800;
+            background: linear-gradient(135deg, rgba(130, 2, 99, 0.06), rgba(251, 139, 36, 0.06));
+            box-shadow: 0 6px 18px rgba(130, 2, 99, 0.04);
+        }
+
+        .title {
+            font-weight: 800;
+            font-size: 1.05rem;
+            color: var(--text-dark)
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center
+        }
+
+        .icon-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            display: grid;
+            place-items: center;
+            border: 1px solid rgba(15, 15, 15, 0.04);
+            background: var(--glass);
+            cursor: pointer;
+            transition: all .22s
+        }
+
+        .icon-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-strong);
+            color: var(--primary1)
+        }
+
+        /* Page container */
+        .page {
+            max-width: 1280px;
+            margin: 20px auto;
+            padding: 18px;
+        }
+
+        /* Hero */
+        .hero {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+            border-radius: 14px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.8));
+            border: 1px solid rgba(10, 10, 12, 0.03);
+            box-shadow: 0 10px 30px rgba(16, 24, 40, 0.02);
+        }
+
+        .hero-left {
+            max-width: 820px
+        }
+
+        .eyebrow {
+            color: var(--primary2);
+            font-weight: 800;
+            letter-spacing: 1px;
+            margin-bottom: 10px
+        }
+
+        .hero-title {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 8px
+        }
+
+        .hero-sub {
+            color: var(--muted);
+            line-height: 1.55
+        }
+
+        /* Controls */
+        .controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 18px;
+            flex-wrap: wrap;
+        }
+
+        .filter-bar {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            padding: 8px;
+            border-radius: 999px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.8));
+            border: 1px solid rgba(16, 24, 40, 0.05);
+            box-shadow: 0 8px 30px rgba(16, 24, 40, 0.04);
+        }
+
+        /* Filter chips */
+        .chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 14px;
+            border-radius: 999px;
+            background: transparent;
+            border: 1px solid rgba(15, 15, 15, 0.04);
+            cursor: pointer;
+            font-weight: 700;
+            color: var(--text-dark);
+            transition: all .25s;
+            box-shadow: 0 2px 10px rgba(16, 24, 40, 0.02);
+        }
+
+        .chip i {
+            width: 20px;
+            text-align: center;
+            opacity: 0.95
+        }
+
+        .chip:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(16, 24, 40, 0.05)
+        }
+
+        .chip.active {
+            background: linear-gradient(90deg, var(--primary1), var(--primary2));
+            color: #fff;
+            border-color: transparent;
+            box-shadow: 0 16px 48px rgba(251, 139, 36, 0.12);
+        }
+
+        /* search + sort */
+        .tools {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-left: auto
+        }
+
+        .search {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            padding: 8px 12px;
+            border-radius: 12px;
+            background: var(--glass-2);
+            border: 1px solid rgba(16, 24, 40, 0.03);
+            min-width: 260px;
+        }
+
+        .search input {
+            border: 0;
+            background: transparent;
+            outline: none;
+            color: var(--text-dark);
+            font-weight: 600
+        }
+
+        .select {
+            padding: 8px 10px;
+            border-radius: 10px;
+            border: 1px solid rgba(16, 24, 40, 0.04);
+            background: transparent;
+            color: var(--text-dark)
+        }
+
+        /* Grid: 3 columns */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 24px
+        }
+
+        @media(max-width:1024px) {
+            .grid {
+                grid-template-columns: repeat(2, 1fr)
+            }
+        }
+
+        @media(max-width:680px) {
+            .grid {
+                grid-template-columns: 1fr
+            }
+
+            .controls {
+                justify-content: center
+            }
+        }
+
+        /* Package card */
+        .pkg {
+            background: linear-gradient(180deg, #ffffff, #fffaf6);
+            border-radius: var(--card-radius);
+            overflow: hidden;
+            border: 1px solid rgba(16, 24, 40, 0.04);
+            transition: transform .6s cubic-bezier(.2, .9, .22, 1), box-shadow .6s;
+            box-shadow: 0 6px 25px rgba(16, 24, 40, 0.04);
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .pkg:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 30px 70px rgba(16, 24, 40, 0.08)
+        }
+
+        .pkg-media {
+            height: 220px;
+            overflow: hidden;
+            position: relative
+        }
+
+        .pkg-media img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: scale(1);
+            transition: transform .9s cubic-bezier(.2, .9, .22, 1)
+        }
+
+        .pkg:hover .pkg-media img {
+            transform: scale(1.12) translateY(-6%)
+        }
+
+        .pkg-badge {
+            position: absolute;
+            left: 14px;
+            top: 14px;
+            background: linear-gradient(90deg, var(--primary1), var(--primary2));
+            padding: 8px 12px;
+            border-radius: 10px;
+            color: #fff;
+            font-weight: 800;
+            z-index: 3;
+            box-shadow: 0 10px 40px rgba(251, 139, 36, 0.08)
+        }
+
+        .pkg-body {
+            padding: 16px 16px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px
+        }
+
+        .pkg-title {
+            font-weight: 800;
+            color: var(--text-dark);
+            font-size: 1.08rem
+        }
+
+        .pkg-sub {
+            color: var(--muted);
+            font-size: 0.95rem;
+            line-height: 1.45
+        }
+
+        .meta {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            font-weight: 700;
+            color: var(--muted)
+        }
+
+        .meta .price {
+            margin-left: auto;
+            color: var(--primary1);
+            font-weight: 800
+        }
+
+        .pkg-cta {
+            display: flex;
+            gap: 10px;
+            margin-top: 8px
+        }
+
+        .btn-ghost {
+            padding: 10px 12px;
+            border-radius: 10px;
+            border: 1px solid rgba(16, 24, 40, 0.04);
+            background: transparent;
+            cursor: pointer
+        }
+
+        .btn-primary {
+            padding: 10px 14px;
+            border-radius: 10px;
+            border: none;
+            background: linear-gradient(90deg, var(--primary2), var(--primary3));
+            color: #fff;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(217, 3, 103, 0.06)
+        }
+
+        /* Emphasis style when single result */
+        .single-result-wrapper {
+            display: flex;
+            justify-content: center;
+            padding: 30px 0;
+        }
+
+        .single-result-wrapper .pkg {
+            width: 78% !important;
+            max-width: 920px;
+            transform: scale(1.03);
+            box-shadow: 0 40px 120px rgba(16, 24, 40, 0.08)
+        }
+
+
+
+        /* Modal full-screen */
+        .modal-full {
+            position: fixed;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2200
+        }
+
+        .modal-full.active {
+            display: flex
+        }
+
+        .modal-backdrop {
+            position: absolute;
+            inset: 0;
+            background: rgba(10, 10, 12, 0.4);
+            backdrop-filter: blur(8px) saturate(120%)
+        }
+
+        .modal-panel {
+            position: relative;
+            width: 95%;
+            max-width: 1120px;
+            height: 90%;
+            background: linear-gradient(180deg, #ffffff, #fffaf6);
+            border-radius: 14px;
+            overflow: auto;
+            padding-bottom: 60px;
+            border: 1px solid rgba(16, 24, 40, 0.03);
+            box-shadow: 0 50px 130px rgba(16, 24, 40, 0.08);
+            transform: translateY(40px);
+            opacity: 0;
+            transition: all .45s cubic-bezier(.22, .9, .36, 1);
+            /* animation: modalOpen 0.5s ease forwards; */
+
+        }
+
+        /* Fancy modal animations */
+        @keyframes modalOpen {
+            0% {
+                opacity: 0;
+                transform: translateY(60px) scale(0.96);
+            }
+
+            70% {
+                opacity: 1;
+                transform: translateY(-6px) scale(1.02);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes modalClose {
+            0% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateY(200px) scale(0.96);
+            }
+        }
+
+
+        .modal-full.active .modal-panel {
+            transform: translateY(0);
+            opacity: 1;
+            animation: modalOpen 0.45s cubic-bezier(0.22, 0.9, 0.36, 1);
+        }
+
+        .modal-panel.closing {
+            animation: modalClose 0.4s cubic-bezier(0.22, 0.9, 0.36, 1) forwards;
+        }
+
+        .modal-hero {
+            height: 320px;
+            border-top-left-radius: 14px;
+            border-top-right-radius: 14px;
+            overflow: hidden;
+            position: relative
+        }
+
+        .modal-hero img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover
+        }
+
+        .modal-grid {
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            gap: 20px;
+            padding: 22px
+        }
+
+        @media(max-width:920px) {
+            .modal-grid {
+                grid-template-columns: 1fr
+            }
+
+            .modal-panel {
+                height: 88%
+            }
+
+            .modal-hero {
+                height: 220px
+            }
+        }
+
+        .modal-title {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--primary3);
+            margin-bottom: 6px
+        }
+
+        .modal-sub {
+            color: var(--muted);
+            margin-bottom: 12px
+        }
+
+        .info-cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin-bottom: 12px
+        }
+
+        .info-card {
+            background: rgba(16, 24, 40, 0.02);
+            padding: 10px;
+            border-radius: 8px;
+            color: var(--text-dark);
+            font-weight: 700
+        }
+
+        .sidebar {
+            background: linear-gradient(180deg, #fff, #fffaf6);
+            padding: 14px;
+            border-radius: 12px;
+            border: 1px solid rgba(16, 24, 40, 0.03)
+        }
+
+        .sidebar h4 {
+            color: var(--primary1);
+            margin: 0 0 8px 0
+        }
+
+        .modal-footer {
+            position: sticky;
+            bottom: 0;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            padding: 12px 22px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.95));
+            border-top: 1px solid rgba(16, 24, 40, 0.03)
+        }
+
+        .modal-close {
+            position: absolute;
+            right: 12px;
+            top: 12px;
+            border-radius: 10px;
+            padding: 10px;
+            border: 1px solid rgba(16, 24, 40, 0.04);
+            cursor: pointer;
+            background: var(--glass-2)
+        }
+
+        /* Booking modal */
+        .book-modal {
+            position: fixed;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2300
+        }
+
+        .book-modal.active {
+            display: flex
+        }
+
+        .book-panel {
+            width: 420px;
+            background: #fff;
+            padding: 18px;
+            border-radius: 12px;
+            border: 1px solid rgba(16, 24, 40, 0.04);
+            box-shadow: 0 30px 100px rgba(16, 24, 40, 0.08)
+        }
+
+        .form-row {
+            margin-bottom: 10px
+        }
+
+        .form-row input,
+        .form-row textarea {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid rgba(16, 24, 40, 0.04);
+            outline: none
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            margin-top: 8px
+        }
+
+        /* Small anim */
+        .reveal {
+            opacity: 0;
+            transform: translateY(14px);
+            transition: all .6s cubic-bezier(.2, .9, .22, 1)
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: none
+        }
+
+        /* footer */
+        footer {
+            margin-top: 36px;
+            padding: 24px;
+            text-align: center;
+            color: var(--muted)
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="brand">
+            <div class="logo"><i class="fa-solid fa-plane-departure"></i></div>
+            <div class="title">TravelSmart Packages</div>
+        </div>
+
+        <div class="nav-actions">
+            <div class="icon-btn" title="Search"><i class="fa-solid fa-magnifying-glass"></i></div>
+            <div class="icon-btn" title="Account"><i class="fa-regular fa-user"></i></div>
+        </div>
+    </header>
+
+    <main class="page">
+        <section class="hero">
+            <div class="hero-left">
+                <div class="eyebrow">FEATURED PACKAGES</div>
+                <h1 class="hero-title">Premium travel packages — curated & ready to book</h1>
+                <p class="hero-sub">Filter by category, search, and open full-screen details and booking. All animations
+                    and UI are optimized for clarity and impact.</p>
+
+                <div class="controls">
+                    <div class="filter-bar" id="filterBar" role="toolbar" aria-label="Filter packages">
+                        <!-- chips injected -->
+                    </div>
+
+                    <div class="tools">
+                        <div class="search" title="Search packages">
+                            <i class="fa-solid fa-search" style="color:var(--muted)"></i>
+                            <input id="searchInput" placeholder="Search (Paris, Beach, Luxury)"
+                                aria-label="Search packages">
+                        </div>
+                        <select id="sortSelect" class="select" aria-label="Sort packages">
+                            <option value="popular">Sort: Popular</option>
+                            <option value="price-asc">Price: Low → High</option>
+                            <option value="price-desc">Price: High → Low</option>
+                            <option value="duration">Duration</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <aside style="width:320px">
+                <div
+                    style="padding:14px;border-radius:12px;background:linear-gradient(180deg,#fff,#fffaf6);border:1px solid rgba(16,24,40,0.03); margin-bottom: 120px;">
+                    <h4 style="margin:0 0 8px;color:var(--primary2)">Top Picks</h4>
+                    <p style="color:var(--muted);margin-bottom:12px">Hand-picked trending packages</p>
+                    <div style="display:flex;flex-direction:column;gap:8px">
+                        <div style="display:flex;justify-content:space-between"><strong>Paris Weekend</strong><span
+                                style="color:var(--primary1)">€499</span></div>
+                        <div style="display:flex;justify-content:space-between"><strong>Tokyo Fusion</strong><span
+                                style="color:var(--primary1)">€1,199</span></div>
+                        <div style="display:flex;justify-content:space-between"><strong>Dubai Luxury</strong><span
+                                style="color:var(--primary1)">€1,799</span></div>
+                    </div>
+                </div>
+            </aside>
+        </section>
+
+        <!-- GRID -->
+        <section style="margin-top:22px">
+            <div id="gridContainer">
+                <div id="grid" class="grid" aria-live="polite"></div>
+                <div id="emptyState" style="display:none;text-align:center;padding:40px;color:var(--muted)">No packages
+                    found.</div>
+            </div>
+        </section>
+    </main>
+
+    <!-- PACKAGE DETAIL MODAL (full-screen blurred) -->
+    <div id="pkgModal" class="modal-full" aria-hidden="true" role="dialog" aria-modal="true">
+        <div class="modal-backdrop" id="modalBackdrop"></div>
+        <div class="modal-panel" role="document" aria-labelledby="modalTitle">
+            <button class="modal-close" id="modalClose" aria-label="Close modal">&times;</button>
+
+            <div class="modal-hero"><img id="modalHeroImg" src="" alt=""></div>
+
+            <div class="modal-grid">
+                <div>
+                    <div style="display:flex;align-items:flex-start;gap:10px;justify-content:space-between">
+                        <div>
+                            <div class="modal-title" id="modalTitle">Package Title</div>
+                            <div class="modal-sub" id="modalSubtitle">Duration • Category • Rating</div>
+                        </div>
+                    </div>
+
+                    <p id="modalShort" style="color:var(--text-dark);margin-top:8px"></p>
+
+                    <div class="info-cards" id="infoCards"></div>
+
+                    <h4 style="color:var(--primary2);margin-top:8px">Why you'll love it</h4>
+                    <p id="modalWhy" style="color:var(--text-dark)"></p>
+
+                    <h4 style="color:var(--primary2);margin-top:10px">Highlights</h4>
+                    <ul id="modalHighlights" style="color:var(--text-dark);margin-left:20px"></ul>
+
+                    <h4 style="color:var(--primary2);margin-top:10px">Sample itinerary</h4>
+                    <div id="modalItinerary" style="color:var(--text-dark);margin-top:8px"></div>
+                </div>
+
+                <aside class="sidebar">
+                    <h4 id="priceTag">€0</h4>
+                    <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px">
+                        <div
+                            style="display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;background:rgba(16,24,40,0.03)">
+                            <i class="fa-solid fa-star" style="color:#ffce3b"></i><strong id="ratingVal">4.9</strong>
+                        </div>
+                        <div id="durationChip" style="color:var(--muted);font-weight:700"></div>
+                    </div>
+
+                    <div style="margin-top:6px">
+                        <strong style="color:var(--primary3)">Includes</strong>
+                        <ul id="includes" style="margin-left:16px;color:var(--text-dark)"></ul>
+                    </div>
+
+                    <div style="margin-top:12px">
+                        <strong style="color:var(--primary3)">Nearby stays</strong>
+                        <ul id="sidebarHotels" style="margin-left:16px;color:var(--text-dark)"></ul>
+                    </div>
+
+                    <div style="position:sticky;bottom:18px;margin-top:16px">
+                        <div style="display:flex;gap:8px;justify-content:flex-end">
+                            <button class="btn-ghost" id="btnShare" title="Share">Share</button>
+                            <button class="btn-primary" id="btnBook">Book Now</button>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+
+            <div class="modal-footer" style="display:none"></div>
+        </div>
+    </div>
+
+    <!-- BOOKING modal -->
+    <div id="bookModal" class="book-modal" aria-hidden="true">
+        <div style="position:absolute;inset:0;background:rgba(10,10,12,0.4); z-index: -1;"></div>
+        <div class="book-panel" role="dialog" aria-modal="true">
+            <h3 id="bookTitle" style="margin-top:0;color:var(--primary1)">Book Package</h3>
+            <p id="bookSubtitle" style="color:var(--muted);margin-bottom:12px">Fill details to reserve</p>
+
+            <div style="max-height:48vh;overflow:auto;padding-right:6px">
+                <div class="form-row"><input id="bookName" placeholder="Full name"></div>
+                <div class="form-row"><input id="bookEmail" placeholder="Email" type="email"></div>
+                <div class="form-row"><input id="bookPhone" placeholder="Phone"></div>
+                <div class="form-row"><input id="bookGuests" placeholder="Guests (e.g. 2)"></div>
+                <div class="form-row"><label style="font-size:.9rem;color:var(--muted)">Travel dates</label></div>
+                <div class="form-row"><input id="bookFrom" type="date"></div>
+                <div class="form-row"><textarea id="bookNotes" placeholder="Special requests (optional)"></textarea>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button class="btn-ghost" id="bookCancel">Cancel</button>
+                <button class="btn-primary" id="bookSubmit">Reserve</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        © 2025 TravelSmart · Built with ❤️
+    </footer>
+
+    <script>
+        /* -------------------------
+           Data: packages (25 entries sample)
+           You can add / edit objects here (images: images/...)
+           ------------------------- */
+        const packages = [
+            { id: 'paris', title: 'Paris Weekend — City of Light', category: 'Romantic', durationDays: 3, price: 499, rating: 4.8, highlights: ['Eiffel Tower', 'Seine Cruise', 'Louvre'], img: 'images/paris.webp', short: 'Iconic Paris weekend — cafés, views, and romance.', difficulty: 'Easy', groupSize: '2-6', itinerary: ['Arrival & Seine', 'Louvre & Montmartre', 'Markets & depart'], includes: ['Hotel', 'Breakfast', 'Seine ticket'], hotels: ['Pullman Paris', 'Hotel du Louvre'], facilities: ['Airport pickup'], popular: true },
+            { id: 'tokyo', title: 'Tokyo Fusion — Tradition & Neon', category: 'Adventure', durationDays: 6, price: 1199, rating: 4.9, highlights: ['Tsukiji', 'Shibuya', 'Mt. Fuji'], img: 'images/tokyo.jpg', short: 'Mix of temples and neon-lit nights.', difficulty: 'Moderate', groupSize: '1-8', itinerary: ['Food walk', 'City highlights', 'Mt. Fuji'], includes: ['Hotel', 'Guide'], hotels: ['Park Hyatt'], facilities: ['Train pass'], popular: true },
+            { id: 'italy', title: 'Rome Classics — Ancient & Modern', category: 'Heritage', durationDays: 4, price: 649, rating: 4.6, highlights: ['Colosseum', 'Vatican', 'Piazzas'], img: 'images/rome.jfif', short: 'History, art and irresistible pasta.', difficulty: 'Easy', groupSize: '2-8', itinerary: ['Colosseum', 'Vatican', 'Food walk'], includes: ['Hotel', 'Tickets'], hotels: ['Hotel de Russie'], facilities: ['Guided tours'], popular: false },
+            { id: 'dubai', title: 'Dubai Luxury Escape', category: 'Luxury', durationDays: 5, price: 1799, rating: 4.7, highlights: ['Desert Safari', 'Burj Khalifa', 'Yacht'], img: 'images/dubai.jpg', short: 'High-end skyline experiences and desert evenings.', difficulty: 'Easy', groupSize: '1-6', itinerary: ['Desert', 'City tour', 'Yacht'], includes: ['5-star hotel', 'Transfers'], hotels: ['Burj Al Arab'], facilities: ['Concierge'], popular: true },
+            { id: 'santorini', title: 'Santorini — Sunset & Aegean', category: 'Romantic', durationDays: 4, price: 899, rating: 4.9, highlights: ['Oia sunset', 'Volcano cruise', 'Winery'], img: 'images/santorini.jfif', short: 'White buildings and legendary sunsets.', difficulty: 'Easy', groupSize: '2-6', itinerary: ['Sunset', 'Island tour', 'Boat trip'], includes: ['Hotel', 'Boat'], hotels: ['Canaves Oia'], facilities: ['Transfers'], popular: true },
+            { id: 'capetown', title: 'Cape Town Nature & Wine', category: 'Nature', durationDays: 6, price: 1099, rating: 4.7, highlights: ['Table Mountain', 'Winelands', 'Coast'], img: 'images/capetown.jpg', short: 'Mountains, coastline and vineyards.', difficulty: 'Moderate', groupSize: '2-10', itinerary: ['Mountain', 'Wine tours', 'Coastal drives'], includes: ['Hotel', 'Tours'], hotels: ['Winery stays'], facilities: ['Guides'], popular: false },
+            { id: 'bali', title: 'Bali Tropical Escape', category: 'Relax', durationDays: 7, price: 799, rating: 4.8, highlights: ['Ubud', 'Seminyak', 'Temples'], img: 'images/bali.jpg', short: 'Spa, rice terraces and sunny beaches.', difficulty: 'Easy', groupSize: '1-8', itinerary: ['Culture', 'Beaches', 'Spa'], includes: ['Resort', 'Transfers'], hotels: ['Bali resorts'], facilities: ['Spa'], popular: true },
+            { id: 'barcelona', title: 'Barcelona — Gaudí & Sun', category: 'Heritage', durationDays: 4, price: 599, rating: 4.5, highlights: ['Sagrada Familia', 'Park Güell', 'Tapas'], img: 'images/barcelona.jfif', short: 'Architecture and Mediterranean vibes.', difficulty: 'Easy', groupSize: '1-8', itinerary: ['Gaudí', 'Gothic', 'Beach'], includes: ['Hotel'], hotels: ['Boutique hotels'], facilities: ['Guides'], popular: false },
+            { id: 'newyork', title: 'New York Express', category: 'City', durationDays: 3, price: 399, rating: 4.4, highlights: ['Broadway', 'Central Park', 'Skyline'], img: 'images/newyork1.webp', short: 'Fast-paced highlights of NYC.', difficulty: 'Easy', groupSize: '1-6', itinerary: ['Skyline', 'Broadway', 'Markets'], includes: ['Hotel'], hotels: ['NYC hotels'], facilities: ['Metro passes'], popular: true },
+            { id: 'bangkok', title: 'Bangkok — Street & Temples', category: 'Adventure', durationDays: 5, price: 549, rating: 4.6, highlights: ['Floating markets', 'Grand Palace', 'Food tours'], img: 'images/bangkok.jpg', short: 'Markets, temples and street food delights.', difficulty: 'Moderate', groupSize: '1-8', itinerary: ['Temples', 'Markets', 'Food walks'], includes: ['Hotel', 'Guide'], hotels: ['Local hotels'], facilities: ['Transport'], popular: false },
+            { id: 'moscow', title: 'Moscow History & Grandeur', category: 'Heritage', durationDays: 5, price: 749, rating: 4.5, highlights: ['Red Square', 'Kremlin', 'Cathedrals'], img: 'images/moscow.jpg', short: 'Grandeur, architecture and history.', difficulty: 'Moderate', groupSize: '1-8', itinerary: ['Red Square', 'Museums', 'City tours'], includes: ['Hotel'], hotels: ['Central hotels'], facilities: ['Guides'], popular: false },
+            { id: 'istanbul', title: 'Istanbul — Crossroads of Continents', category: 'Cultural', durationDays: 4, price: 569, rating: 4.6, highlights: ['Hagia Sophia', 'Bazaars', 'Bosphorus'], img: 'images/istanbul.jpg', short: 'East meets west — rich history & markets.', difficulty: 'Easy', groupSize: '1-8', itinerary: ['Historical tour', 'Bosphorus'], includes: ['Hotel'], hotels: ['Historic hotels'], facilities: ['Transfers'], popular: true },
+            { id: 'rio', title: 'Rio de Janeiro Carnival Vibes', category: 'Beach', durationDays: 5, price: 899, rating: 4.6, highlights: ['Christ Statue', 'Beaches', 'Carnival'], img: 'images/rio.jfif', short: 'Vibrant culture, beaches and fun.', difficulty: 'Moderate', groupSize: '1-10', itinerary: ['City', 'Beaches', 'Culture'], includes: ['Hotel'], hotels: ['Copacabana hotels'], facilities: ['Transfers'], popular: false },
+            { id: 'cairo', title: 'Cairo — Ancient Wonders', category: 'Heritage', durationDays: 4, price: 649, rating: 4.4, highlights: ['Pyramids', 'Nile Cruise', 'Markets'], img: 'images/cairo.jpg', short: 'Pyramids, Nile and ancient history.', difficulty: 'Moderate', groupSize: '2-8', itinerary: ['Pyramids', 'Museum', 'Market'], includes: ['Hotel', 'Guided tours'], hotels: ['Nile hotels'], facilities: ['Transfers'], popular: false },
+            { id: 'sydney', title: 'Sydney Harbour & Beaches', category: 'City', durationDays: 5, price: 799, rating: 4.6, highlights: ['Opera House', 'Beaches', 'Harbour'], img: 'images/sydney.jpg', short: 'Harbour city, beaches and relaxed vibes.', difficulty: 'Easy', groupSize: '1-8', itinerary: ['Opera house', 'Beaches', 'Island'], includes: ['Hotel'], hotels: ['Harbour hotels'], facilities: ['Transport'], popular: false },
+            { id: 'lisbon', title: 'Lisbon Coastal Charm', category: 'Romantic', durationDays: 4, price: 529, rating: 4.5, highlights: ['Alfama', 'Sintra', 'Coastline'], img: 'images/lisbon.jpg', short: 'Hills, trams and coastal sunsets.', difficulty: 'Easy', groupSize: '1-8', itinerary: ['City', 'Sintra', 'Coast'], includes: ['Hotel'], hotels: ['Lisbon hotels'], facilities: ['Guides'], popular: false },
+            { id: 'amsterdam', title: 'Amsterdam Canals & Culture', category: 'City', durationDays: 3, price: 479, rating: 4.5, highlights: ['Canals', 'Museums', 'Bikes'], img: 'images/amsterdam.jpg', short: 'Bike, canals and museums.', difficulty: 'Easy', groupSize: '1-8', itinerary: ['Canal tour', 'Museums', 'Markets'], includes: ['Hotel'], hotels: ['Canal hotels'], facilities: ['Transport'], popular: false },
+            { id: 'prague', title: 'Prague — Fairy-tale Streets', category: 'Heritage', durationDays: 3, price: 449, rating: 4.6, highlights: ['Old Town', 'Castle', 'Bridges'], img: 'images/prague.jpg', short: 'Cobblestone lanes and medieval charm.', difficulty: 'Easy', groupSize: '1-8', itinerary: ['Old town', 'Castle', 'Food walk'], includes: ['Hotel'], hotels: ['Historic hotels'], facilities: ['Guides'], popular: false },
+            { id: 'buenos', title: 'Buenos Aires — Tango & Flavor', category: 'Cultural', durationDays: 5, price: 699, rating: 4.4, highlights: ['Tango', 'Steakhouses', 'Culture'], img: 'images/buenos.jpg', short: 'Dance, food and vibrant streets.', difficulty: 'Moderate', groupSize: '1-8', itinerary: ['City walks', 'Shows', 'Food tours'], includes: ['Hotel'], hotels: ['City hotels'], facilities: ['Guides'], popular: false },
+            { id: 'zanzibar', title: 'Zanzibar Beach Retreat', category: 'Beach', durationDays: 6, price: 899, rating: 4.7, highlights: ['Beaches', 'Spice tours', 'Dhow cruise'], img: 'images/zanzibar.jpg', short: 'Tropical beaches and island life.', difficulty: 'Easy', groupSize: '1-8', itinerary: ['Beaches', 'Spice tour', 'Boat trip'], includes: ['Hotel', 'Transfers'], hotels: ['Beach resorts'], facilities: ['Transfers'], popular: true },
+            { id: 'amalficoast', title: 'Amalfi Coast — Coastline & Cuisine', category: 'Romantic', durationDays: 5, price: 999, rating: 4.7, highlights: ['Positano', 'Boat days', 'Seafood'], img: 'images/amalfi.jpg', short: 'Dramatic cliffs, coastal drives & food.', difficulty: 'Easy', groupSize: '2-8', itinerary: ['Positano', 'Boat', 'Food'], includes: ['Hotel'], hotels: ['Local villas'], facilities: ['Transfers'], popular: false },
+            { id: 'vancouver', title: 'Vancouver Outdoors & Nature', category: 'Nature', durationDays: 5, price: 859, rating: 4.6, highlights: ['Mountains', 'Parks', 'Coast'], img: 'images/vancouver.jpg', short: 'Parks, mountains and coastal adventures.', difficulty: 'Moderate', groupSize: '1-8', itinerary: ['Parks', 'Coast', 'Trips'], includes: ['Hotel'], hotels: ['Nature lodges'], facilities: ['Guides'], popular: false },
+            { id: 'seoul', title: 'Seoul — K-Culture & Nightlife', category: 'City', durationDays: 4, price: 679, rating: 4.6, highlights: ['Palaces', 'Food', 'Night markets'], img: 'images/seoul.jpg', short: 'History meets modern nightlife.', difficulty: 'Easy', groupSize: '1-8', itinerary: ['Palaces', 'Markets', 'Food'], includes: ['Hotel'], hotels: ['City hotels'], facilities: ['Transport'], popular: false },
+            { id: 'ireland', title: 'Ireland — Emerald Roadtrip', category: 'Nature', durationDays: 7, price: 1199, rating: 4.8, highlights: ['Cliffs', 'Castles', 'Roads'], img: 'images/ireland.jpg', short: 'Roadtrip through emerald isles.', difficulty: 'Moderate', groupSize: '2-10', itinerary: ['Coast drives', 'Castles', 'Pubs'], includes: ['Hotel'], hotels: ['Country inns'], facilities: ['Transfers'], popular: true },
+            { id: 'rejkjavik', title: 'Iceland — Northern Lights & Glaciers', category: 'Nature', durationDays: 6, price: 1499, rating: 4.9, highlights: ['Glaciers', 'Northern Lights', 'Hot springs'], img: 'images/iceland.jpg', short: 'Glaciers, waterfalls and aurora nights.', difficulty: 'Moderate', groupSize: '1-6', itinerary: ['Golden Circle', 'Glacier', 'Aurora'], includes: ['Hotel', 'Tours'], hotels: ['Local stays'], facilities: ['Guides'], popular: true }
+        ];
+
+        /* -------------------------
+           DOM refs
+           ------------------------- */
+        const gridEl = document.getElementById('grid');
+        const filterBar = document.getElementById('filterBar');
+        const searchInput = document.getElementById('searchInput');
+        const sortSelect = document.getElementById('sortSelect');
+        const emptyState = document.getElementById('emptyState');
+        const gridContainer = document.getElementById('gridContainer');
+
+        const pkgModal = document.getElementById('pkgModal');
+        const modalBackdrop = document.getElementById('modalBackdrop');
+        const modalClose = document.getElementById('modalClose');
+        const modalHeroImg = document.getElementById('modalHeroImg');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalSubtitle = document.getElementById('modalSubtitle');
+        const modalShort = document.getElementById('modalShort');
+        const infoCards = document.getElementById('infoCards');
+        const modalWhy = document.getElementById('modalWhy');
+        const modalHighlights = document.getElementById('modalHighlights');
+        const modalItinerary = document.getElementById('modalItinerary');
+        const priceTag = document.getElementById('priceTag');
+        const ratingVal = document.getElementById('ratingVal');
+        const durationChip = document.getElementById('durationChip');
+        const includesList = document.getElementById('includes');
+        const sidebarHotels = document.getElementById('sidebarHotels');
+        const btnBook = document.getElementById('btnBook');
+
+        const bookModal = document.getElementById('bookModal');
+        const bookCancel = document.getElementById('bookCancel');
+        const bookSubmit = document.getElementById('bookSubmit');
+        const bookTitle = document.getElementById('bookTitle');
+        const bookSubtitle = document.getElementById('bookSubtitle');
+        const bookName = document.getElementById('bookName');
+        const bookEmail = document.getElementById('bookEmail');
+        const bookPhone = document.getElementById('bookPhone');
+        const bookGuests = document.getElementById('bookGuests');
+        const bookFrom = document.getElementById('bookFrom');
+        const bookNotes = document.getElementById('bookNotes');
+
+        /* -------------------------
+           State
+           ------------------------- */
+        let state = {
+            filter: 'All',
+            search: '',
+            sort: 'popular',
+            results: [...packages]
+        };
+
+        /* -------------------------
+           Helpers
+           ------------------------- */
+        function uniq(arr) { return [...new Set(arr)] }
+        function formatPrice(p) { return `€${p.toLocaleString()}` }
+
+        /* -------------------------
+           Build filter chips (functional)
+           ------------------------- */
+        function buildFilters() {
+            const cats = ['All', ...uniq(packages.map(p => p.category))];
+            filterBar.innerHTML = '';
+            cats.forEach(cat => {
+                const chip = document.createElement('button');
+                chip.className = 'chip' + (state.filter === cat ? ' active' : '');
+                chip.dataset.cat = cat;
+                chip.title = `Filter: ${cat}`;
+                // choose an icon per category (simple mapping)
+                const mapIcon = {
+                    'All': 'fa-globe',
+                    'Romantic': 'fa-heart',
+                    'Adventure': 'fa-mountain',
+                    'Heritage': 'fa-landmark',
+                    'Luxury': 'fa-gem',
+                    'Nature': 'fa-leaf',
+                    'Relax': 'fa-umbrella-beach',
+                    'City': 'fa-city',
+                    'Beach': 'fa-water',
+                    'Cultural': 'fa-theater-masks'
+                };
+                const icon = mapIcon[cat] || 'fa-map-location-dot';
+                chip.innerHTML = `<i class="fa-solid ${icon}"></i><span>${cat}</span>`;
+                chip.addEventListener('click', () => {
+                    document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+                    chip.classList.add('active');
+                    state.filter = cat;
+                    applyFilters();
+                });
+                filterBar.appendChild(chip);
+            });
+        }
+        buildFilters();
+
+        /* -------------------------
+           Render grid
+           ------------------------- */
+        function renderGrid(list) {
+            gridEl.innerHTML = '';
+
+            // center single result
+            if (list.length === 1) {
+                gridEl.innerHTML = `<div class="single-result-wrapper"><article class="pkg reveal" data-id="${list[0].id}"></article></div>`;
+                const wrapperCard = gridEl.querySelector('.pkg');
+                wrapperCard.outerHTML = pkgNodeHtml(list[0]); // replace placeholder
+                attachCardEvents();
+                observeReveals();
+                emptyState.style.display = 'none';
+                return;
+            } else {
+                // normal grid
+                if (list.length === 0) { emptyState.style.display = 'block'; return; }
+                emptyState.style.display = 'none';
+                list.forEach(pkg => {
+                    const node = document.createElement('article');
+                    node.className = 'pkg reveal';
+                    node.setAttribute('data-id', pkg.id);
+                    node.innerHTML = pkgNodeHtml(pkg);
+                    gridEl.appendChild(node);
+                });
+                attachCardEvents();
+                observeReveals();
+            }
+        }
+
+        function pkgNodeHtml(pkg) {
+            return `
+    <div class="pkg-media">
+      <img src="${pkg.img}" alt="${escapeHtml(pkg.title)}">
+      <div class="pkg-badge">${escapeHtml(pkg.category)}</div>
+    </div>
+    <div class="pkg-body">
+      <div>
+        <div class="pkg-title">${escapeHtml(pkg.title)}</div>
+        <div class="pkg-sub">${escapeHtml(pkg.short)}</div>
+        <div class="meta">
+          <div class="rating"><i class="fa-solid fa-star" style="color:#ffce3b"></i> ${pkg.rating}</div>
+          <div style="font-weight:700;color:var(--muted)">${pkg.difficulty}</div>
+          <div style="color:var(--muted);font-weight:600">${pkg.groupSize}</div>
+          <div class="price">${formatPrice(pkg.price)}</div>
+        </div>
+      </div>
+
+      <div class="pkg-cta">
+        <button class="btn-ghost" data-id="${pkg.id}" aria-label="Quick view">Quick View</button>
+        <button class="btn-primary" data-id="${pkg.id}" aria-label="Details & Book">Details & Book</button>
+      </div>
+    </div>
+  `;
+        }
+
+        /* -------------------------
+           Reveal observer
+           ------------------------- */
+        function observeReveals() {
+            const obs = new IntersectionObserver((entries, o) => {
+                entries.forEach(en => {
+                    if (en.isIntersecting) {
+                        en.target.classList.add('visible');
+                        o.unobserve(en.target);
+                    }
+                });
+            }, { threshold: 0.12 });
+            document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+        }
+
+        /* -------------------------
+           Filter / Search / Sort
+           ------------------------- */
+        function applyFilters() {
+            let list = [...packages];
+
+            // category
+            if (state.filter && state.filter !== 'All') {
+                list = list.filter(p => p.category === state.filter);
+            }
+
+            // search
+            if (state.search && state.search.trim()) {
+                const q = state.search.trim().toLowerCase();
+                list = list.filter(p => (p.title + ' ' + p.short + ' ' + p.highlights.join(' ')).toLowerCase().includes(q));
+            }
+
+            // sort
+            if (state.sort === 'price-asc') list.sort((a, b) => a.price - b.price);
+            else if (state.sort === 'price-desc') list.sort((a, b) => b.price - a.price);
+            else if (state.sort === 'duration') list.sort((a, b) => a.durationDays - b.durationDays);
+            else list.sort((a, b) => (b.popular ? 1 : 0) - (a.popular ? 1 : 0));
+
+            state.results = list;
+            renderGrid(list);
+        }
+
+        /* -------------------------
+           Wire inputs
+           ------------------------- */
+        searchInput.addEventListener('input', (e) => { state.search = e.target.value; applyFilters(); });
+        sortSelect.addEventListener('change', (e) => { state.sort = e.target.value; applyFilters(); });
+
+        /* init */
+        applyFilters();
+
+        /* -------------------------
+           Card events
+           ------------------------- */
+        function attachCardEvents() {
+            // Quick view and Details & Book buttons
+            document.querySelectorAll('.btn-ghost, .btn-primary').forEach(btn => {
+                btn.addEventListener('click', (ev) => {
+                    const id = btn.dataset.id;
+                    openDetailModal(id);
+                });
+            });
+        }
+
+        /* -------------------------
+           Modal: open / close
+           ------------------------- */
+
+        /* -------------------------
+   Modal: open / close
+   ------------------------- */
+        function openDetailModal(id) {
+            const pkg = packages.find(p => p.id === id);
+            if (!pkg) return;
+
+            const modalPanel = pkgModal.querySelector('.modal-panel');
+
+            // 🔹 Always reset scroll to top before showing
+            modalPanel.scrollTo({ top: 0, behavior: 'auto' });
+
+            // Fill modal content
+            modalHeroImg.src = pkg.img;
+            modalTitle.textContent = pkg.title;
+            modalSubtitle.textContent = `${pkg.durationDays} days • ${pkg.category} • ${pkg.rating}★`;
+            modalShort.textContent = pkg.short;
+            priceTag.textContent = formatPrice(pkg.price);
+            ratingVal.textContent = pkg.rating;
+            durationChip.textContent = `${pkg.durationDays} days`;
+
+            infoCards.innerHTML = '';
+            const items = [
+                { k: 'Duration', v: `${pkg.durationDays} days` },
+                { k: 'Group', v: pkg.groupSize },
+                { k: 'Difficulty', v: pkg.difficulty },
+                { k: 'Includes', v: pkg.includes.length + ' items' }
+            ];
+            items.forEach(it => {
+                const el = document.createElement('div');
+                el.className = 'info-card';
+                el.innerHTML = `<strong style="color:var(--primary2)">${escapeHtml(it.k)}</strong>
+                    <div style="margin-top:6px;color:var(--text-dark)">${escapeHtml(it.v)}</div>`;
+                infoCards.appendChild(el);
+            });
+
+            modalHighlights.innerHTML = '';
+            pkg.highlights.forEach(h => {
+                const li = document.createElement('li');
+                li.textContent = h;
+                modalHighlights.appendChild(li);
+            });
+
+            modalItinerary.innerHTML = '';
+            pkg.itinerary.forEach(i => {
+                const p = document.createElement('p');
+                p.textContent = i;
+                modalItinerary.appendChild(p);
+            });
+
+            includesList.innerHTML = '';
+            pkg.includes.forEach(i => {
+                const li = document.createElement('li');
+                li.textContent = i;
+                includesList.appendChild(li);
+            });
+
+            sidebarHotels.innerHTML = '';
+            pkg.hotels.forEach(h => {
+                const li = document.createElement('li');
+                li.textContent = h;
+                sidebarHotels.appendChild(li);
+            });
+
+            // 🔹 Show modal + lock background scroll
+            pkgModal.classList.add('active');
+            pkgModal.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+
+            // 🔹 Trigger open animation
+            modalPanel.style.animation = 'none';
+            modalPanel.offsetHeight; // force reflow
+            modalPanel.style.animation = 'modalOpen 0.6s ease forwards';
+
+            // 🔹 Hook booking button
+            btnBook.onclick = () => openBooking(pkg);
+        }
+
+        function closeDetailModal() {
+            const modalPanel = pkgModal.querySelector('.modal-panel');
+
+            // 🔹 Play closing animation
+            modalPanel.style.animation = 'modalClose 0.4s ease forwards';
+
+            // 🔹 After animation completes, hide modal & reset scroll
+            setTimeout(() => {
+                pkgModal.classList.remove('active');
+                pkgModal.setAttribute('aria-hidden', 'true');
+                document.body.style.overflow = '';
+
+                // Force scroll reset to top for next open
+                modalPanel.scrollTo({ top: 0, behavior: 'auto' });
+            }, 400);
+        }
+
+
+
+
+        modalClose.addEventListener('click', closeDetailModal);
+        modalBackdrop.addEventListener('click', closeDetailModal);
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && pkgModal.classList.contains('active')) closeDetailModal(); });
+
+        /* -------------------------
+           Booking flow
+           ------------------------- */
+        function openBooking(pkg) {
+            bookTitle.textContent = `Book: ${pkg.title}`;
+            bookSubtitle.textContent = `${pkg.durationDays} days • ${pkg.category} — ${formatPrice(pkg.price)} per person`;
+            // clear fields
+            bookName.value = ''; bookEmail.value = ''; bookPhone.value = ''; bookGuests.value = '2'; bookFrom.value = ''; bookNotes.value = '';
+            bookModal.classList.add('active'); bookModal.setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden';
+        }
+
+        function closeBooking() {
+            bookModal.classList.remove('active'); bookModal.setAttribute('aria-hidden', 'true'); document.body.style.overflow = '';
+        }
+
+        bookCancel.addEventListener('click', closeBooking);
+        bookSubmit.addEventListener('click', () => {
+            if (!bookName.value || !bookEmail.value) { alert('Please enter name and email'); return; }
+            closeBooking(); closeDetailModal();
+            showToast(`Thanks ${bookName.value}! We received your booking request.`);
+        });
+
+        /* -------------------------
+           Simple toast
+           ------------------------- */
+        function showToast(msg) {
+            const t = document.createElement('div'); t.style.position = 'fixed'; t.style.right = '22px'; t.style.bottom = '22px'; t.style.padding = '12px 16px';
+            t.style.background = 'linear-gradient(90deg,var(--primary1),var(--primary2))'; t.style.color = '#fff'; t.style.borderRadius = '10px'; t.style.boxShadow = '0 10px 30px rgba(16,24,40,0.12)';
+            t.style.zIndex = 9999; t.textContent = msg; document.body.appendChild(t);
+            setTimeout(() => { t.style.transition = 'all .4s'; t.style.opacity = '0'; t.style.transform = 'translateY(20px)'; }, 2600);
+            setTimeout(() => t.remove(), 3200);
+        }
+
+        /* -------------------------
+           Utility escape
+           ------------------------- */
+        function escapeHtml(s) { if (!s) return ''; return String(s).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;'); }
+
+        /* -------------------------
+           Share action
+           ------------------------- */
+        document.getElementById('btnShare').addEventListener('click', () => {
+            navigator.clipboard?.writeText(location.href).then(() => showToast('Page link copied to clipboard'));
+        });
+
+        /* -------------------------
+           Attach events for dynamic nodes after render
+           ------------------------- */
+        function attachCardEvents() {
+            // Because pkgNodeHtml uses innerHTML we need to attach on created dom
+            document.querySelectorAll('.pkg').forEach(card => {
+                const id = card.getAttribute('data-id');
+                // buttons inside
+                const quick = card.querySelector('.btn-ghost');
+                const det = card.querySelector('.btn-primary');
+                if (quick) quick.addEventListener('click', () => openDetailModal(id));
+                if (det) det.addEventListener('click', () => openDetailModal(id));
+            });
+        }
+
+        /* -------------------------
+           Re-render on resize to ensure single result styling
+           ------------------------- */
+        window.addEventListener('resize', () => applyFilters());
+
+        /* -------------------------
+           Accessibility: focus search on / press '/'
+           ------------------------- */
+        document.addEventListener('keydown', (e) => { if (e.key === '/') { e.preventDefault(); searchInput.focus(); } });
+
+        /* -------------------------
+           Initial animation for filters and cards
+           ------------------------- */
+        (function animateIn() {
+            // small stagger for chips
+            const chips = document.querySelectorAll('.chip');
+            chips.forEach((c, i) => setTimeout(() => c.classList.add('visible'), 40 * i));
+        })();
+    </script>
+</body>
+
+</html>
