@@ -35,6 +35,191 @@
             overflow-x: hidden;
         }
 
+        /* ===== NAVBAR ===== */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 70px;
+            backdrop-filter: blur(5px);
+            background: transparent;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            transition: all 0.4s ease;
+            z-index: 100;
+        }
+
+        nav.scrolled {
+            background: rgba(130, 2, 99, 0.95);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* ===== LOGO ===== */
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--text-light);
+            letter-spacing: 0.5px;
+        }
+
+        .logo i {
+            color: var(--accent1);
+            font-size: 1.6rem;
+        }
+
+        /* ===== NAV LINKS ===== */
+        .nav-links {
+            display: flex;
+            gap: 35px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            position: relative;
+            text-decoration: none;
+            font-weight: 500;
+            color: var(--text-light);
+            letter-spacing: 0.4px;
+            transition: all 0.3s ease;
+            padding: 6px 0;
+        }
+
+        /* ===== IMPROVED HOVER EFFECT ===== */
+        .nav-links a::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent1), var(--accent2));
+            transition: width 0.3s ease;
+            filter: drop-shadow(0 0 6px var(--accent1));
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent1);
+            text-shadow: 0 0 6px rgba(251, 139, 36, 0.8),
+                0 0 12px rgba(217, 3, 104, 0.6);
+        }
+
+        nav.scrolled .nav-links a {
+            color: var(--text-light);
+        }
+
+        nav.scrolled .nav-links a:hover {
+            color: var(--accent1);
+            text-shadow: 0 0 8px rgba(251, 139, 36, 0.9),
+                0 0 16px rgba(217, 3, 104, 0.7);
+        }
+
+        /* ===== RIGHT ICONS ===== */
+        .nav-right {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            color: var(--text-light);
+        }
+
+        .nav-right i {
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 8px;
+            border-radius: 50%;
+        }
+
+        .nav-right i:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--accent1);
+            transform: translateY(-2px);
+            box-shadow: 0 0 10px rgba(251, 139, 36, 0.5);
+        }
+
+        nav.scrolled .nav-right i:hover {
+            color: var(--accent2);
+            box-shadow: 0 0 10px rgba(217, 3, 104, 0.5);
+        }
+
+        /* ===== HAMBURGER ===== */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .bar {
+            width: 25px;
+            height: 3px;
+            background-color: var(--text-light);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger.active .bar:nth-child(1) {
+            transform: rotate(45deg) translateY(8px);
+            background: var(--accent1);
+        }
+
+        .hamburger.active .bar:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active .bar:nth-child(3) {
+            transform: rotate(-45deg) translateY(-8px);
+            background: var(--accent2);
+        }
+
+        /* ===== MOBILE MENU ===== */
+        @media (max-width: 950px) {
+            .nav-links {
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: rgba(130, 2, 99, 0.97);
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+                padding: 20px 0;
+                opacity: 0;
+                pointer-events: none;
+                transform: translateY(-20px);
+                transition: all 0.4s ease;
+            }
+
+            .nav-links.active {
+                opacity: 1;
+                pointer-events: auto;
+                transform: translateY(0);
+            }
+
+            .hamburger {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 600px) {
+            nav {
+                padding: 14px 30px;
+            }
+
+            .logo {
+                font-size: 1.2rem;
+            }
+        }
+
         /* ------------------ SLIDER ------------------ */
         .slider-wrapper {
             position: relative;
@@ -146,7 +331,7 @@
 
         .slider-controls {
             position: absolute;
-            bottom: -2%;
+            bottom: 5%;
             left: 50%;
             transform: translate(-50%, -50%);
             display: flex;
@@ -170,10 +355,31 @@
         }
 
         /* ------------------ DETAIL PAGE ------------------ */
+
+        .detail-hero {
+            /* width: 80vw; */
+            height: 575px;
+            padding: 35px;
+            border-radius: 25px;
+            border: 1.5px solid #820263;
+            box-shadow: 9px 9px 18px 4px #6b7280;
+            /* background-color: black; */
+        }
+
+        .detail-hero img {
+            width: 100%;
+            border-radius: 20px;
+
+            height: 500px;
+        }
+
         .detail-wrap {
             position: fixed;
             inset: 0;
-            background: #f3f4f6;
+            background: #fff;
+            /* background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center; */
             overflow-y: auto;
             transform: translateY(120%);
             transition: transform 0.8s cubic-bezier(.22, .9, .36, 1);
@@ -240,23 +446,33 @@
             color: var(--text-dark);
             border-radius: var(--card-radius);
             overflow: hidden;
-            box-shadow: 0 8px 20px rgba(16, 24, 40, 0.06);
-            transform: translateY(30px);
+            height: 340px;
             opacity: 0;
-            transition: transform 0.5s ease, opacity 0.5s ease, box-shadow 0.3s ease;
+            transition: transform 0.5s ease, box-shadow 0.3s ease;
             display: flex;
             flex-direction: column;
         }
 
+        .card:hover {
+            transform: translateY(14px) scale(1.015);
+            box-shadow: 0 30px 75px rgba(16, 24, 40, 0.12), 0 0 40px rgba(217, 3, 103, 0.24);
+        }
+
         .card.show {
-            transform: translateY(0);
+            /* transform: translateY(0px); */
             opacity: 1;
         }
 
         .card img {
             width: 100%;
             height: 150px;
-            object-fit: cover;
+            object-fit: center;
+            transition: transform 0.5s ease, opacity 0.5s ease;
+        }
+
+        .card:hover img {
+            transform: scale(1.1) translateZ(0);
+            opacity: 0.7;
         }
 
         .card-body {
@@ -279,20 +495,46 @@
         }
 
         .card-button {
-            margin-top: 12px;
-            padding: 10px 16px;
+            padding: 10px 20px;
             border: none;
             border-radius: 8px;
-            background: var(--accent3);
+            background: linear-gradient(90deg, var(--accent2), var(--accent3));
             color: #fff;
+            font-weight: bold;
             cursor: pointer;
-            font-weight: 600;
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 0;
         }
 
+        .card-button::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(120deg, var(--accent1), var(--accent2), var(--accent3));
+            opacity: 0.3;
+            transition: all 0.4s ease;
+            transform: rotate(45deg) scale(0);
+            z-index: -1;
+            /* push behind the text */
+        }
+
+        .card-button:hover::before {
+            transform: rotate(45deg) scale(1);
+            opacity: 0.8;
+        }
+
+
         .card-button:hover {
+            background: linear-gradient(90deg, var(--accent1), var(--accent2), var(--accent3));
+            /* box-shadow: 0 0 15px var(--accent1), 0 0 25px var(--accent2), 0 0 35px var(--accent3); */
             transform: scale(1.05);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            color: #fff;
+            z-index: 1;
         }
 
         /* Type 2 cards: full-width with ribbon */
@@ -377,10 +619,219 @@
                 border-radius: 6px 6px 0 0;
             }
         }
+
+        /* ===== FOOTER STYLES ===== */
+        footer {
+            background: rgba(130, 2, 99, 0.85);
+            /* slightly darker & subtle */
+            color: var(--text-light);
+            padding: 60px 70px 30px;
+            font-family: system-ui;
+            backdrop-filter: blur(6px);
+            /* soft glassy effect */
+        }
+
+        /* Footer container and other styles remain the same */
+
+
+        .footer-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 50px;
+            justify-content: space-between;
+        }
+
+        .footer-container>div {
+            flex: 1 1 220px;
+        }
+
+        /* Logo & About */
+        .footer-about .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .footer-about .logo i {
+            color: var(--accent1);
+            font-size: 1.8rem;
+        }
+
+        .footer-about p {
+            margin-top: 10px;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        /* Quick Links */
+        .footer-links h3,
+        .footer-contact h3,
+        .footer-newsletter h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: var(--accent1);
+            text-shadow: 0 0 6px var(--accent2);
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links ul li a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: 0.3s;
+            position: relative;
+        }
+
+        .footer-links ul li a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -2px;
+            width: 0%;
+            height: 2px;
+            background: var(--accent1);
+            transition: width 0.3s;
+        }
+
+        .footer-links ul li a:hover::after {
+            width: 100%;
+        }
+
+        .footer-links ul li a:hover {
+            color: var(--accent1);
+        }
+
+        /* Contact Info */
+        .footer-contact p {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-contact i {
+            color: var(--accent1);
+        }
+
+        /* Newsletter */
+        .footer-newsletter p {
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .footer-newsletter form {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .footer-newsletter input[type="email"] {
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            flex: 1;
+            min-width: 180px;
+        }
+
+        .footer-newsletter button {
+            padding: 10px 20px;
+            background: linear-gradient(120deg, var(--accent1), var(--accent2), var(--accent3));
+            color: var(--text-light);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .footer-newsletter button:hover::before {
+            transform: rotate(45deg) scale(1);
+            opacity: 0.8;
+        }
+
+        .footer-newsletter button:hover {
+            background: linear-gradient(90deg, var(--accent1), var(--accent2), var(--accent3));
+            color: #fff;
+            transform: scale(1.1);
+        }
+
+
+
+        /* Footer Bottom */
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            padding-top: 20px;
+            flex-wrap: wrap;
+            gap: 20px;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .social-icons a {
+            color: var(--text-light);
+            margin-left: 15px;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: var(--accent1);
+            transform: translateY(-3px);
+        }
+
+        /* Responsive */
+        @media (max-width: 950px) {
+            .footer-container {
+                flex-direction: column;
+                gap: 40px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .social-icons {
+                margin-top: 10px;
+            }
+        }
     </style>
 </head>
 
 <body>
+    <nav id="navbar">
+        <div class="logo"><i class="fa-solid fa-plane-departure"></i> Travel-Smart</div>
+
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="#">Destinations</a></li>
+            <li><a href="#">Packages</a></li>
+            <li><a href="#">Gallery</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+
+        <div class="nav-right">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <i class="fa-regular fa-user"></i>
+            <div class="hamburger" id="hamburger">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+        </div>
+    </nav>
 
     <!-- ------------------ SLIDER ------------------ -->
     <div class="slider-wrapper" id="sliderWrapper">
@@ -390,7 +841,7 @@
         <div class="slider-card" id="slideCard">
             <div class="slide-title" id="slideTitle"></div>
             <div class="slide-sub" id="slideSub"></div>
-            <button class="btn-explore" id="exploreBtn">Explore More</button>
+            <button class="card-button" id="exploreBtn">Explore More</button>
         </div>
         <div class="slider-controls">
             <button id="prevBtn"><i class="fa-solid fa-arrow-up"></i></button>
@@ -409,24 +860,76 @@
         </div>
     </div>
 
+    <!-- ===== FOOTER ===== -->
+    <footer class="reveal">
+        <div class="footer-container">
+            <!-- Logo & Description -->
+            <div class="footer-about">
+                <div class="logo">
+                    <i class="fas fa-plane-departure"></i>
+                    <span>Travel-Smart</span>
+                </div>
+                <p>Explore the world effortlessly with Travel-Smart. Your journey, our expertise.</p>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="footer-links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Destinations</a></li>
+                    <li><a href="#">Services</a></li>
+                    <li><a href="#">Offers</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="footer-contact">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-map-marker-alt"></i> 123 Travel Street, City</p>
+                <p><i class="fas fa-phone-alt"></i> +123 456 7890</p>
+                <p><i class="fas fa-envelope"></i> info@travelsmart.com</p>
+            </div>
+
+            <!-- Newsletter -->
+            <div class="footer-newsletter">
+                <h3>Newsletter</h3>
+                <p>Subscribe to get latest updates & offers</p>
+                <form>
+                    <input type="email" placeholder="Enter your email" />
+                    <button type="submit">Subscribe</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 Travel-Smart. All rights reserved.</p>
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+            </div>
+        </div>
+    </footer>
+
     <script>
         // ------------------ SLIDER ------------------
         const slides = [
             { name: "Paris", sub: "The land of art, romance, and fine wine.", img: "images/paris.webp", color: "#252E33" },
             { name: "Japan", sub: "A fusion of ancient traditions and futuristic innovation.", img: "images/tokyo.jpg", color: "#2A86BA" },
             { name: "Italy", sub: "Where every corner whispers history, art and flavor.", img: "images/rome.jfif", color: "#FD3555" },
-            { name: "New York", sub: "The city that never sleeps, bustling with energy.", img: "images/newyork.jpg", color: "#1C1C1C" },
-            { name: "London", sub: "Historic landmarks meet modern vibes along the Thames.", img: "images/london.jpg", color: "#2E2B3C" },
+            { name: "New York", sub: "The city that never sleeps, bustling with energy.", img: "images/newyork1.webp", color: "#1C1C1C" },
+            { name: "London", sub: "Historic landmarks meet modern vibes along the Thames.", img: "images/london.webp", color: "#2E2B3C" },
             { name: "Dubai", sub: "Futuristic skyline and luxury like nowhere else.", img: "images/dubai.jpg", color: "#D4AF37" },
             { name: "Sydney", sub: "Harbour city with iconic Opera House and beaches.", img: "images/sydney.jpg", color: "#0077B6" },
-            { name: "Rio de Janeiro", sub: "Vibrant culture, carnival, and breathtaking landscapes.", img: "images/rio.jpg", color: "#FF6F61" },
+            { name: "Rio de Janeiro", sub: "Vibrant culture, carnival, and breathtaking landscapes.", img: "images/rio.jfif", color: "#FF6F61" },
             { name: "Istanbul", sub: "A magical blend of Asia and Europe with rich history.", img: "images/istanbul.jpg", color: "#8B4513" },
             { name: "Cairo", sub: "Ancient wonders, pyramids, and the life-giving Nile.", img: "images/cairo.jpg", color: "#A0522D" },
-            { name: "Barcelona", sub: "Architectural masterpieces meet sunny Mediterranean vibes.", img: "images/barcelona.jpg", color: "#FF4500" },
+            { name: "Barcelona", sub: "Architectural masterpieces meet sunny Mediterranean vibes.", img: "images/barcelona.jfif", color: "#FF4500" },
             { name: "Bangkok", sub: "Bustling markets, temples, and delicious street food.", img: "images/bangkok.jpg", color: "#006400" },
             { name: "Moscow", sub: "Grand architecture, Red Square, and rich Russian history.", img: "images/moscow.jpg", color: "#800000" },
             { name: "Cape Town", sub: "Natural beauty with mountains, beaches, and vineyards.", img: "images/capetown.jpg", color: "#2E8B57" },
-            { name: "Santorini", sub: "Picturesque white buildings and stunning sunsets.", img: "images/santorini.jpg", color: "#4682B4" }
+            { name: "Santorini", sub: "Picturesque white buildings and stunning sunsets.", img: "images/santorini.jfif", color: "#4682B4" }
         ];
 
         let current = 0;
@@ -454,7 +957,7 @@
                     card.classList.add('show');
                     card.style.transform = 'translate(-50%,-50%)';
                 });
-            }, 200);
+            }, 350);
         }
         document.getElementById('nextBtn').addEventListener('click', () => { current = (current + 1) % slides.length; showSlide(current); });
         document.getElementById('prevBtn').addEventListener('click', () => { current = (current - 1 + slides.length) % slides.length; showSlide(current); });
@@ -471,7 +974,7 @@
         const detailData = {
             "Paris": {
                 "places": [
-                    { img: "images/eiffel.jpg", title: "Eiffel Tower", desc: "Iconic tower in the heart of Paris." },
+                    { img: "images/paris.webp", title: "Eiffel Tower", desc: "Iconic tower in the heart of Paris." },
                     { img: "images/louvre.jpg", title: "Louvre Museum", desc: "World's largest art museum." },
                     { img: "images/notredame.jpg", title: "Notre-Dame Cathedral", desc: "Famous Gothic cathedral." }
                 ],
@@ -971,7 +1474,7 @@
             const data = detailData[s.name];
             if (!data) return;
             detailTitle.textContent = s.name;
-            detailContent.innerHTML = "";
+            detailContent.innerHTML = `<div class="detail-hero"><img src="${s.img}" alt=""></div>`;
 
             // Type 1: 3 cards per row
             const sections1 = [{ title: "Places to Visit", items: data.places }, { title: "Famous Cuisine", items: data.cuisine }, { title: "Famous Spots", items: data.spots }];
@@ -1007,6 +1510,23 @@
         });
 
         backBtn.addEventListener('click', () => { detailPage.classList.remove('open'); });
+
+        const navbar = document.getElementById("navbar");
+        const hamburger = document.getElementById("hamburger");
+        const navLinks = document.getElementById("navLinks");
+
+        window.addEventListener("scroll", () => {
+            if (window.scrollY > 60) {
+                navbar.classList.add("scrolled");
+            } else {
+                navbar.classList.remove("scrolled");
+            }
+        });
+
+        hamburger.addEventListener("click", () => {
+            hamburger.classList.toggle("active");
+            navLinks.classList.toggle("active");
+        });
     </script>
 </body>
 

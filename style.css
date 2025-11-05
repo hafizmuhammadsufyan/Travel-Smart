@@ -53,8 +53,8 @@ nav {
     align-items: center;
     justify-content: space-between;
     padding: 16px 70px;
-    backdrop-filter: blur(20px);
-    background: rgba(130, 2, 99, 0.35);
+    backdrop-filter: blur(5px);
+    /* background: rgba(130, 2, 99, 0.35); */
     border-bottom: 1px solid rgba(255, 255, 255, 0.15);
     transition: all 0.4s ease;
     z-index: 100;
@@ -344,17 +344,47 @@ nav.scrolled .nav-right i:hover {
 }
 
 .content button {
-    padding: 13px 23px;
+    padding: 10px 20px;
     border: none;
-    border-radius: 10px;
+    border-radius: 8px;
+    background: linear-gradient(90deg, var(--accent2), var(--accent3));
+    color: #fff;
     font-weight: bold;
-    box-shadow: 5px 3px 7px 2px #505050;
-    background: linear-gradient(120deg, var(--accent1), var(--accent2), var(--accent3));
-    color: white;
     cursor: pointer;
-    opacity: 0;
-    animation: animate 1s ease-in-out 0.6s 1 forwards;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    z-index: 0;
 }
+
+.content button::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(120deg, var(--accent1), var(--accent2), var(--accent3));
+    opacity: 0.3;
+    transition: all 0.4s ease;
+    transform: rotate(45deg) scale(0);
+    z-index: -1;
+    /* push behind the text */
+}
+
+.content button:hover::before {
+    transform: rotate(45deg) scale(1);
+    opacity: 0.8;
+}
+
+.content button:hover {
+    background: linear-gradient(90deg, var(--accent1), var(--accent2), var(--accent3));
+    transform: scale(1.05);
+    color: #fff;
+    z-index: 1;
+}
+
+
 
 @keyframes animate {
     from {
@@ -378,19 +408,25 @@ nav.scrolled .nav-right i:hover {
 }
 
 .button button {
-    width: 40px;
-    height: 35px;
-    border-radius: 8px;
+    padding: 10px 20px;
     border: none;
+    border-radius: 8px;
+    background: linear-gradient(90deg, var(--accent2), var(--accent3));
+    color: #fff;
+    font-weight: bold;
     cursor: pointer;
-    margin: 0 5px;
-    border: 1px solid #000;
-    transition: 0.3s;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    z-index: 0;
 }
 
 .button button:hover {
-    background: #ababab;
+    background: linear-gradient(90deg, var(--accent1), var(--accent2), var(--accent3));
+    /* box-shadow: 0 0 15px var(--accent1), 0 0 25px var(--accent2), 0 0 35px var(--accent3); */
+    transform: scale(1.05);
     color: #fff;
+    z-index: 1;
 }
 
 /* ===== Testimonials Section ===== */
@@ -913,20 +949,44 @@ nav.scrolled .nav-right i:hover {
 }
 
 .btn-primary {
-    background: linear-gradient(90deg, var(--accent1), var(--accent2));
-    color: #fff;
+    padding: 10px 20px;
     border: none;
-    padding: 10px 18px;
-    border-radius: 10px;
-    font-weight: 700;
+    border-radius: 8px;
+    background: linear-gradient(90deg, var(--accent2), var(--accent3));
+    color: #fff;
+    font-weight: bold;
     cursor: pointer;
-    box-shadow: 0 6px 24px rgba(217, 3, 104, 0.08), inset 0 -4px 10px rgba(0, 0, 0, 0.06);
-    transition: transform 220ms, box-shadow 220ms;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(120deg, var(--accent1), var(--accent2), var(--accent3));
+    opacity: 0.3;
+    transition: all 0.4s ease;
+    transform: rotate(45deg) scale(0);
+    z-index: -1;
+    /* push behind the text */
+}
+
+.btn-primary:hover::before {
+    transform: rotate(45deg) scale(1);
+    opacity: 0.8;
 }
 
 .btn-primary:hover {
-    transform: translateY(-3px) scale(1.02);
-    box-shadow: 0 12px 40px rgba(217, 3, 104, 0.14);
+    background: linear-gradient(90deg, var(--accent1), var(--accent2), var(--accent3));
+    transform: scale(1.05);
+    color: #fff;
+    z-index: 1;
 }
 
 .link-ghost {
@@ -968,20 +1028,44 @@ nav.scrolled .nav-right i:hover {
 }
 
 .btn-ghost-large {
-    border: 1px solid rgba(130, 2, 99, 0.12);
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(249, 244, 255, 0.95));
-    padding: 12px 28px;
-    border-radius: 12px;
-    font-weight: 800;
-    color: var(--accent3);
+    padding: 15px 60px;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(90deg, var(--accent2), var(--accent3));
+    color: #fff;
+    font-weight: bold;
     cursor: pointer;
-    transition: transform 200ms, box-shadow 200ms;
-    box-shadow: 0 10px 30px rgba(16, 24, 40, 0.06);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.btn-ghost-large::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(120deg, var(--accent1), var(--accent2), var(--accent3));
+    opacity: 0.3;
+    transition: all 0.4s ease;
+    transform: rotate(45deg) scale(0);
+    z-index: -1;
+    /* push behind the text */
+}
+
+.btn-ghost-large:hover::before {
+    transform: rotate(45deg) scale(1);
+    opacity: 0.8;
 }
 
 .btn-ghost-large:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 18px 46px rgba(130, 2, 99, 0.08);
+    background: linear-gradient(90deg, var(--accent1), var(--accent2), var(--accent3));
+    transform: scale(1.05);
+    color: #fff;
+    z-index: 1;
 }
 
 /* small screens polish */
