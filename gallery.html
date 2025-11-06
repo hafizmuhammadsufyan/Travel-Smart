@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TravelSmart | Gallery</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+    <style>
+        :root {
+            --background: #252432;
+            --accent1: #fb8b24;
+            --accent2: #d90368;
+            --accent3: #820263;
+            --text-light: #ffffff;
+            --text-dark: #0a0a0a;
+            --muted: #6b7280;
+            --card-radius: 18px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "Poppins", sans-serif;
+            background: var(--background);
+            overflow: hidden;
+            height: 100vh;
+            color: var(--text-light);
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        /* ===== NAVBAR ===== */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 70px;
+            backdrop-filter: blur(5px);
+            /* background: rgba(130, 2, 99, 0.35); */
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            transition: all 0.4s ease;
+            z-index: 100;
+        }
+
+        nav.scrolled {
+            background: rgba(130, 2, 99, 0.95);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* ===== LOGO ===== */
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--text-light);
+            letter-spacing: 0.5px;
+        }
+
+        .logo i {
+            color: var(--accent1);
+            font-size: 1.6rem;
+        }
+
+        /* ===== NAV LINKS ===== */
+        .nav-links {
+            display: flex;
+            gap: 35px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            position: relative;
+            text-decoration: none;
+            font-weight: 500;
+            color: var(--text-light);
+            letter-spacing: 0.4px;
+            transition: all 0.3s ease;
+            padding: 6px 0;
+        }
+
+        /* ===== IMPROVED HOVER EFFECT ===== */
+        .nav-links a::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent1), var(--accent2));
+            transition: width 0.3s ease;
+            filter: drop-shadow(0 0 6px var(--accent1));
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent1);
+            text-shadow: 0 0 6px rgba(251, 139, 36, 0.8),
+                0 0 12px rgba(217, 3, 104, 0.6);
+        }
+
+        nav.scrolled .nav-links a {
+            color: var(--text-light);
+        }
+
+        nav.scrolled .nav-links a:hover {
+            color: var(--accent1);
+            text-shadow: 0 0 8px rgba(251, 139, 36, 0.9),
+                0 0 16px rgba(217, 3, 104, 0.7);
+        }
+
+        /* ===== RIGHT ICONS ===== */
+        .nav-right {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            color: var(--text-light);
+        }
+
+        .nav-right i {
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 8px;
+            border-radius: 50%;
+        }
+
+        .nav-right i:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--accent1);
+            transform: translateY(-2px);
+            box-shadow: 0 0 10px rgba(251, 139, 36, 0.5);
+        }
+
+        nav.scrolled .nav-right i:hover {
+            color: var(--accent2);
+            box-shadow: 0 0 10px rgba(217, 3, 104, 0.5);
+        }
+
+        /* ===== HAMBURGER ===== */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .bar {
+            width: 25px;
+            height: 3px;
+            background-color: var(--text-light);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger.active .bar:nth-child(1) {
+            transform: rotate(45deg) translateY(8px);
+            background: var(--accent1);
+        }
+
+        .hamburger.active .bar:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active .bar:nth-child(3) {
+            transform: rotate(-45deg) translateY(-8px);
+            background: var(--accent2);
+        }
+
+        /* ===== MOBILE MENU ===== */
+        @media (max-width: 950px) {
+            .nav-links {
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: rgba(130, 2, 99, 0.97);
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+                padding: 20px 0;
+                opacity: 0;
+                pointer-events: none;
+                transform: translateY(-20px);
+                transition: all 0.4s ease;
+            }
+
+            .nav-links.active {
+                opacity: 1;
+                pointer-events: auto;
+                transform: translateY(0);
+            }
+
+            .hamburger {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 600px) {
+            nav {
+                padding: 14px 30px;
+            }
+
+            .logo {
+                font-size: 1.2rem;
+            }
+        }
+
+        .gallery-container {
+            display: flex;
+            height: 100vh;
+            width: 100vw;
+            position: relative;
+            overflow: hidden;
+            transition: background 1s ease;
+        }
+
+        .text-section {
+            width: 35%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border-right: 4px solid var(--accent2);
+            padding: 2rem;
+            position: relative;
+            transform: translateY(100%);
+            opacity: 0;
+            transition: all 1s ease;
+        }
+
+        .text-section.active {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .text-section h1 {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            color: var(--accent1);
+            transition: color 0.8s ease;
+        }
+
+        .text-section p {
+            font-size: 1.1rem;
+            line-height: 1.5;
+            color: #e0e0e0;
+            margin-bottom: 1.5rem;
+        }
+
+        .divider {
+            width: 60px;
+            height: 4px;
+            border-radius: 10px;
+            background: var(--accent1);
+            margin-bottom: 1.5rem;
+            transition: background 0.8s ease;
+            animation: colorChange 4s linear infinite alternate;
+        }
+
+        @keyframes colorChange {
+            0% {
+                background: var(--accent1);
+            }
+
+            50% {
+                background: var(--accent2);
+            }
+
+            100% {
+                background: var(--accent3);
+            }
+        }
+
+        .person {
+            font-weight: 600;
+            color: var(--accent1);
+            font-size: 1rem;
+            letter-spacing: 1px;
+        }
+
+        .image-section {
+            width: 65%;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .image-section img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: -150%;
+            left: 0;
+            filter: brightness(75%);
+            transition: all 1s ease;
+        }
+
+        .image-section img.active {
+            top: 0;
+            transform: scale(1.05);
+        }
+
+        /* Navigation Buttons */
+        .nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            font-size: 1.2rem;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .prev-btn {
+            left: 20px;
+        }
+
+        .next-btn {
+            right: 20px;
+        }
+
+        /* ===== FOOTER STYLES ===== */
+        footer {
+            background: rgba(130, 2, 99, 0.85);
+            /* slightly darker & subtle */
+            color: var(--text-light);
+            padding: 60px 70px 30px;
+            font-family: system-ui;
+            backdrop-filter: blur(6px);
+            /* soft glassy effect */
+        }
+
+        /* Footer container and other styles remain the same */
+
+
+        .footer-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 50px;
+            justify-content: space-between;
+        }
+
+        .footer-container>div {
+            flex: 1 1 220px;
+        }
+
+        /* Logo & About */
+        .footer-about .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .footer-about .logo i {
+            color: var(--accent1);
+            font-size: 1.8rem;
+        }
+
+        .footer-about p {
+            margin-top: 10px;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        /* Quick Links */
+        .footer-links h3,
+        .footer-contact h3,
+        .footer-newsletter h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: var(--accent1);
+            text-shadow: 0 0 6px var(--accent2);
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links ul li a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: 0.3s;
+            position: relative;
+        }
+
+        .footer-links ul li a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -2px;
+            width: 0%;
+            height: 2px;
+            background: var(--accent1);
+            transition: width 0.3s;
+        }
+
+        .footer-links ul li a:hover::after {
+            width: 100%;
+        }
+
+        .footer-links ul li a:hover {
+            color: var(--accent1);
+        }
+
+        /* Contact Info */
+        .footer-contact p {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-contact i {
+            color: var(--accent1);
+        }
+
+        /* Newsletter */
+        .footer-newsletter p {
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .footer-newsletter form {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .footer-newsletter input[type="email"] {
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            flex: 1;
+            min-width: 180px;
+        }
+
+        .footer-newsletter button {
+            padding: 10px 20px;
+            background: linear-gradient(120deg, var(--accent1), var(--accent2), var(--accent3));
+            color: var(--text-light);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .footer-newsletter button:hover::before {
+            transform: rotate(45deg) scale(1);
+            opacity: 0.8;
+        }
+
+        .footer-newsletter button:hover {
+            background: linear-gradient(90deg, var(--accent1), var(--accent2), var(--accent3));
+            color: #fff;
+            transform: scale(1.1);
+        }
+
+
+
+        /* Footer Bottom */
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            padding-top: 20px;
+            flex-wrap: wrap;
+            gap: 20px;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .social-icons a {
+            color: var(--text-light);
+            margin-left: 15px;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: var(--accent1);
+            transform: translateY(-3px);
+        }
+
+        /* Responsive */
+        @media (max-width: 950px) {
+            .footer-container {
+                flex-direction: column;
+                gap: 40px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .social-icons {
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav id="navbar">
+        <div class="logo"><i class="fa-solid fa-plane-departure"></i> Travel-Smart</div>
+
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="destinations.html">Destinations</a></li>
+            <li><a href="packages.html">Packages</a></li>
+            <li><a href="#">Gallery</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+
+        <div class="nav-right">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <i class="fa-regular fa-user"></i>
+            <div class="hamburger" id="hamburger">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="gallery-container" id="galleryContainer">
+        <div class="text-section" id="textSection"></div>
+        <div class="image-section" id="imageSection"></div>
+        <button class="nav-btn prev-btn"><i class="fas fa-chevron-left"></i></button>
+        <button class="nav-btn next-btn"><i class="fas fa-chevron-right"></i></button>
+    </div>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="reveal">
+        <div class="footer-container">
+            <!-- Logo & Description -->
+            <div class="footer-about">
+                <div class="logo">
+                    <i class="fas fa-plane-departure"></i>
+                    <span>Travel-Smart</span>
+                </div>
+                <p>Explore the world effortlessly with Travel-Smart. Your journey, our expertise.</p>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="footer-links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="destinations.html">Destinations</a></li>
+                    <li><a href="packages.html">Packages</a></li>
+                    <li><a href="#">Gallery</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="footer-contact">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-map-marker-alt"></i> 123 Travel Street, City</p>
+                <p><i class="fas fa-phone-alt"></i> +123 456 7890</p>
+                <p><i class="fas fa-envelope"></i> info@travelsmart.com</p>
+            </div>
+
+            <!-- Newsletter -->
+            <div class="footer-newsletter">
+                <h3>Newsletter</h3>
+                <p>Subscribe to get latest updates & offers</p>
+                <form>
+                    <input type="email" placeholder="Enter your email" />
+                    <button type="submit">Subscribe</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 Travel-Smart. All rights reserved.</p>
+            <div class="social-icons">
+                <a href="https://www.facebook.com/"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://www.instagram.com/"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.twitter.com/"><i class="fab fa-twitter"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            const galleryData = [
+                {
+                    color: "#252432",
+                    title: "Memories from Paris",
+                    text: "“The TravelSmart experience was exceptional! The Eiffel Tower at sunset was pure magic. Everything was perfectly planned.”",
+                    person: "— Amelia, France",
+                    image: "images/paris.webp"
+                },
+                {
+                    color: "#2A86BA",
+                    title: "Adventures in Japan",
+                    text: "“From Tokyo’s neon nights to Kyoto’s peaceful temples, everything was seamless. TravelSmart made my dream trip real.”",
+                    person: "— Hiroshi, Japan",
+                    image: "images/tokyo.jpg"
+                },
+                {
+                    color: "#820263",
+                    title: "Romance in Italy",
+                    text: "“Venice gondolas, Italian food, and breathtaking art — unforgettable! I’d book again with TravelSmart anytime.”",
+                    person: "— Lucia, Italy",
+                    image: "images/rome.jfif"
+                },
+                {
+                    color: "#fb8b24",
+                    title: "Peace in Bali",
+                    text: "“The sunsets, beaches, and calm vibes made this trip divine. The itinerary was flawless and the service top-notch.”",
+                    person: "— Arka, Indonesia",
+                    image: "images/bali.jpg"
+                },
+                {
+                    color: "#1C1C1C",
+                    title: "Energy of New York",
+                    text: "“From Times Square to Central Park, every corner was alive with energy. TravelSmart made exploring effortless.”",
+                    person: "— Emma, USA",
+                    image: "images/newyork1.webp"
+                },
+                {
+                    color: "#2E2B3C",
+                    title: "Charm of London",
+                    text: "“Big Ben, Thames, and cozy cafés — London felt like a beautiful mix of old and new.”",
+                    person: "— Oliver, UK",
+                    image: "images/london.webp"
+                },
+                {
+                    color: "#D4AF37",
+                    title: "Luxury in Dubai",
+                    text: "“Skyline views, desert adventures, and luxury at every step. Absolutely spectacular experience.”",
+                    person: "— Aisha, UAE",
+                    image: "images/dubai.jpg"
+                },
+                {
+                    color: "#0077B6",
+                    title: "Waves of Sydney",
+                    text: "“The Harbour Bridge and Bondi Beach were stunning! Perfect blend of adventure and relaxation.”",
+                    person: "— Liam, Australia",
+                    image: "images/sydney.jpg"
+                },
+                {
+                    color: "#FF6F61",
+                    title: "Rhythms of Rio",
+                    text: "“Carnival spirit, samba, and sunsets — Rio was pure joy. Every day felt like a celebration.”",
+                    person: "— Sofia, Brazil",
+                    image: "images/rio.jfif"
+                },
+                {
+                    color: "#8B4513",
+                    title: "Magic of Istanbul",
+                    text: "“The bazaars, mosques, and Bosphorus views — a cultural feast I’ll never forget.”",
+                    person: "— Mehmet, Turkey",
+                    image: "images/istanbul.jpg"
+                },
+                {
+                    color: "#A0522D",
+                    title: "Wonders of Cairo",
+                    text: "“Standing before the pyramids was surreal! TravelSmart made our journey smooth and memorable.”",
+                    person: "— Layla, Egypt",
+                    image: "images/cairo.jpg"
+                },
+                {
+                    color: "#FF4500",
+                    title: "Colors of Barcelona",
+                    text: "“Gaudí’s art, sunny beaches, and tapas nights — it was a dream vacation come true.”",
+                    person: "— Carlos, Spain",
+                    image: "images/barcelona.jfif"
+                },
+                {
+                    color: "#006400",
+                    title: "Spice of Bangkok",
+                    text: "“Temples, street food, and vibrant markets — every moment was an adventure for the senses.”",
+                    person: "— Arun, Thailand",
+                    image: "images/bangkok.jpg"
+                },
+                {
+                    color: "#800000",
+                    title: "Grandeur of Moscow",
+                    text: "“Historic architecture, Red Square, and winter charm — Moscow was breathtaking in every way.”",
+                    person: "— Natalia, Russia",
+                    image: "images/moscow.jpg"
+                },
+                {
+                    color: "#2E8B57",
+                    title: "Nature of Cape Town",
+                    text: "“From Table Mountain to vineyards, Cape Town was filled with scenic beauty and warmth.”",
+                    person: "— Ethan, South Africa",
+                    image: "images/capetown.jpg"
+                },
+                {
+                    color: "#4682B4",
+                    title: "Sunsets of Santorini",
+                    text: "“White rooftops, blue domes, and golden sunsets — pure magic every evening.”",
+                    person: "— Eleni, Greece",
+                    image: "images/santorini.jfif"
+                }
+            ];
+
+            let current = 0;
+            const total = galleryData.length;
+
+            const textSection = $("#textSection");
+            const imageSection = $("#imageSection");
+            const container = $("#galleryContainer");
+
+            function renderSlide(index) {
+                const data = galleryData[index];
+
+                textSection.removeClass("active");
+                imageSection.find("img").removeClass("active");
+
+                setTimeout(() => {
+                    textSection.html(`
+            <h1 style="color:${data.color === '#252432' ? '#fb8b24' : '#fff'};">${data.title}</h1>
+            <div class="divider"></div>
+            <p>${data.text}</p>
+            <div class="person" style="color:${data.color === '#fb8b24' ? '#fff' : '#fb8b24'};">${data.person}</div>
+          `);
+
+                    imageSection.html(`<img src="${data.image}" alt="${data.title}" class="">`);
+                    container.css("background", data.color);
+
+                    setTimeout(() => {
+                        textSection.addClass("active");
+                        imageSection.find("img").addClass("active");
+                    }, 100);
+                }, 400);
+            }
+
+            $(".next-btn").click(() => {
+                current = (current + 1) % total;
+                renderSlide(current);
+            });
+
+            $(".prev-btn").click(() => {
+                current = (current - 1 + total) % total;
+                renderSlide(current);
+            });
+
+            // Auto slide every 2 seconds
+            setInterval(() => {
+                $(".next-btn").click();
+            }, 5000);
+
+            renderSlide(current);
+        });
+
+
+        const navbar = document.getElementById("navbar");
+        const hamburger = document.getElementById("hamburger");
+        const navLinks = document.getElementById("navLinks");
+
+        window.addEventListener("scroll", () => {
+            if (window.scrollY > 60) {
+                navbar.classList.add("scrolled");
+            } else {
+                navbar.classList.remove("scrolled");
+            }
+        });
+
+        hamburger.addEventListener("click", () => {
+            hamburger.classList.toggle("active");
+            navLinks.classList.toggle("active");
+        });
+
+
+        const animatedEls = document.querySelectorAll("[data-animate]");
+        const onScroll = () => {
+            animatedEls.forEach(el => {
+                const top = el.getBoundingClientRect().top;
+                if (top < window.innerHeight - 100) el.classList.add("active");
+            });
+        };
+        window.addEventListener("scroll", onScroll);
+        onScroll();
+    </script>
+</body>
+
+</html>

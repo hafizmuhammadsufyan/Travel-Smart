@@ -16,7 +16,7 @@
             /* Theme (you specified these) */
             --background: linear-gradient(180deg, #f8f9fb, #fff4ed);
             /* LIGHT background */
-            --text-light: #111827;
+            --text-light: #ffffff;
             --text-dark: #0a0a0a;
             --overlay-darkness: rgba(0, 0, 0, 0.18);
             --primary1: #fb8b24;
@@ -48,76 +48,202 @@
             overflow-x: hidden
         }
 
-        a {
-            color: inherit
-        }
-
-        /* Header */
-        header {
-            position: sticky;
+        /* ===== NAVBAR ===== */
+        nav {
+            position: fixed;
             top: 0;
-            z-index: 140;
+            width: 100%;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 12px;
-            padding: 16px 40px;
-            background: transparent;
-            backdrop-filter: blur(6px);
+            padding: 16px 70px;
+            backdrop-filter: blur(5px);
+            /* background: rgba(130, 2, 99, 0.95); */
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            transition: all 0.4s ease;
+            z-index: 100;
         }
 
-        .brand {
+        nav.scrolled {
+            background: rgba(130, 2, 99, 0.95);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* ===== LOGO ===== */
+        .logo {
             display: flex;
             align-items: center;
-            gap: 12px
-        }
-
-        .logo {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
-            display: grid;
-            place-items: center;
-            color: var(--primary3);
-            font-weight: 800;
-            background: linear-gradient(135deg, rgba(130, 2, 99, 0.06), rgba(251, 139, 36, 0.06));
-            box-shadow: 0 6px 18px rgba(130, 2, 99, 0.04);
-        }
-
-        .title {
-            font-weight: 800;
-            font-size: 1.05rem;
-            color: var(--text-dark)
-        }
-
-        .nav-actions {
-            display: flex;
             gap: 10px;
-            align-items: center
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--text-light);
+            letter-spacing: 0.5px;
         }
 
-        .icon-btn {
-            width: 44px;
-            height: 44px;
-            border-radius: 10px;
-            display: grid;
-            place-items: center;
-            border: 1px solid rgba(15, 15, 15, 0.04);
-            background: var(--glass);
+        .logo i {
+            color: var(--primary1);
+            font-size: 1.6rem;
+        }
+
+        /* ===== NAV LINKS ===== */
+        .nav-links {
+            display: flex;
+            gap: 35px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            position: relative;
+            text-decoration: none;
+            font-weight: 500;
+            color: var(--text-light);
+            letter-spacing: 0.4px;
+            transition: all 0.3s ease;
+            padding: 6px 0;
+        }
+
+        /* ===== IMPROVED HOVER EFFECT ===== */
+        .nav-links a::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary1), var(--primary2));
+            transition: width 0.3s ease;
+            filter: drop-shadow(0 0 6px var(--primary1));
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary1);
+            text-shadow: 0 0 6px rgba(251, 139, 36, 0.8),
+                0 0 12px rgba(217, 3, 104, 0.6);
+        }
+
+        nav.scrolled .nav-links a {
+            color: var(--text-light);
+        }
+
+        nav.scrolled .nav-links a:hover {
+            color: var(--primary1);
+            text-shadow: 0 0 8px rgba(251, 139, 36, 0.9),
+                0 0 16px rgba(217, 3, 104, 0.7);
+        }
+
+        /* ===== RIGHT ICONS ===== */
+        .nav-right {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            color: var(--text-light);
+        }
+
+        .nav-right i {
+            font-size: 1.2rem;
             cursor: pointer;
-            transition: all .22s
+            transition: all 0.3s ease;
+            padding: 8px;
+            border-radius: 50%;
         }
 
-        .icon-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-strong);
-            color: var(--primary1)
+        .nav-right i:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--primary1);
+            transform: translateY(-2px);
+            box-shadow: 0 0 10px rgba(251, 139, 36, 0.5);
         }
+
+        nav.scrolled .nav-right i:hover {
+            color: var(--primary2);
+            box-shadow: 0 0 10px rgba(217, 3, 104, 0.5);
+        }
+
+        /* ===== HAMBURGER ===== */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .bar {
+            width: 25px;
+            height: 3px;
+            background-color: var(--text-light);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger.active .bar:nth-child(1) {
+            transform: rotate(45deg) translateY(8px);
+            background: var(--primary1);
+        }
+
+        .hamburger.active .bar:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active .bar:nth-child(3) {
+            transform: rotate(-45deg) translateY(-8px);
+            background: var(--primary2);
+        }
+
+        /* ===== MOBILE MENU ===== */
+        @media (max-width: 950px) {
+            .nav-links {
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: rgba(130, 2, 99, 0.97);
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+                padding: 20px 0;
+                opacity: 0;
+                pointer-events: none;
+                transform: translateY(-20px);
+                transition: all 0.4s ease;
+            }
+
+            .nav-links.active {
+                opacity: 1;
+                pointer-events: auto;
+                transform: translateY(0);
+            }
+
+            .hamburger {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 600px) {
+            nav {
+                padding: 14px 30px;
+            }
+
+            .logo {
+                font-size: 1.2rem;
+            }
+        }
+
+        /* a {
+            color: inherit
+        } */
+
+
 
         /* Page container */
         .page {
             max-width: 1280px;
-            margin: 20px auto;
+            margin: 50px auto;
+            padding: 0px auto;
             padding: 18px;
         }
 
@@ -168,13 +294,15 @@
 
         .filter-bar {
             display: flex;
-            gap: 8px;
+            gap: 17px;
             align-items: center;
-            padding: 8px;
+            padding: 10px;
+            margin-top: 20px;
+            margin-bottom: 20px;
             border-radius: 999px;
             background: linear-gradient(180deg, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.8));
             border: 1px solid rgba(16, 24, 40, 0.05);
-            box-shadow: 0 8px 30px rgba(16, 24, 40, 0.04);
+            box-shadow: 0px 7px 15px 0px rgba(16, 24, 40, 0.283);
         }
 
         /* Filter chips */
@@ -190,7 +318,7 @@
             font-weight: 700;
             color: var(--text-dark);
             transition: all .25s;
-            box-shadow: 0 2px 10px rgba(16, 24, 40, 0.02);
+            /* box-shadow: 0 2px 10px rgba(16, 24, 40, 0.233); */
         }
 
         .chip i {
@@ -201,33 +329,37 @@
 
         .chip:hover {
             transform: translateY(-4px);
-            box-shadow: 0 20px 40px rgba(16, 24, 40, 0.05)
+            box-shadow: 0 2px 10px rgba(16, 24, 40, 0.233);
         }
 
         .chip.active {
             background: linear-gradient(90deg, var(--primary1), var(--primary2));
             color: #fff;
             border-color: transparent;
-            box-shadow: 0 16px 48px rgba(251, 139, 36, 0.12);
+            box-shadow: 0 2px 10px rgba(16, 24, 40, 0.637);
+
         }
 
         /* search + sort */
         .tools {
             display: flex;
             align-items: center;
-            gap: 12px;
-            margin-left: auto
+            gap: 15px;
+            margin-left: auto;
+            margin-bottom: 25px;
+
         }
 
         .search {
             display: flex;
             gap: 8px;
             align-items: center;
-            padding: 8px 12px;
+            padding: 12px 14px;
             border-radius: 12px;
             background: var(--glass-2);
-            border: 1px solid rgba(16, 24, 40, 0.03);
-            min-width: 260px;
+            box-shadow: 0px 7px 15px 0px rgba(16, 24, 40, 0.283);
+            border: 1px solid rgba(16, 24, 40, 0);
+            min-width: 280px;
         }
 
         .search input {
@@ -239,11 +371,13 @@
         }
 
         .select {
-            padding: 8px 10px;
+            padding: 13px 15px;
             border-radius: 10px;
             border: 1px solid rgba(16, 24, 40, 0.04);
             background: transparent;
-            color: var(--text-dark)
+            color: var(--text-dark);
+            box-shadow: 0px 7px 15px 0px rgba(16, 24, 40, 0.283);
+
         }
 
         /* Grid: 3 columns */
@@ -625,28 +759,218 @@
             transform: none
         }
 
-        /* footer */
+        /* ===== FOOTER STYLES ===== */
         footer {
-            margin-top: 36px;
-            padding: 24px;
-            text-align: center;
-            color: var(--muted)
+            background: rgba(130, 2, 99, 0.85);
+            /* slightly darker & subtle */
+            color: var(--text-light) !important;
+            padding: 60px 70px 30px;
+            font-family: system-ui;
+            backdrop-filter: blur(6px);
+            /* soft glassy effect */
+        }
+
+        /* Footer container and other styles remain the same */
+
+
+        .footer-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 50px;
+            justify-content: space-between;
+        }
+
+        .footer-container>div {
+            flex: 1 1 220px;
+        }
+
+        /* Logo & About */
+        .footer-about .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .footer-about .logo i {
+            color: var(--primary1) !important;
+            font-size: 1.8rem;
+        }
+
+        .footer-about p {
+            margin-top: 10px;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        /* Quick Links */
+        .footer-links h3,
+        .footer-contact h3,
+        .footer-newsletter h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: var(--primary1) !important;
+            text-shadow: 0 0 6px var(--primary2);
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links ul li a {
+            color: var(--text-light) !important;
+            text-decoration: none;
+            transition: 0.3s;
+            position: relative;
+        }
+
+        .footer-links ul li a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -2px;
+            width: 0%;
+            height: 2px;
+            background: var(--primary1);
+            transition: width 0.3s;
+        }
+
+        .footer-links ul li a:hover::after {
+            width: 100%;
+        }
+
+        .footer-links ul li a:hover {
+            color: var(--primary1) !important;
+        }
+
+        /* Contact Info */
+        .footer-contact p {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-contact i {
+            color: var(--primary1) !important;
+        }
+
+        /* Newsletter */
+        .footer-newsletter p {
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .footer-newsletter form {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .footer-newsletter input[type="email"] {
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            flex: 1;
+            min-width: 180px;
+        }
+
+        .footer-newsletter button {
+            padding: 10px 20px;
+            background: linear-gradient(120deg, var(--primary1), var(--primary2), var(--primary3));
+            color: var(--text-light);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .footer-newsletter button:hover::before {
+            transform: rotate(45deg) scale(1);
+            opacity: 0.8;
+        }
+
+        .footer-newsletter button:hover {
+            background: linear-gradient(90deg, var(--primary1), var(--primary2), var(--primary3));
+            color: #fff;
+            transform: scale(1.1);
+        }
+
+
+
+        /* Footer Bottom */
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            padding-top: 20px;
+            flex-wrap: wrap;
+            gap: 20px;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .social-icons a {
+            color: var(--text-light);
+            margin-left: 15px;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: var(--primary1);
+            transform: translateY(-3px);
+        }
+
+        /* Responsive */
+        @media (max-width: 950px) {
+            .footer-container {
+                flex-direction: column;
+                gap: 40px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .social-icons {
+                margin-top: 10px;
+            }
         }
     </style>
 </head>
 
 <body>
-    <header>
-        <div class="brand">
-            <div class="logo"><i class="fa-solid fa-plane-departure"></i></div>
-            <div class="title">TravelSmart Packages</div>
-        </div>
+    <nav id="navbar">
+        <div class="logo"><i class="fa-solid fa-plane-departure"></i> Travel-Smart</div>
 
-        <div class="nav-actions">
-            <div class="icon-btn" title="Search"><i class="fa-solid fa-magnifying-glass"></i></div>
-            <div class="icon-btn" title="Account"><i class="fa-regular fa-user"></i></div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="destinations.html">Destinations</a></li>
+            <li><a href="#">Packages</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+
+        <div class="nav-right">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <i class="fa-regular fa-user"></i>
+            <div class="hamburger" id="hamburger">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
         </div>
-    </header>
+    </nav>
 
     <main class="page">
         <section class="hero">
@@ -679,7 +1003,7 @@
 
             <aside style="width:320px">
                 <div
-                    style="padding:14px;border-radius:12px;background:linear-gradient(180deg,#fff,#fffaf6);border:1px solid rgba(16,24,40,0.03); margin-bottom: 120px;">
+                    style="padding:14px;border-radius:12px;background:linear-gradient(180deg,#fff,#fffaf6);border:1px solid rgba(16,24,40,0.03); margin-bottom: 180px;">
                     <h4 style="margin:0 0 8px;color:var(--primary2)">Top Picks</h4>
                     <p style="color:var(--muted);margin-bottom:12px">Hand-picked trending packages</p>
                     <div style="display:flex;flex-direction:column;gap:8px">
@@ -793,8 +1117,57 @@
         </div>
     </div>
 
-    <footer>
-        © 2025 TravelSmart · Built with ❤️
+    <!-- ===== FOOTER ===== -->
+    <footer class="reveal">
+        <div class="footer-container">
+            <!-- Logo & Description -->
+            <div class="footer-about">
+                <div class="logo">
+                    <i class="fas fa-plane-departure"></i>
+                    <span>Travel-Smart</span>
+                </div>
+                <p>Explore the world effortlessly with Travel-Smart. Your journey, our expertise.</p>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="footer-links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="destinations.html">Destinations</a></li>
+                    <li><a href="#">Packages</a></li>
+                    <li><a href="gallery.html">Gallery</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="footer-contact">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-map-marker-alt"></i> 123 Travel Street, City</p>
+                <p><i class="fas fa-phone-alt"></i> +123 456 7890</p>
+                <p><i class="fas fa-envelope"></i> info@travelsmart.com</p>
+            </div>
+
+            <!-- Newsletter -->
+            <div class="footer-newsletter">
+                <h3>Newsletter</h3>
+                <p>Subscribe to get latest updates & offers</p>
+                <form>
+                    <input type="email" placeholder="Enter your email" />
+                    <button type="submit">Subscribe</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 Travel-Smart. All rights reserved.</p>
+            <div class="social-icons">
+                <a href="https://www.facebook.com/"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://www.instagram.com/"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.twitter.com/"><i class="fab fa-twitter"></i></a>
+            </div>
+        </div>
     </footer>
 
     <script>
@@ -803,8 +1176,8 @@
            You can add / edit objects here (images: images/...)
            ------------------------- */
         const packages = [
-            { id: 'paris', title: 'Paris Weekend — City of Light', category: 'Romantic', durationDays: 3, price: 499, rating: 4.8, highlights: ['Eiffel Tower', 'Seine Cruise', 'Louvre'], img: 'images/paris.webp', short: 'Iconic Paris weekend — cafés, views, and romance.', difficulty: 'Easy', groupSize: '2-6', itinerary: ['Arrival & Seine', 'Louvre & Montmartre', 'Markets & depart'], includes: ['Hotel', 'Breakfast', 'Seine ticket'], hotels: ['Pullman Paris', 'Hotel du Louvre'], facilities: ['Airport pickup'], popular: true },
-            { id: 'tokyo', title: 'Tokyo Fusion — Tradition & Neon', category: 'Adventure', durationDays: 6, price: 1199, rating: 4.9, highlights: ['Tsukiji', 'Shibuya', 'Mt. Fuji'], img: 'images/tokyo.jpg', short: 'Mix of temples and neon-lit nights.', difficulty: 'Moderate', groupSize: '1-8', itinerary: ['Food walk', 'City highlights', 'Mt. Fuji'], includes: ['Hotel', 'Guide'], hotels: ['Park Hyatt'], facilities: ['Train pass'], popular: true },
+            { id: 'paris', title: 'Paris Weekend — City of Light', category: 'Romantic', durationDays: 3, price: 499, rating: 4.8, highlights: ['Eiffel Tower', 'Seine Cruise', 'Louvre'], img: 'images/paris.webp', short: 'Iconic Paris weekend cafés, views, and romance.', difficulty: 'Easy', groupSize: '2-6', itinerary: ['Arrival & Seine', 'Louvre & Montmartre', 'Markets & depart'], includes: ['Hotel', 'Breakfast', 'Seine ticket'], hotels: ['Pullman Paris', 'Hotel du Louvre'], facilities: ['Airport pickup'], popular: true },
+            { id: 'tokyo', title: 'Tokyo Fusion — Tradition & Neon', category: 'Adventure', durationDays: 6, price: 1199, rating: 4.9, highlights: ['Tsukiji', 'Shibuya', 'Mt. Fuji'], img: 'images/tokyo.jpg', short: 'Iconic mix of temples and neon-lit nights. Must visit', difficulty: 'Moderate', groupSize: '1-8', itinerary: ['Food walk', 'City highlights', 'Mt. Fuji'], includes: ['Hotel', 'Guide'], hotels: ['Park Hyatt'], facilities: ['Train pass'], popular: true },
             { id: 'italy', title: 'Rome Classics — Ancient & Modern', category: 'Heritage', durationDays: 4, price: 649, rating: 4.6, highlights: ['Colosseum', 'Vatican', 'Piazzas'], img: 'images/rome.jfif', short: 'History, art and irresistible pasta.', difficulty: 'Easy', groupSize: '2-8', itinerary: ['Colosseum', 'Vatican', 'Food walk'], includes: ['Hotel', 'Tickets'], hotels: ['Hotel de Russie'], facilities: ['Guided tours'], popular: false },
             { id: 'dubai', title: 'Dubai Luxury Escape', category: 'Luxury', durationDays: 5, price: 1799, rating: 4.7, highlights: ['Desert Safari', 'Burj Khalifa', 'Yacht'], img: 'images/dubai.jpg', short: 'High-end skyline experiences and desert evenings.', difficulty: 'Easy', groupSize: '1-6', itinerary: ['Desert', 'City tour', 'Yacht'], includes: ['5-star hotel', 'Transfers'], hotels: ['Burj Al Arab'], facilities: ['Concierge'], popular: true },
             { id: 'santorini', title: 'Santorini — Sunset & Aegean', category: 'Romantic', durationDays: 4, price: 899, rating: 4.9, highlights: ['Oia sunset', 'Volcano cruise', 'Winery'], img: 'images/santorini.jfif', short: 'White buildings and legendary sunsets.', difficulty: 'Easy', groupSize: '2-6', itinerary: ['Sunset', 'Island tour', 'Boat trip'], includes: ['Hotel', 'Boat'], hotels: ['Canaves Oia'], facilities: ['Transfers'], popular: true },
@@ -1228,6 +1601,34 @@
             const chips = document.querySelectorAll('.chip');
             chips.forEach((c, i) => setTimeout(() => c.classList.add('visible'), 40 * i));
         })();
+
+        const navbar = document.getElementById("navbar");
+        const hamburger = document.getElementById("hamburger");
+        const navLinks = document.getElementById("navLinks");
+
+        window.addEventListener("scroll", () => {
+            if (window.scrollY > 60) {
+                navbar.classList.add("scrolled");
+            } else {
+                navbar.classList.remove("scrolled");
+            }
+        });
+
+        hamburger.addEventListener("click", () => {
+            hamburger.classList.toggle("active");
+            navLinks.classList.toggle("active");
+        });
+
+
+        const animatedEls = document.querySelectorAll("[data-animate]");
+        const onScroll = () => {
+            animatedEls.forEach(el => {
+                const top = el.getBoundingClientRect().top;
+                if (top < window.innerHeight - 100) el.classList.add("active");
+            });
+        };
+        window.addEventListener("scroll", onScroll);
+        onScroll();
     </script>
 </body>
 

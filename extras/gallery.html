@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Travel Smart | Gallery Showcase</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    :root {
+      --background: #252432;
+      --accent1: #fb8b24;
+      --accent2: #d90368;
+      --accent3: #820263;
+      --text-light: #ffffff;
+      --overlay-darkness: rgba(0, 0, 0, 0.45);
+      --card-radius: 18px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      background: var(--background);
+      overflow: hidden;
+      color: var(--text-light);
+    }
+
+    .slider {
+      display: flex;
+      height: 100vh;
+      width: 100%;
+      position: relative;
+    }
+
+    /* LEFT TEXT AREA */
+    .text-section {
+      width: 35%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      padding: 2rem;
+      text-align: center;
+      background: var(--accent3);
+      transition: background 1.2s ease-in-out;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .text-inner {
+      position: absolute;
+      bottom: -100%;
+      opacity: 0;
+      width: 80%;
+      margin: auto;
+      transition: all 1s cubic-bezier(0.65, 0, 0.35, 1);
+    }
+
+    .text-inner.active {
+      bottom: 50%;
+      transform: translateY(50%);
+      opacity: 1;
+    }
+
+    .text-inner h2 {
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+      color: var(--accent1);
+      letter-spacing: 1px;
+    }
+
+    .text-inner p {
+      font-size: 1rem;
+      color: #e2e2e2;
+      line-height: 1.6;
+    }
+
+    /* DIVIDER LINE */
+    .divider {
+      width: 4px;
+      background: linear-gradient(180deg, var(--accent1), var(--accent2));
+      animation: colorShift 5s infinite alternate ease;
+      transition: background 1s ease;
+    }
+
+    @keyframes colorShift {
+      0% {
+        background: linear-gradient(180deg, var(--accent1), var(--accent2));
+      }
+      50% {
+        background: linear-gradient(180deg, var(--accent3), var(--accent1));
+      }
+      100% {
+        background: linear-gradient(180deg, var(--accent2), var(--accent3));
+      }
+    }
+
+    /* RIGHT IMAGE SECTION */
+    .image-section {
+      width: 65%;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .image-slide {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: -100%;
+      opacity: 0;
+      transition: all 1.2s cubic-bezier(0.65, 0, 0.35, 1);
+      background-size: cover;
+      background-position: center;
+      filter: brightness(0.8);
+    }
+
+    .image-slide.active {
+      top: 0;
+      opacity: 1;
+    }
+
+    /* NAV BUTTONS */
+    .controls {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 1rem;
+      z-index: 10;
+    }
+
+    .controls button {
+      background: var(--accent1);
+      border: none;
+      color: var(--text-light);
+      padding: 0.7rem 1.5rem;
+      border-radius: 25px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .controls button:hover {
+      background: var(--accent2);
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 900px) {
+      .slider {
+        flex-direction: column;
+      }
+      .divider {
+        display: none;
+      }
+      .text-section, .image-section {
+        width: 100%;
+        height: 50%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="slider">
+    <!-- TEXT SECTION -->
+    <div class="text-section" id="textSection">
+      <div class="text-inner active">
+        <h2>“An Unforgettable Experience”</h2>
+        <p>“The Travel Smart gallery helped us relive every moment of our journey —  
+          the photos, the destinations, everything felt alive again!”</p>
+      </div>
+    </div>
+
+    <!-- DIVIDER -->
+    <div class="divider"></div>
+
+    <!-- IMAGE SECTION -->
+    <div class="image-section" id="imageContainer">
+      <div class="image-slide active" style="background-image:url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1400&q=80');"></div>
+      <div class="image-slide" style="background-image:url('https://images.unsplash.com/photo-1483683804023-6ccdb62f86ef?auto=format&fit=crop&w=1400&q=80');"></div>
+      <div class="image-slide" style="background-image:url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1400&q=80');"></div>
+      <div class="image-slide" style="background-image:url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1400&q=80');"></div>
+    </div>
+
+    <!-- CONTROLS -->
+    <div class="controls">
+      <button id="prev"><i class="fas fa-arrow-left"></i> Prev</button>
+      <button id="next">Next <i class="fas fa-arrow-right"></i></button>
+    </div>
+  </div>
+
+  <script>
+    const slides = document.querySelectorAll(".image-slide");
+    const textSection = document.getElementById("textSection");
+
+    const testimonials = [
+      {
+        quote: "“An Unforgettable Experience”",
+        text: "“The Travel Smart gallery helped us relive every moment of our journey — the photos, the destinations, everything felt alive again!”",
+        color: "#820263"
+      },
+      {
+        quote: "“Captured Perfection”",
+        text: "“Every click tells a story — our vacation gallery is a masterpiece, thanks to Travel Smart’s amazing team!”",
+        color: "#252432"
+      },
+      {
+        quote: "“Memories Brought to Life”",
+        text: "“The way images slide through with elegance, it feels like watching a travel documentary of our own trip!”",
+        color: "#d90368"
+      },
+      {
+        quote: "“A Visual Journey”",
+        text: "“From beaches to mountains — our experiences were displayed so beautifully, we can’t stop watching it.”",
+        color: "#fb8b24"
+      }
+    ];
+
+    let current = 0;
+
+    document.getElementById("next").addEventListener("click", () => changeSlide(1));
+    document.getElementById("prev").addEventListener("click", () => changeSlide(-1));
+
+    function changeSlide(dir) {
+      slides[current].classList.remove("active");
+      current = (current + dir + slides.length) % slides.length;
+      slides[current].classList.add("active");
+
+      // Change background color
+      textSection.style.background = testimonials[current].color;
+
+      // Animate text
+      const newText = document.createElement("div");
+      newText.className = "text-inner";
+      newText.innerHTML = `
+        <h2>${testimonials[current].quote}</h2>
+        <p>${testimonials[current].text}</p>
+      `;
+      textSection.appendChild(newText);
+
+      setTimeout(() => {
+        newText.classList.add("active");
+      }, 50);
+
+      // Remove previous text smoothly
+      const oldText = document.querySelector(".text-inner.active:not(:last-child)");
+      if (oldText) {
+        oldText.classList.remove("active");
+        setTimeout(() => oldText.remove(), 1000);
+      }
+    }
+  </script>
+
+</body>
+</html>

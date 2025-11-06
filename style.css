@@ -355,6 +355,9 @@ nav.scrolled .nav-right i:hover {
     position: relative;
     overflow: hidden;
     z-index: 0;
+    opacity: 0;
+    animation: animate 1s ease-in-out 0.6s 1 forwards;
+
 }
 
 .content button::before {
