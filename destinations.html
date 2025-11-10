@@ -28,7 +28,7 @@
         body,
         html {
             width: 100%;
-            height: 100%;
+            min-height: 100vh;
             font-family: 'Poppins', sans-serif;
             background: #252432;
             color: var(--text-light);
@@ -392,7 +392,7 @@
 
         .detail-inner {
             max-width: 1200px;
-            margin: 60px auto;
+            margin: 10px auto;
             padding: 30px;
         }
 
@@ -410,18 +410,45 @@
         }
 
         .detail-back {
-            padding: 12px 18px;
-            border-radius: 12px;
+            padding: 15px 80px;
             border: none;
-            cursor: pointer;
-            font-weight: 700;
-            background: var(--accent1);
+            border-radius: 8px;
+            background: linear-gradient(90deg, var(--accent2), var(--accent3));
             color: #fff;
+            font-weight: bold;
+            cursor: pointer;
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 0;
         }
 
+        .detail-back::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(120deg, var(--accent1), var(--accent2), var(--accent3));
+            opacity: 0.3;
+            transition: all 0.4s ease;
+            transform: rotate(45deg) scale(0);
+            z-index: -1;
+        }
+
+        .detail-back:hover::before {
+            transform: rotate(45deg) scale(1);
+            opacity: 0.8;
+        }
+
+
         .detail-back:hover {
-            background: var(--accent2);
+            background: linear-gradient(90deg, var(--accent1), var(--accent2), var(--accent3));
+            /* box-shadow: 0 0 15px var(--accent1), 0 0 25px var(--accent2), 0 0 35px var(--accent3); */
+            transform: scale(1.05);
+            color: #fff;
+            z-index: 1;
         }
 
         .section-head {
@@ -853,7 +880,7 @@
         <div class="detail-inner" id="detailInner">
             <div class="detail-header">
                 <h2 class="detail-title" id="detailTitle"></h2>
-                <button class="detail-back" id="backBtn">Back</button>
+                <button class="detail-back" id="backBtn">Back to slides</button>
             </div>
             <div id="detailContent"></div>
         </div>
@@ -915,7 +942,7 @@
     <script>
         // ------------------ SLIDER ------------------
         const slides = [
-            { name: "Paris", sub: "The land of art, romance, and fine wine.", img: "images/paris.webp", color: "#252E33" },
+            { name: "Paris", sub: "The land of art, romance, and fine wine.", img: "images/eiffel.jpeg", color: "#252E33" },
             { name: "Japan", sub: "A fusion of ancient traditions and futuristic innovation.", img: "images/tokyo.jpg", color: "#2A86BA" },
             { name: "Italy", sub: "Where every corner whispers history, art and flavor.", img: "images/rome.jfif", color: "#FD3555" },
             { name: "New York", sub: "The city that never sleeps, bustling with energy.", img: "images/newyork1.webp", color: "#1C1C1C" },
@@ -974,12 +1001,12 @@
         const detailData = {
             "Paris": {
                 "places": [
-                    { img: "images/paris.webp", title: "Eiffel Tower", desc: "Iconic tower offering stunning city views." },
-                    { img: "images/louvre.jpg", title: "Louvre Museum", desc: "World's largest art museum and home to the Mona Lisa." },
+                    { img: "images/eiffel.jpeg", title: "Eiffel Tower", desc: "Iconic tower offering stunning city views." },
+                    { img: "images/louvre.jfif", title: "Louvre Museum", desc: "World's largest art museum and home to the Mona Lisa." },
                     { img: "images/notredame.jpg", title: "Notre-Dame Cathedral", desc: "Famous Gothic cathedral on the Île de la Cité." }
                 ],
                 "cuisine": [
-                    { img: "images/croissant.jpg", title: "Croissant", desc: "Buttery, flaky French pastry." },
+                    { img: "images/croissant.jfif", title: "Croissant", desc: "Buttery, flaky French pastry." },
                     { img: "images/escargot.jpg", title: "Escargot", desc: "Traditional French dish of cooked snails." },
                     { img: "images/ratatouille.jpg", title: "Ratatouille", desc: "A classic Provençal vegetable stew." }
                 ],
@@ -1005,18 +1032,18 @@
             "Japan": {
                 "places": [
                     { img: "images/tokyo.jpg", title: "Tokyo Tower", desc: "Modern communications tower inspired by the Eiffel Tower." },
-                    { img: "images/kyoto.jpg", title: "Kyoto Temples", desc: "Historic temples preserving Japanese heritage." },
-                    { img: "images/mtfuji.jpg", title: "Mount Fuji", desc: "Japan’s tallest mountain and a cultural symbol." }
+                    { img: "images/kyoto.avif", title: "Kyoto Temples", desc: "Historic temples preserving Japanese heritage." },
+                    { img: "images/mount.jpg", title: "Mount Fuji", desc: "Japan’s tallest mountain and a cultural symbol." }
                 ],
                 "cuisine": [
                     { img: "images/sushi.jpg", title: "Sushi", desc: "Traditional Japanese vinegared rice with seafood." },
-                    { img: "images/ramen.jpg", title: "Ramen", desc: "Noodle soup with rich broth and toppings." },
+                    { img: "images/ramen.avif", title: "Ramen", desc: "Noodle soup with rich broth and toppings." },
                     { img: "images/tempura.jpg", title: "Tempura", desc: "Crispy deep-fried seafood or vegetables." }
                 ],
                 "spots": [
-                    { img: "images/shibuya.jpg", title: "Shibuya Crossing", desc: "World’s busiest pedestrian crossing." },
+                    { img: "images/shibuya.jfif", title: "Shibuya Crossing", desc: "World’s busiest pedestrian crossing." },
                     { img: "images/nara.jpg", title: "Nara Park", desc: "Famous for friendly deer and ancient temples." },
-                    { img: "images/osaka.jpg", title: "Osaka Castle", desc: "Historic castle surrounded by cherry blossoms." }
+                    { img: "images/Osaka.webp", title: "Osaka Castle", desc: "Historic castle surrounded by cherry blossoms." }
                 ],
                 "todo": [
                     "Experience Tokyo’s nightlife and traditional tea ceremonies.",
