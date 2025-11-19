@@ -48,7 +48,7 @@
             background: transparent;
             border-bottom: 1px solid rgba(255, 255, 255, 0.15);
             transition: all 0.4s ease;
-            z-index: 100;
+            z-index: 1000;
         }
 
         nav.scrolled {
@@ -392,7 +392,7 @@
 
         .detail-inner {
             max-width: 1200px;
-            margin: 10px auto;
+            margin: 60px auto;
             padding: 30px;
         }
 
@@ -1066,14 +1066,14 @@
                     { img: "images/florence.jpg", title: "Florence", desc: "Cradle of the Renaissance with iconic architecture." }
                 ],
                 "cuisine": [
-                    { img: "images/pasta.jpg", title: "Pasta", desc: "Italy’s most iconic dish in countless variations." },
+                    { img: "images/pasta2.jpg", title: "Pasta", desc: "Italys most iconic dish in countless variations." },
                     { img: "images/pizza.jpg", title: "Pizza Margherita", desc: "Classic Neapolitan pizza with tomato and mozzarella." },
                     { img: "images/gelato.jpg", title: "Gelato", desc: "Traditional Italian-style ice cream." }
                 ],
                 "spots": [
                     { img: "images/venice.jpg", title: "Venice Canals", desc: "Romantic gondola rides through waterways." },
-                    { img: "images/milan.jpg", title: "Milan Cathedral", desc: "Masterpiece of Gothic architecture." },
-                    { img: "images/pompeii.jpg", title: "Pompeii", desc: "Ruins of an ancient Roman city buried by Vesuvius." }
+                    { img: "images/milan.jfif", title: "Milan Cathedral", desc: "Masterpiece of Gothic architecture." },
+                    { img: "images/pompeii.webp", title: "Pompeii", desc: "Ruins of an ancient Roman city buried by Vesuvius." }
                 ],
                 "todo": [
                     "Tour the Colosseum and Vatican museums.",
@@ -1091,17 +1091,17 @@
 
             "New York": {
                 "places": [
-                    { img: "images/nytimes.jpg", title: "Times Square", desc: "Iconic neon-lit district." },
-                    { img: "images/centralpark.jpg", title: "Central Park", desc: "Oasis of greenery in the heart of the city." },
-                    { img: "images/statueofliberty.jpg", title: "Statue of Liberty", desc: "Symbol of freedom and democracy." }
+                    { img: "images/times.jpg", title: "Times Square", desc: "Iconic neon-lit district." },
+                    { img: "images/central.jpg", title: "Central Park", desc: "Oasis of greenery in the heart of the city." },
+                    { img: "images/statue.jfif", title: "Statue of Liberty", desc: "Symbol of freedom and democracy." }
                 ],
                 "cuisine": [
-                    { img: "images/burger.jpg", title: "NYC Burger", desc: "Classic American-style burger." },
-                    { img: "images/pizza-ny.jpg", title: "New York Pizza", desc: "Thin crust pizza by the slice." },
-                    { img: "images/cheesecake.jpg", title: "Cheesecake", desc: "Famous creamy New York-style dessert." }
+                    { img: "images/burger.webp", title: "NYC Burger", desc: "Classic American-style burger." },
+                    { img: "images/nypizza.jpg", title: "New York Pizza", desc: "Thin crust pizza by the slice." },
+                    { img: "images/cheesecack.webp", title: "Cheesecake", desc: "Famous creamy New York-style dessert." }
                 ],
                 "spots": [
-                    { img: "images/brooklyn.jpg", title: "Brooklyn Bridge", desc: "Historic bridge connecting Manhattan and Brooklyn." },
+                    { img: "images/brooklyn.jfif", title: "Brooklyn Bridge", desc: "Historic bridge connecting Manhattan and Brooklyn." },
                     { img: "images/empire.jpg", title: "Empire State Building", desc: "Art Deco skyscraper offering panoramic views." },
                     { img: "images/soho.jpg", title: "SoHo", desc: "Trendy district for shopping and art." }
                 ],
@@ -1121,19 +1121,19 @@
 
             "London": {
                 "places": [
-                    { img: "images/bigben.jpg", title: "Big Ben", desc: "Famous clock tower and symbol of London." },
-                    { img: "images/londonbridge.jpg", title: "Tower Bridge", desc: "Historic drawbridge over the River Thames." },
-                    { img: "images/buckingham.jpg", title: "Buckingham Palace", desc: "Official residence of the British monarch." }
+                    { img: "images/big.jfif", title: "Big Ben", desc: "Famous clock tower and symbol of London." },
+                    { img: "images/bridge.jfif", title: "Tower Bridge", desc: "Historic drawbridge over the River Thames." },
+                    { img: "images/buckingham.jfif", title: "Buckingham Palace", desc: "Official residence of the British monarch." }
                 ],
                 "cuisine": [
-                    { img: "images/fishchips.jpg", title: "Fish & Chips", desc: "Classic British dish served with vinegar." },
-                    { img: "images/tea.jpg", title: "English Tea", desc: "Traditional afternoon refreshment." },
-                    { img: "images/pie.jpg", title: "Steak Pie", desc: "Savory pastry dish loved across the UK." }
+                    { img: "images/fishchips.webp", title: "Fish & Chips", desc: "Classic British dish served with vinegar." },
+                    { img: "images/english.jfif", title: "English Tea", desc: "Traditional afternoon refreshment." },
+                    { img: "images/pie.webp", title: "Steak Pie", desc: "Savory pastry dish loved across the UK." }
                 ],
                 "spots": [
-                    { img: "images/hydepark.jpg", title: "Hyde Park", desc: "Famous park for relaxation and picnics." },
-                    { img: "images/oxfordstreet.jpg", title: "Oxford Street", desc: "Major shopping destination." },
-                    { img: "images/londoneye.jpg", title: "London Eye", desc: "Observation wheel offering views of the city." }
+                    { img: "images/hyde.jfif", title: "Hyde Park", desc: "Famous park for relaxation and picnics." },
+                    { img: "images/oxford.webp", title: "Oxford Street", desc: "Major shopping destination." },
+                    { img: "images/london.jfif", title: "London Eye", desc: "Observation wheel offering views of the city." }
                 ],
                 "todo": [
                     "Ride the London Eye for panoramic city views.",
@@ -1490,9 +1490,14 @@
             });
 
             detailPage.classList.add('open');
+
+            // let navColor = document.getElementById("navbar")
+
+            navbar.style.backgroundColor = "rgba(130, 2, 99, 0.95)"
         });
 
-        backBtn.addEventListener('click', () => { detailPage.classList.remove('open'); });
+        backBtn.addEventListener('click', () => { detailPage.classList.remove('open'); navbar.style.backgroundColor = ""
+} );
 
         const navbar = document.getElementById("navbar");
         const hamburger = document.getElementById("hamburger");
